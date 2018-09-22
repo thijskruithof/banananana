@@ -5,16 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Banananana"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Width="400">
-    <Border Height="Auto" Margin="6" Background="#FFE0E0E0" CornerRadius="8" BorderThickness="0" VerticalAlignment="Top" >
+             d:DesignHeight="450" d:DesignWidth="800" Width="400" MouseDoubleClick="UserControl_MouseDoubleClick">
+    <Border Height="Auto" Margin="6" Background="White" CornerRadius="8" BorderThickness="0" VerticalAlignment="Top" >
         <Border BorderThickness="8" Height="Auto">
             <StackPanel Height="Auto" Orientation="Vertical">
-                <RichTextBox x:Name="richTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFFB533" FontSize="18" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" TextChanged="richTextBox_TextChanged">
-                    <FlowDocument>
-                        <Paragraph>
-                            <Run Foreground="Black" Text=""/>
-                        </Paragraph>
-                    </FlowDocument>
+                <Grid Height="24">
+                    <StackPanel Orientation="Horizontal" Width="270" Margin="51,0"/>
+                    <Button x:Name="deleteButton" Content="❌" Margin="0" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="16" Padding="1,-5,1,1" Foreground="#FF919191" Click="deleteButton_Click"/>
+                </Grid>
+                <Rectangle Fill="#FFD4D4D4" Height="2" Margin="0,0,0,8"/>
+                <RichTextBox x:Name="richTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFFC500" FontSize="18" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" TextChanged="richTextBox_TextChanged" SelectionOpacity="0.7" MouseDoubleClick="richTextBox_MouseDoubleClick" LostKeyboardFocus="richTextBox_LostKeyboardFocus">
+                    <FlowDocument/>
                 </RichTextBox>
 
             </StackPanel>

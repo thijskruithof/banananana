@@ -28,11 +28,17 @@ namespace Banananana
         private void addTaskButton_Click(object sender, RoutedEventArgs e)
         {
             TaskControl tc = new TaskControl();
+            tc.OnDelete += TaskControl_OnDelete;
             stackPanel.Children.Insert(1, tc);
 
             //Keyboard.Focus(tc.richTextBox);
             tc.richTextBox.Focus();
             //Keyboard.Focus(tc.richTextBox);
+        }
+
+        private void TaskControl_OnDelete(TaskControl inTask)
+        {
+            stackPanel.Children.Remove(inTask);
         }
     }
 }

@@ -9,7 +9,7 @@
     <Window.Background>
         <ImageBrush ImageSource="Resources/bananas-close-up.jpg" Stretch="UniformToFill"/>
     </Window.Background>
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Focusable="False">
         <StackPanel x:Name="stackPanel" Orientation="Horizontal" Width="Auto" Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Border HorizontalAlignment="Right" Margin="8" VerticalAlignment="Top" Width="36" Background="#FFE8E8E8" CornerRadius="8" >
                 <Button x:Name="addPileButton" Content="+" BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" FontSize="28" VerticalContentAlignment="Top" RenderTransformOrigin="0.5,0.5" Padding="1,-4,1,1" Click="addTaskButton_Click" Height="34"/>

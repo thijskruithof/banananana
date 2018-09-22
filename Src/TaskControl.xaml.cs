@@ -20,6 +20,10 @@ namespace Banananana
     /// </summary>
     public partial class TaskControl : UserControl
     {
+        public delegate void TaskControlHandler(TaskControl inTask);
+
+        public event TaskControlHandler OnDelete;
+
         public TaskControl()
         {
             InitializeComponent();
@@ -33,6 +37,28 @@ namespace Banananana
         private void richTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        private void deleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            OnDelete(this);
+        }
+
+        private void richTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            
+        }
+
+        private void UserControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            //richTextBox.IsEnabled = true;
+            //Keyboard.Focus(richTextBox);
+            //richTextBox.SelectAll();
+        }
+
+        private void richTextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            //richTextBox.IsEnabled = false;
         }
     }
 }

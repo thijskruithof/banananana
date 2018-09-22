@@ -5,13 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Banananana"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="416" Width="416" MinHeight="100">
+             d:DesignHeight="200" d:DesignWidth="416" Width="416" MinHeight="75">
     <Grid Height="Auto">
-        <Border Margin="8" Padding="0" CornerRadius="8" Background="White" Height="Auto">
+        <Border Margin="8" Padding="0" CornerRadius="8" Background="#FFDADADA" Height="Auto">
             <StackPanel x:Name="stackPanel" Margin="0,8,0,0" Height="Auto" >
                 <Grid Height="35" Background="#FFFFCB19">
                     <Label x:Name="label" Content="Title" Background="{x:Null}" FontSize="18.667" HorizontalAlignment="Center"/>
-                    <Button x:Name="addTaskButton" Content="+" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Top" Width="39" BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" FontSize="28" VerticalContentAlignment="Top" RenderTransformOrigin="0.5,0.5" Padding="1,-4,1,1" Click="addTaskButton_Click"/>
+                    <Button x:Name="addTaskButton" Content="+" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" FontSize="28" VerticalContentAlignment="Top" RenderTransformOrigin="0.5,0.5" Padding="1,-4,1,1" Click="addTaskButton_Click"/>
                 </Grid>
             </StackPanel>
 
