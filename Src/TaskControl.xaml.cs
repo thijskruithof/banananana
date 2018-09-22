@@ -24,14 +24,63 @@ namespace Banananana
 
         public event TaskControlHandler OnDelete;
 
+        static int mCounter = 0;
+
+        public enum EDragState
+        {
+            NoDraggingActive,
+            IsBeingDragged,
+            IsNotBeingDragged
+        }
+
+        private EDragState mDragState = EDragState.NoDraggingActive;
+
+        private Brush mOriginalBackground;
+
+        public EDragState DragState
+        {
+            get { return mDragState; }
+
+            set
+            {
+                if (mDragState != value)
+                {
+                    switch (value)
+                    {
+                        case EDragState.NoDraggingActive:
+                            RenderTransform = Transform.Identity;
+                            border.BorderBrush = null;
+                            border.Background = mOriginalBackground;
+                            break;
+                        case EDragState.IsBeingDragged:
+                            RenderTransform = new TranslateTransform(12.0, 0.0);
+                            border.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 220, 0));
+                            border.Background = mOriginalBackground;
+
+                            break;
+                        case EDragState.IsNotBeingDragged:
+                            RenderTransform = Transform.Identity;
+                            border.BorderBrush = null;
+                            border.Background = new SolidColorBrush(Color.FromArgb(255, 240, 240, 240));
+
+                            break;
+                    }
+                }
+
+                mDragState = value;
+            }
+        }
+
         public TaskControl()
         {
             InitializeComponent();
 
+            mOriginalBackground = border.Background;
+
             //richTextBox.Focus();
             //Keyboard.Focus(richTextBox);
-            //richTextBox.Document.Blocks.Clear();
-            //richTextBox.Document.Blocks.Add(new Paragraph(new Run("Text")));
+            richTextBox.Document.Blocks.Clear();
+            richTextBox.Document.Blocks.Add(new Paragraph(new Run(String.Format("Task {0}", mCounter++))));
         }
 
         private void richTextBox_TextChanged(object sender, TextChangedEventArgs e)
