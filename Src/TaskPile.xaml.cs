@@ -20,8 +20,8 @@ namespace Banananana
     /// </summary>
     public partial class TaskPile : UserControl
     {
-        public delegate void TaskDragHandler(TaskPile inPile, TaskControl inTask);
-        public delegate void TaskDragMoveHandler(TaskPile inPile, TaskControl inTask, Point inPosition);
+        public delegate void TaskDragHandler(TaskControl inTask);
+        public delegate void TaskDragMoveHandler(TaskControl inTask, Point inPosition);
 
         public event TaskDragHandler OnDragTaskStarted;
         public event TaskDragMoveHandler OnDragTaskMoved;
@@ -52,7 +52,7 @@ namespace Banananana
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                OnDragTaskStarted(this, sender as TaskControl);
+                OnDragTaskStarted(sender as TaskControl);
 
                 e.Handled = true;
             }
@@ -62,7 +62,7 @@ namespace Banananana
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                OnDragTaskMoved(this, sender as TaskControl, e.GetPosition(this));
+                OnDragTaskMoved(sender as TaskControl, e.GetPosition(this.Parent as IInputElement));
 
                 e.Handled = true;
             }
@@ -72,7 +72,7 @@ namespace Banananana
         {
             if (e.ChangedButton == MouseButton.Left )
             {
-                OnDragTaskStopped(this, sender as TaskControl);
+                OnDragTaskStopped(sender as TaskControl);
 
                 e.Handled = true;
             }

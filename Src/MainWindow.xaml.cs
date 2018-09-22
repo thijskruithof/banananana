@@ -23,7 +23,6 @@ namespace Banananana
 
         private bool mDraggingTask;
         private TaskControl mDraggedTask;
-        private TaskPile mDraggedPile;
         private Cursor mDragPreviousCursor;
 
 
@@ -52,57 +51,108 @@ namespace Banananana
         }
 
 
-        private void Pile_OnDragTaskStarted(TaskPile inPile, TaskControl inTask)
+
+        private void Pile_OnDragTaskStarted(TaskControl inTask)
         {
-            mDraggingTask = true;
             mDraggedTask = inTask;
-            mDraggedPile = inPile;
+
             mDraggedTask.CaptureMouse();
-            mDragPreviousCursor = mDraggedPile.Cursor;
-            mDraggedPile.Cursor = Cursors.Hand;
+            mDragPreviousCursor = Cursor;
+            Cursor = Cursors.Hand;
 
-            for (int i = 1; i < mDraggedPile.stackPanel.Children.Count; ++i)
-                (mDraggedPile.stackPanel.Children[i] as TaskControl).DragState = (mDraggedPile.stackPanel.Children[i] == mDraggedTask) ? TaskControl.EDragState.IsBeingDragged : TaskControl.EDragState.IsNotBeingDragged;
+            for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
+            {
+                TaskPile pile = stackPanel.Children[j] as TaskPile;
+                for (int i = 1; i < pile.stackPanel.Children.Count; ++i)
+                    (pile.stackPanel.Children[i] as TaskControl).DragState = (pile.stackPanel.Children[i] == mDraggedTask) ? TaskControl.EDragState.IsBeingDragged : TaskControl.EDragState.IsNotBeingDragged;
+            }
 
+            mDraggingTask = true;
         }
 
-        private void Pile_OnDragTaskMoved(TaskPile inPile, TaskControl inTask, Point inPosition)
+        private void Pile_OnDragTaskMoved(TaskControl inTask, Point inPosition)
         {
+            if (!mDraggingTask)
+                return;
+
             // Find out where to place our task
             Point mouse_pos = inPosition;
 
-            int preferred_index = mDraggedPile.stackPanel.Children.Count - 1;
+            int preferred_tile_index = stackPanel.Children.Count - 2;
+            TaskPile preferred_tile = stackPanel.Children[preferred_tile_index] as TaskPile;
 
-            for (int i = 2; i < mDraggedPile.stackPanel.Children.Count; ++i)
+            // Determine pile we're trying to move our task to
+            for (int i = 1; i < stackPanel.Children.Count-1; ++i)
             {
-                Point control_top_left = mDraggedPile.stackPanel.Children[i].TransformToAncestor(this).Transform(new Point(0, 0));
+                TaskPile pile = stackPanel.Children[i] as TaskPile;
+                Point control_top_left = pile.stackPanel.Children[0].TransformToAncestor(this).Transform(new Point(0, 0));
 
-                if (mouse_pos.Y < control_top_left.Y)
+                if (mouse_pos.X < control_top_left.X)
                 {
-                    preferred_index = i - 1;
+                    preferred_tile_index = i - 1;
+                    preferred_tile = stackPanel.Children[i-1] as TaskPile;
                     break;
                 }
             }
 
-            int current_index = mDraggedPile.stackPanel.Children.IndexOf(mDraggedTask);
+            // Determine task index we're trying to move our task to
+            int preferred_task_index = preferred_tile.stackPanel.Children.Count - 1;
 
-            // Move dragged task to preferred spot
-            if (current_index != preferred_index)
+            for (int i = 2; i < preferred_tile.stackPanel.Children.Count; ++i)
             {
-                mDraggedPile.stackPanel.Children.RemoveAt(current_index);
-                mDraggedPile.stackPanel.Children.Insert(preferred_index, mDraggedTask);
+                Point control_top_left = preferred_tile.stackPanel.Children[i].TransformToAncestor(this).Transform(new Point(0, 0));
+
+                if (mouse_pos.Y < control_top_left.Y)
+                {
+                    preferred_task_index = i - 1;
+                    break;
+                }
             }
 
+            int current_pile_index = -1;
+            TaskPile current_pile = null;
+            for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
+            {
+                TaskPile pile = stackPanel.Children[j] as TaskPile;
+                if (pile.stackPanel.Children.Contains(mDraggedTask))
+                {
+                    current_pile_index = j;
+                    current_pile = pile;
+                    break;
+                }
+            }
+
+            int current_task_index = current_pile.stackPanel.Children.IndexOf(mDraggedTask);
+
+            // Move dragged task to a different pile?
+            if (current_pile_index != preferred_tile_index)
+            {
+                current_pile.stackPanel.Children.RemoveAt(current_task_index);
+                preferred_tile.stackPanel.Children.Insert(preferred_task_index, mDraggedTask);
+            }
+            // Move dragged task to different spot in same pile?
+            else if (current_task_index != preferred_task_index)
+            {
+                current_pile.stackPanel.Children.RemoveAt(current_task_index);
+                current_pile.stackPanel.Children.Insert(preferred_task_index, mDraggedTask);
+            }
         }
 
 
-        private void Pile_OnDragTaskStopped(TaskPile inPile, TaskControl inTask)
+        private void Pile_OnDragTaskStopped(TaskControl inTask)
         {
-            mDraggedPile.Cursor = mDragPreviousCursor;
+            if (!mDraggingTask)
+                return;
+
+            Cursor = mDragPreviousCursor;
             mDraggedTask.ReleaseMouseCapture();
 
-            for (int i = 1; i < mDraggedPile.stackPanel.Children.Count; ++i)
-                (mDraggedPile.stackPanel.Children[i] as TaskControl).DragState = TaskControl.EDragState.NoDraggingActive;
+            for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
+            {
+                TaskPile pile = stackPanel.Children[j] as TaskPile;
+                for (int i = 1; i < pile.stackPanel.Children.Count; ++i)
+                    (pile.stackPanel.Children[i] as TaskControl).DragState = TaskControl.EDragState.NoDraggingActive;
+            }
 
             mDraggingTask = false;
         }
