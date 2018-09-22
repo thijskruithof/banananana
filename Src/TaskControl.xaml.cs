@@ -61,7 +61,7 @@ namespace Banananana
                         case EDragState.IsNotBeingDragged:
                             RenderTransform = Transform.Identity;
                             border.BorderBrush = null;
-                            border.Background = new SolidColorBrush(Color.FromArgb(255, 240, 240, 240));
+                            border.Background = new SolidColorBrush(Color.FromArgb(255, 230, 230, 230));
 
                             break;
                     }

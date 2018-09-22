@@ -20,10 +20,13 @@ namespace Banananana
     /// </summary>
     public partial class TaskPile : UserControl
     {
-        private bool mDraggingTask;
-        private TaskControl mDraggedTask;
-        private Point mDragStartMousePosition;
-        private Cursor mDragPreviousCursor;
+        public delegate void TaskDragHandler(TaskPile inPile, TaskControl inTask);
+        public delegate void TaskDragMoveHandler(TaskPile inPile, TaskControl inTask, Point inPosition);
+
+        public event TaskDragHandler OnDragTaskStarted;
+        public event TaskDragMoveHandler OnDragTaskMoved;
+        public event TaskDragHandler OnDragTaskStopped;
+
 
         public TaskPile()
         {
@@ -47,49 +50,19 @@ namespace Banananana
 
         private void TaskControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left && !mDraggingTask)
+            if (e.ChangedButton == MouseButton.Left)
             {
-                mDraggingTask = true;
-                mDraggedTask = sender as TaskControl;
-                mDragStartMousePosition = e.GetPosition(this);
-                mDraggedTask.CaptureMouse();
-                mDragPreviousCursor = Cursor;
-                Cursor = Cursors.Hand;
+                OnDragTaskStarted(this, sender as TaskControl);
 
-                for (int i = 1; i < stackPanel.Children.Count; ++i)
-                    (stackPanel.Children[i] as TaskControl).DragState = (stackPanel.Children[i] == mDraggedTask) ? TaskControl.EDragState.IsBeingDragged : TaskControl.EDragState.IsNotBeingDragged;
                 e.Handled = true;
             }
         }
 
         private void TaskControl_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed && mDraggingTask)
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
-                // Find out where to place our task
-                Point mouse_pos = e.GetPosition(this);
-
-                int preferred_index = stackPanel.Children.Count-1;
-
-                for (int i=2; i<stackPanel.Children.Count; ++i)
-                {
-                    Point control_top_left = stackPanel.Children[i].TransformToAncestor(this).Transform(new Point(0, 0));
-
-                    if (mouse_pos.Y < control_top_left.Y)
-                    {
-                        preferred_index = i - 1;
-                        break;
-                    }
-                }
-
-                int current_index = stackPanel.Children.IndexOf(mDraggedTask);
-
-                // Move dragged task to preferred spot
-                if (current_index != preferred_index)
-                {
-                    stackPanel.Children.RemoveAt(current_index);
-                    stackPanel.Children.Insert(preferred_index, mDraggedTask);
-                }
+                OnDragTaskMoved(this, sender as TaskControl, e.GetPosition(this));
 
                 e.Handled = true;
             }
@@ -97,15 +70,9 @@ namespace Banananana
 
         private void TaskControl_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left && mDraggingTask)
+            if (e.ChangedButton == MouseButton.Left )
             {
-                Cursor = mDragPreviousCursor;
-                mDraggedTask.ReleaseMouseCapture();
-
-                for (int i = 1; i < stackPanel.Children.Count; ++i)
-                    (stackPanel.Children[i] as TaskControl).DragState = TaskControl.EDragState.NoDraggingActive;
-
-                mDraggingTask = false;
+                OnDragTaskStopped(this, sender as TaskControl);
 
                 e.Handled = true;
             }
