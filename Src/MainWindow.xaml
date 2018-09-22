@@ -5,14 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Banananana"
         mc:Ignorable="d"
-        Title="MainWindow" Height="616.83" Width="843.696">
-    <Grid Margin="0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="400"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <StackPanel x:Name="StackPanel" Margin="0" Background="White" UseLayoutRounding="False">
-            <Button Content="Add" Height="33" Margin="265,0,0,0" Background="#FF71D33A" Foreground="#FF366E16" FontSize="16" BorderBrush="#FF225505" BorderThickness="0" FontWeight="Bold" Click="Button_Click"/>
-        </StackPanel>
-    </Grid>
+        Title="Banananana" Height="616.83" Width="843.696">
+    <Window.Background>
+        <ImageBrush ImageSource="Resources/bananas-close-up.jpg" Stretch="UniformToFill"/>
+    </Window.Background>
+    <StackPanel x:Name="stackPanel" Orientation="Horizontal">
+        <Border HorizontalAlignment="Right" Margin="8" VerticalAlignment="Top" Width="36" Background="#FFE8E8E8" CornerRadius="8" >
+            <Button x:Name="addPileButton" Content="+" BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" FontSize="28" VerticalContentAlignment="Top" RenderTransformOrigin="0.5,0.5" Padding="1,-4,1,1" Click="addTaskButton_Click" Height="34"/>
+        </Border>
+    </StackPanel>
 </Window>

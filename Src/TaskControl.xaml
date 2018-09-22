@@ -12,7 +12,7 @@
                 <RichTextBox x:Name="richTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFFB533" FontSize="18" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" TextChanged="richTextBox_TextChanged">
                     <FlowDocument>
                         <Paragraph>
-                            <Run Text="(Click to add)" Foreground="Black"/>
+                            <Run Foreground="Black" Text=""/>
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>

@@ -24,6 +24,8 @@ namespace Banananana
         {
             InitializeComponent();
 
+            //richTextBox.Focus();
+            //Keyboard.Focus(richTextBox);
             //richTextBox.Document.Blocks.Clear();
             //richTextBox.Document.Blocks.Add(new Paragraph(new Run("Text")));
         }

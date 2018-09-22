@@ -24,12 +24,17 @@ namespace Banananana
         public MainWindow()
         {
             InitializeComponent();
+
+            TaskPile pile = new TaskPile();
+            pile.VerticalAlignment = VerticalAlignment.Top;
+            this.stackPanel.Children.Insert(0, pile);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void addTaskButton_Click(object sender, RoutedEventArgs e)
         {
-            TaskControl task_control = new TaskControl();
-            this.StackPanel.Children.Insert(0, task_control);
+            TaskPile pile = new TaskPile();
+            pile.VerticalAlignment = VerticalAlignment.Top;
+            this.stackPanel.Children.Insert(this.stackPanel.Children.Count-1, pile);
         }
     }
 }
