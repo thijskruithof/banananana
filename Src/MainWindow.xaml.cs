@@ -56,7 +56,7 @@ namespace Banananana
         {
             mDraggedTask = inTask;
 
-            mDraggedTask.CaptureMouse();
+            //mDraggedTask.CaptureMouse();
             mDragPreviousCursor = Cursor;
             Cursor = Cursors.Hand;
 
@@ -145,7 +145,7 @@ namespace Banananana
                 return;
 
             Cursor = mDragPreviousCursor;
-            mDraggedTask.ReleaseMouseCapture();
+            //mDraggedTask.ReleaseMouseCapture();
 
             for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
             {

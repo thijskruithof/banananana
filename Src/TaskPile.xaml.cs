@@ -27,6 +27,9 @@ namespace Banananana
         public event TaskDragMoveHandler OnDragTaskMoved;
         public event TaskDragHandler OnDragTaskStopped;
 
+        private bool mDragging = false;
+        private TaskControl mClickedTask;
+        private Point mClickedPosition;
 
         public TaskPile()
         {
@@ -52,7 +55,9 @@ namespace Banananana
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                OnDragTaskStarted(sender as TaskControl);
+                mClickedTask = sender as TaskControl;
+                mClickedPosition = e.GetPosition(Parent as IInputElement);
+                mClickedTask.CaptureMouse();
 
                 e.Handled = true;
             }
@@ -62,7 +67,20 @@ namespace Banananana
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                OnDragTaskMoved(sender as TaskControl, e.GetPosition(this.Parent as IInputElement));
+                Point mouse_pos = e.GetPosition(this.Parent as IInputElement);
+                Point delta = new Point(mouse_pos.X - mClickedPosition.X, mouse_pos.Y - mClickedPosition.Y);
+                double mouse_move_dist = Math.Sqrt(delta.X * delta.X + delta.Y * delta.Y);
+
+                if (!mDragging && mouse_move_dist >= 1.0)
+                {
+                    OnDragTaskStarted(mClickedTask);
+
+                    mDragging = true;
+                }
+
+
+                if (mDragging)
+                    OnDragTaskMoved(sender as TaskControl, mouse_pos);
 
                 e.Handled = true;
             }
@@ -70,9 +88,11 @@ namespace Banananana
 
         private void TaskControl_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left )
+            if (e.ChangedButton == MouseButton.Left && mDragging)
             {
                 OnDragTaskStopped(sender as TaskControl);
+                mClickedTask.ReleaseMouseCapture();
+                mDragging = false;
 
                 e.Handled = true;
             }
