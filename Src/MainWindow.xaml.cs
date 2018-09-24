@@ -85,7 +85,7 @@ namespace Banananana
             for (int i = 1; i < stackPanel.Children.Count-1; ++i)
             {
                 TaskPile pile = stackPanel.Children[i] as TaskPile;
-                Point control_top_left = pile.stackPanel.Children[0].TransformToAncestor(this).Transform(new Point(0, 0));
+                Point control_top_left = pile.stackPanel.Children[0].TransformToAncestor(stackPanel).Transform(new Point(0, 0));
 
                 if (mouse_pos.X < control_top_left.X)
                 {
@@ -100,7 +100,7 @@ namespace Banananana
 
             for (int i = 2; i < preferred_tile.stackPanel.Children.Count; ++i)
             {
-                Point control_top_left = preferred_tile.stackPanel.Children[i].TransformToAncestor(this).Transform(new Point(0, 0));
+                Point control_top_left = preferred_tile.stackPanel.Children[i].TransformToAncestor(stackPanel).Transform(new Point(0, 0));
 
                 if (mouse_pos.Y < control_top_left.Y)
                 {
