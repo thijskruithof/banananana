@@ -78,29 +78,19 @@ namespace Banananana
             // Find out where to place our task
             Point mouse_pos = inPosition;
 
-            int preferred_tile_index = stackPanel.Children.Count - 2;
-            TaskPile preferred_tile = stackPanel.Children[preferred_tile_index] as TaskPile;
+            // Determine pile to place task in
+            double pile_width = (stackPanel.Children[0] as TaskPile).Width;
+            int num_piles = stackPanel.Children.Count - 1;
 
-            // Determine pile we're trying to move our task to
-            for (int i = 1; i < stackPanel.Children.Count-1; ++i)
-            {
-                TaskPile pile = stackPanel.Children[i] as TaskPile;
-                Point control_top_left = pile.stackPanel.Children[0].TransformToAncestor(stackPanel).Transform(new Point(0, 0));
-
-                if (mouse_pos.X < control_top_left.X)
-                {
-                    preferred_tile_index = i - 1;
-                    preferred_tile = stackPanel.Children[i-1] as TaskPile;
-                    break;
-                }
-            }
+            int preferred_pile_index = Math.Min((int)(mouse_pos.X / pile_width), num_piles-1);
+            TaskPile preferred_pile = stackPanel.Children[preferred_pile_index] as TaskPile;
 
             // Determine task index we're trying to move our task to
-            int preferred_task_index = preferred_tile.stackPanel.Children.Count - 1;
+            int preferred_task_index = preferred_pile.stackPanel.Children.Count - 1;
 
-            for (int i = 2; i < preferred_tile.stackPanel.Children.Count; ++i)
+            for (int i = 2; i < preferred_pile.stackPanel.Children.Count; ++i)
             {
-                Point control_top_left = preferred_tile.stackPanel.Children[i].TransformToAncestor(stackPanel).Transform(new Point(0, 0));
+                Point control_top_left = preferred_pile.stackPanel.Children[i].TransformToAncestor(stackPanel).Transform(new Point(0, 0));
 
                 if (mouse_pos.Y < control_top_left.Y)
                 {
@@ -125,10 +115,10 @@ namespace Banananana
             int current_task_index = current_pile.stackPanel.Children.IndexOf(mDraggedTask);
 
             // Move dragged task to a different pile?
-            if (current_pile_index != preferred_tile_index)
+            if (current_pile_index != preferred_pile_index)
             {
                 current_pile.stackPanel.Children.RemoveAt(current_task_index);
-                preferred_tile.stackPanel.Children.Insert(preferred_task_index, mDraggedTask);
+                preferred_pile.stackPanel.Children.Insert(preferred_task_index, mDraggedTask);
             }
             // Move dragged task to different spot in same pile?
             else if (current_task_index != preferred_task_index)
@@ -145,7 +135,6 @@ namespace Banananana
                 return;
 
             Cursor = mDragPreviousCursor;
-            //mDraggedTask.ReleaseMouseCapture();
 
             for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
             {
