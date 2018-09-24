@@ -10,7 +10,7 @@
         <Border Margin="8" Padding="0" Background="#D8ECECEC" Height="Auto">
             <StackPanel x:Name="stackPanel" Margin="0,8,0,0" Height="Auto" >
                 <Grid Height="32" Background="#FFFFCB19">
-                    <Label x:Name="label" Content="Title" Background="{x:Null}" FontSize="16" HorizontalAlignment="Center"/>
+                    <TextBox HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" Text="TextBox" Width="200" FontSize="16" HorizontalContentAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0"/>
                     <Button x:Name="addTaskButton" Content="+" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="39" BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" FontSize="24" VerticalContentAlignment="Top" RenderTransformOrigin="0.5,0.5" Padding="1,-4,1,1" Click="addTaskButton_Click"/>
                 </Grid>
             </StackPanel>
