@@ -31,15 +31,44 @@ namespace Banananana
         private TaskControl mClickedTask;
         private Point mClickedPosition;
 
+
+        public IEnumerable<TaskControl> Tasks
+        {
+            get
+            {
+                for (int i=1; i<stackPanel.Children.Count; ++i)
+                    yield return stackPanel.Children[i] as TaskControl;
+            }
+        }
+
         public TaskPile()
         {
             InitializeComponent();
         }
 
+
+        public void MoveTaskToPile(TaskControl inTask, TaskPile inDestinationPile, int inDestinationTaskIndex)
+        {
+            // Remove
+            int task_index = this.stackPanel.Children.IndexOf(inTask);
+            this.stackPanel.Children.RemoveAt(task_index);
+
+            // Add
+            inDestinationPile.stackPanel.Children.Insert(inDestinationTaskIndex, inTask);
+
+            // Set new parent pile
+            inTask.ParentPile = inDestinationPile;
+        }
+
+        public void DeleteTask(TaskControl inTask)
+        {
+            stackPanel.Children.Remove(inTask);
+        }
+
+
         private void addTaskButton_Click(object sender, RoutedEventArgs e)
         {
             TaskControl task_control = new TaskControl(this);
-            task_control.OnDelete += TaskControl_OnDelete;
             stackPanel.Children.Insert(1, task_control);
 
             //Keyboard.Focus(tc.richTextBox);
@@ -104,17 +133,5 @@ namespace Banananana
             parent_pile.stackPanel.Children.Remove(inTask);
         }
 
-        public void MoveTaskToPile(TaskControl inTask, TaskPile inDestinationPile, int inDestinationTaskIndex)
-        {
-            // Remove
-            int task_index = this.stackPanel.Children.IndexOf(inTask);
-            this.stackPanel.Children.RemoveAt(task_index);
-
-            // Add
-            inDestinationPile.stackPanel.Children.Insert(inDestinationTaskIndex, inTask);
-
-            // Set new parent pile
-            inTask.ParentPile = inDestinationPile;
-        }
     }
 }

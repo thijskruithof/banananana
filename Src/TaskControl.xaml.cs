@@ -22,8 +22,6 @@ namespace Banananana
     {
         public delegate void TaskControlHandler(TaskControl inTask);
 
-        public event TaskControlHandler OnDelete;
-
         static int mCounter = 0;
 
         public enum EDragState
@@ -96,7 +94,7 @@ namespace Banananana
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
-            OnDelete(this);
+            ParentPile.DeleteTask(this);
         }
 
         private void richTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)

@@ -64,8 +64,9 @@ namespace Banananana
             for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
             {
                 TaskPile pile = stackPanel.Children[j] as TaskPile;
-                for (int i = 1; i < pile.stackPanel.Children.Count; ++i)
-                    (pile.stackPanel.Children[i] as TaskControl).DragState = (pile.stackPanel.Children[i] == mDraggedTask) ? TaskControl.EDragState.IsBeingDragged : TaskControl.EDragState.IsNotBeingDragged;
+
+                foreach (TaskControl task in pile.Tasks)
+                    task.DragState = (task == mDraggedTask) ? TaskControl.EDragState.IsBeingDragged : TaskControl.EDragState.IsNotBeingDragged;
             }
 
             mDraggingTask = true;
@@ -80,7 +81,7 @@ namespace Banananana
             Point mouse_pos = inPosition;
 
             // Determine pile to place task in
-            double pile_width = (stackPanel.Children[0] as TaskPile).Width;
+            double pile_width = (stackPanel.Children[0] as TaskPile).Width; // Child 0 is always the header of the pile
             int num_piles = stackPanel.Children.Count - 1;
 
             int preferred_pile_index = Math.Min((int)(mouse_pos.X / pile_width), num_piles-1);
@@ -133,8 +134,9 @@ namespace Banananana
             for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
             {
                 TaskPile pile = stackPanel.Children[j] as TaskPile;
-                for (int i = 1; i < pile.stackPanel.Children.Count; ++i)
-                    (pile.stackPanel.Children[i] as TaskControl).DragState = TaskControl.EDragState.NoDraggingActive;
+
+                foreach (TaskControl task in pile.Tasks)
+                    task.DragState = TaskControl.EDragState.NoDraggingActive;
             }
 
             mDraggingTask = false;
