@@ -37,6 +37,11 @@ namespace Banananana
 
         private Brush mOriginalBackground;
 
+        public TaskPile ParentPile
+        {
+            get; set;
+        }
+
         public EDragState DragState
         {
             get { return mDragState; }
@@ -71,10 +76,11 @@ namespace Banananana
             }
         }
 
-        public TaskControl()
+        public TaskControl(TaskPile inPile)
         {
             InitializeComponent();
 
+            ParentPile = inPile;
             mOriginalBackground = border.Background;
 
             //richTextBox.Focus();

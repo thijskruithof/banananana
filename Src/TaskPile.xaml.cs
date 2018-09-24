@@ -38,7 +38,7 @@ namespace Banananana
 
         private void addTaskButton_Click(object sender, RoutedEventArgs e)
         {
-            TaskControl task_control = new TaskControl();
+            TaskControl task_control = new TaskControl(this);
             task_control.OnDelete += TaskControl_OnDelete;
             stackPanel.Children.Insert(1, task_control);
 
@@ -100,7 +100,21 @@ namespace Banananana
 
         private void TaskControl_OnDelete(TaskControl inTask)
         {
-            stackPanel.Children.Remove(inTask);
+            TaskPile parent_pile = inTask.ParentPile;
+            parent_pile.stackPanel.Children.Remove(inTask);
+        }
+
+        public void MoveTaskToPile(TaskControl inTask, TaskPile inDestinationPile, int inDestinationTaskIndex)
+        {
+            // Remove
+            int task_index = this.stackPanel.Children.IndexOf(inTask);
+            this.stackPanel.Children.RemoveAt(task_index);
+
+            // Add
+            inDestinationPile.stackPanel.Children.Insert(inDestinationTaskIndex, inTask);
+
+            // Set new parent pile
+            inTask.ParentPile = inDestinationPile;
         }
     }
 }

@@ -60,6 +60,7 @@ namespace Banananana
             mDragPreviousCursor = Cursor;
             Cursor = Cursors.Hand;
 
+            // Update dragging state of all tasks
             for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
             {
                 TaskPile pile = stackPanel.Children[j] as TaskPile;
@@ -114,17 +115,10 @@ namespace Banananana
 
             int current_task_index = current_pile.stackPanel.Children.IndexOf(mDraggedTask);
 
-            // Move dragged task to a different pile?
-            if (current_pile_index != preferred_pile_index)
+            // Move dragged task to a different pile? Or move dragged task to different spot in same pile?
+            if (current_pile_index != preferred_pile_index || current_task_index != preferred_task_index)
             {
-                current_pile.stackPanel.Children.RemoveAt(current_task_index);
-                preferred_pile.stackPanel.Children.Insert(preferred_task_index, mDraggedTask);
-            }
-            // Move dragged task to different spot in same pile?
-            else if (current_task_index != preferred_task_index)
-            {
-                current_pile.stackPanel.Children.RemoveAt(current_task_index);
-                current_pile.stackPanel.Children.Insert(preferred_task_index, mDraggedTask);
+                current_pile.MoveTaskToPile(mDraggedTask, preferred_pile, preferred_task_index);
             }
         }
 
