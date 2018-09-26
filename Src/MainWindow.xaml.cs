@@ -20,10 +20,10 @@ namespace Banananana
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        private bool mDraggingTask;
+        private bool mDragging;
         private TaskControl mDraggedTask;
-        private Cursor mDragPreviousCursor;
+        private TaskPile mDraggedPile;
+        private Cursor mDragPreviousCursor;        
 
 
         public MainWindow()
@@ -47,7 +47,58 @@ namespace Banananana
             pile.OnDragTaskMoved += Pile_OnDragTaskMoved;
             pile.OnDragTaskStopped += Pile_OnDragTaskStopped;
 
+            pile.OnDragPileStarted += Pile_OnDragPileStarted;
+            pile.OnDragPileMoved += Pile_OnDragPileMoved;
+            pile.OnDragPileStopped += Pile_OnDragPileStopped;
+
             stackPanel.Children.Insert(stackPanel.Children.Count-1, pile);
+        }
+
+
+
+
+        private void Pile_OnDragPileStarted(TaskPile inPile)
+        {
+            mDraggedPile = inPile;
+
+            mDragPreviousCursor = Cursor;
+            Cursor = Cursors.Hand;
+
+            mDragging = true;
+        }
+
+        private void Pile_OnDragPileMoved(TaskPile inPile, Point inPosition)
+        {
+            if (!mDragging)
+                return;
+
+            // Find out where to place our task
+            Point mouse_pos = inPosition;
+
+            // Determine pile to place task in
+            double pile_width = (stackPanel.Children[0] as TaskPile).Width; // Child 0 is always the header of the pile
+            int num_piles = stackPanel.Children.Count - 1;
+
+            int preferred_pile_index = Math.Min((int)(mouse_pos.X / pile_width), num_piles - 1);
+            int current_pile_index = stackPanel.Children.IndexOf(inPile);
+
+            // Move the pile to a different spot?
+            if (current_pile_index != preferred_pile_index)
+            {
+                stackPanel.Children.RemoveAt(current_pile_index);
+                stackPanel.Children.Insert(preferred_pile_index, inPile);
+            }
+        }
+
+        private void Pile_OnDragPileStopped(TaskPile inPile)
+        {
+            if (!mDragging)
+                return;
+
+            Cursor = mDragPreviousCursor;
+
+
+            mDragging = false;
         }
 
 
@@ -69,12 +120,12 @@ namespace Banananana
                     task.DragState = (task == mDraggedTask) ? TaskControl.EDragState.IsBeingDragged : TaskControl.EDragState.IsNotBeingDragged;
             }
 
-            mDraggingTask = true;
+            mDragging = true;
         }
 
         private void Pile_OnDragTaskMoved(TaskControl inTask, Point inPosition)
         {
-            if (!mDraggingTask)
+            if (!mDragging)
                 return;
 
             // Find out where to place our task
@@ -126,7 +177,7 @@ namespace Banananana
 
         private void Pile_OnDragTaskStopped(TaskControl inTask)
         {
-            if (!mDraggingTask)
+            if (!mDragging)
                 return;
 
             Cursor = mDragPreviousCursor;
@@ -139,7 +190,7 @@ namespace Banananana
                     task.DragState = TaskControl.EDragState.NoDraggingActive;
             }
 
-            mDraggingTask = false;
+            mDragging = false;
         }
     }
 }

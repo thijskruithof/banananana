@@ -23,12 +23,21 @@ namespace Banananana
         public delegate void TaskDragHandler(TaskControl inTask);
         public delegate void TaskDragMoveHandler(TaskControl inTask, Point inPosition);
 
+        public delegate void PileDragHandler(TaskPile inPile);
+        public delegate void PileDragMoveHandler(TaskPile inPile, Point inPosition);
+
+
         public event TaskDragHandler OnDragTaskStarted;
         public event TaskDragMoveHandler OnDragTaskMoved;
         public event TaskDragHandler OnDragTaskStopped;
 
+        public event PileDragHandler OnDragPileStarted;
+        public event PileDragMoveHandler OnDragPileMoved;
+        public event PileDragHandler OnDragPileStopped;
+
         private bool mDragging = false;
         private TaskControl mClickedTask;
+        private TaskPile mClickedPile;
         private Point mClickedPosition;
 
 
@@ -85,6 +94,7 @@ namespace Banananana
             if (e.ChangedButton == MouseButton.Left)
             {
                 mClickedTask = sender as TaskControl;
+                mClickedPile = null;
                 mClickedPosition = e.GetPosition(Parent as IInputElement);
                 mClickedTask.CaptureMouse();
 
@@ -131,6 +141,57 @@ namespace Banananana
         {
             TaskPile parent_pile = inTask.ParentPile;
             parent_pile.stackPanel.Children.Remove(inTask);
+        }
+
+
+
+        private void headerGrid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                mClickedTask = null;
+                mClickedPile = this;
+                mClickedPosition = e.GetPosition(Parent as IInputElement);
+                (sender as Grid).CaptureMouse();
+
+                e.Handled = true;
+            }
+        }
+
+
+        private void headerGrid_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                Point mouse_pos = e.GetPosition(this.Parent as IInputElement);
+                Point delta = new Point(mouse_pos.X - mClickedPosition.X, mouse_pos.Y - mClickedPosition.Y);
+                double mouse_move_dist = Math.Sqrt(delta.X * delta.X + delta.Y * delta.Y);
+
+                if (!mDragging && mouse_move_dist >= 1.0)
+                {
+                    OnDragPileStarted(mClickedPile);
+
+                    mDragging = true;
+                }
+
+
+                if (mDragging)
+                    OnDragPileMoved(this, mouse_pos);
+
+                e.Handled = true;
+            }
+        }
+
+        private void headerGrid_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left && mDragging)
+            {
+                OnDragPileStopped(this);
+                (sender as Grid).ReleaseMouseCapture();
+                mDragging = false;
+
+                e.Handled = true;
+            }
         }
 
     }
