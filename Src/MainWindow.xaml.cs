@@ -150,9 +150,9 @@ namespace Banananana
             TaskPile preferred_pile = stackPanel.Children[preferred_pile_index] as TaskPile;
 
             // Determine task index we're trying to move our task to
-            int preferred_task_index = preferred_pile.stackPanel.Children.Count - 1;
+            int preferred_task_index = preferred_pile.stackPanel.Children.Count - 2;
 
-            for (int i = 2; i < preferred_pile.stackPanel.Children.Count; ++i)
+            for (int i = 2; i < preferred_pile.stackPanel.Children.Count - 1; ++i)
             {
                 Point control_top_left = preferred_pile.stackPanel.Children[i].TransformToAncestor(stackPanel).Transform(new Point(0, 0));
 

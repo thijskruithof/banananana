@@ -55,7 +55,7 @@ namespace Banananana
         {
             get
             {
-                for (int i=1; i<stackPanel.Children.Count; ++i)
+                for (int i=1; i<stackPanel.Children.Count-1; ++i)
                     yield return stackPanel.Children[i] as TaskControl;
             }
         }
@@ -236,5 +236,14 @@ namespace Banananana
             }
         }
 
+        private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            //titleLabel.Visibility = Visibility.Hidden;
+            //titleTextBox.Visibility = Visibility.Visible;
+            //titleTextBox.Text = titleLabel.Content as string;
+            //titleTextBox.SelectAll();
+
+            //e.Handled = true;
+        }
     }
 }
