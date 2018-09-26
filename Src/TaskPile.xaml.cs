@@ -35,6 +35,16 @@ namespace Banananana
         public event PileDragMoveHandler OnDragPileMoved;
         public event PileDragHandler OnDragPileStopped;
 
+
+        public enum EDragState
+        {
+            NoDraggingActive,
+            IsBeingDragged,
+            IsNotBeingDragged
+        }
+
+        private EDragState mDragState = EDragState.NoDraggingActive;
+
         private bool mDragging = false;
         private TaskControl mClickedTask;
         private TaskPile mClickedPile;
@@ -49,6 +59,38 @@ namespace Banananana
                     yield return stackPanel.Children[i] as TaskControl;
             }
         }
+
+
+        public EDragState DragState
+        {
+            get { return mDragState; }
+
+            set
+            {
+                if (mDragState != value)
+                {
+                    switch (value)
+                    {
+                        case EDragState.NoDraggingActive:
+                            border.BorderBrush = null;
+                            border.Opacity = 1.0;
+                            break;
+                        case EDragState.IsBeingDragged:
+                            border.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 220, 0));
+                            border.Opacity = 1.0;
+                            break;
+                        case EDragState.IsNotBeingDragged:
+                            border.BorderBrush = null;
+                            border.Opacity = 0.5;
+                            break;
+                    }
+                }
+
+                mDragState = value;
+            }
+        }
+
+
 
         public TaskPile()
         {

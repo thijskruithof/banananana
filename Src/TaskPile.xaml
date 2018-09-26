@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Banananana"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="416" Width="316" MinHeight="75">
+             d:DesignHeight="200" d:DesignWidth="416" Width="324" MinHeight="75" BorderThickness="0">
     <Grid Height="Auto">
-        <Border Margin="8" Padding="0" Background="#D8ECECEC" Height="Auto">
+        <Border x:Name="border" Margin="8" Padding="0" Background="#D8ECECEC" Height="Auto" BorderThickness="4">
             <StackPanel x:Name="stackPanel" Margin="0,8,0,0" Height="Auto" >
                 <Grid x:Name="headerGrid" Height="32" Background="#FFFFCB19" MouseDown="headerGrid_MouseDown" MouseUp="headerGrid_MouseUp" MouseMove="headerGrid_MouseMove">
                     <Label Content="Label" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="200" Height="23" HorizontalContentAlignment="Center" FontSize="16" VerticalContentAlignment="Center" Padding="0"/>

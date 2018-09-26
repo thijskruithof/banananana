@@ -64,6 +64,13 @@ namespace Banananana
             mDragPreviousCursor = Cursor;
             Cursor = Cursors.Hand;
 
+            // Update dragging state of all piles
+            for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
+            {
+                TaskPile pile = stackPanel.Children[j] as TaskPile;
+                pile.DragState = (pile == mDraggedPile) ? TaskPile.EDragState.IsBeingDragged : TaskPile.EDragState.IsNotBeingDragged;
+            }
+
             mDragging = true;
         }
 
@@ -97,9 +104,13 @@ namespace Banananana
 
             Cursor = mDragPreviousCursor;
 
+            // Update dragging state of all piles
+            for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
+                (stackPanel.Children[j] as TaskPile).DragState = TaskPile.EDragState.NoDraggingActive;
 
             mDragging = false;
         }
+
 
 
 

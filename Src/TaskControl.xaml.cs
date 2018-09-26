@@ -53,19 +53,17 @@ namespace Banananana
                         case EDragState.NoDraggingActive:
                             RenderTransform = Transform.Identity;
                             border.BorderBrush = null;
-                            border.Background = mOriginalBackground;
+                            border.Opacity = 1.0;
                             break;
                         case EDragState.IsBeingDragged:
                             RenderTransform = new TranslateTransform(12.0, 0.0);
                             border.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 220, 0));
-                            border.Background = mOriginalBackground;
-
+                            border.Opacity = 1.0;
                             break;
                         case EDragState.IsNotBeingDragged:
                             RenderTransform = Transform.Identity;
                             border.BorderBrush = null;
-                            border.Background = new SolidColorBrush(Color.FromArgb(255, 230, 230, 230));
-
+                            border.Opacity = 0.5;
                             break;
                     }
                 }
