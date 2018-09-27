@@ -7,14 +7,19 @@
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="416" Width="324" MinHeight="75" BorderThickness="0">
     <Grid Height="Auto">
-        <Border x:Name="border" Margin="8" Padding="0" Background="#D8ECECEC" Height="Auto" BorderThickness="4">
+        <Border x:Name="border" Margin="8" Padding="0" Background="#D8ECECEC" Height="Auto" BorderThickness="4" CornerRadius="12">
             <StackPanel x:Name="stackPanel" Margin="0,8,0,0" Height="Auto" >
-                <Grid x:Name="headerGrid" Height="32" Background="#FFFFCB19" MouseDown="headerGrid_MouseDown" MouseUp="headerGrid_MouseUp" MouseMove="headerGrid_MouseMove">
-                    <Label x:Name="titleLabel" Content="Label" Margin="4" Width="286" Height="24" FontSize="16" Padding="0" MouseDoubleClick="Label_MouseDoubleClick"/>
-                    <TextBox x:Name="titleTextBox" HorizontalAlignment="Center" Height="23" Margin="0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center" Width="120" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" Visibility="Hidden"/>
+                <Grid x:Name="headerGrid" Height="Auto" Background="#FFFFCB19" MouseDown="headerGrid_MouseDown" MouseUp="headerGrid_MouseUp" MouseMove="headerGrid_MouseMove" Margin="0,2,0,0">
+                    <Grid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem x:Name="editTitleMenuItem" Header="Edit..." Click="editTitleMenuItem_Click"/>
+                        </ContextMenu>
+                    </Grid.ContextMenu>
+                    <Label x:Name="titleLabel" Content="Label" Margin="4" FontSize="16" Padding="0" MouseDoubleClick="Label_MouseDoubleClick" Height="Auto"/>
+                    <TextBox x:Name="titleTextBox" Margin="4" TextWrapping="Wrap" Text="TextBox" FontSize="16" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" Visibility="Hidden" LostKeyboardFocus="titleTextBox_LostKeyboardFocus" AcceptsReturn="True" Height="Auto"/>
                 </Grid>
                 <Border BorderThickness="0" Height="40">
-                    <Button x:Name="addTaskButton" Content="+" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="39" BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" FontSize="24" VerticalContentAlignment="Top" RenderTransformOrigin="0.5,0.5" Padding="1,-4,1,1" Click="addTaskButton_Click"/>
+                    <Button x:Name="addTaskButton" Content="+" Margin="4,0" VerticalAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" FontSize="24" VerticalContentAlignment="Top" RenderTransformOrigin="0.5,0.5" Padding="1,-4,1,1" Click="addTaskButton_Click" HorizontalContentAlignment="Center"/>
                 </Border>
             </StackPanel>
 

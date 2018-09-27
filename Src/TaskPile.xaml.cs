@@ -45,7 +45,8 @@ namespace Banananana
 
         private EDragState mDragState = EDragState.NoDraggingActive;
 
-        private bool mDragging = false;
+        private bool mRequestDragging = false;
+        private bool mIsDragging = false;
         private TaskControl mClickedTask;
         private TaskPile mClickedPile;
         private Point mClickedPosition;
@@ -138,7 +139,8 @@ namespace Banananana
                 mClickedTask = sender as TaskControl;
                 mClickedPile = null;
                 mClickedPosition = e.GetPosition(Parent as IInputElement);
-                mClickedTask.CaptureMouse();
+                mRequestDragging = true;
+                mClickedTask.CaptureMouse();                
 
                 e.Handled = true;
             }
@@ -152,15 +154,16 @@ namespace Banananana
                 Point delta = new Point(mouse_pos.X - mClickedPosition.X, mouse_pos.Y - mClickedPosition.Y);
                 double mouse_move_dist = Math.Sqrt(delta.X * delta.X + delta.Y * delta.Y);
 
-                if (!mDragging && mouse_move_dist >= 1.0)
+                if (mRequestDragging && !mIsDragging && mouse_move_dist >= 1.0)
                 {
                     OnDragTaskStarted(mClickedTask);
 
-                    mDragging = true;
+                    mIsDragging = true;
+                    mRequestDragging = false;
                 }
 
 
-                if (mDragging)
+                if (mIsDragging)
                     OnDragTaskMoved(sender as TaskControl, mouse_pos);
 
                 e.Handled = true;
@@ -169,11 +172,12 @@ namespace Banananana
 
         private void TaskControl_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left && mDragging)
+            if (e.ChangedButton == MouseButton.Left && mIsDragging)
             {
                 OnDragTaskStopped(sender as TaskControl);
                 mClickedTask.ReleaseMouseCapture();
-                mDragging = false;
+                mIsDragging = false;
+                mRequestDragging = false;
 
                 e.Handled = true;
             }
@@ -189,12 +193,16 @@ namespace Banananana
 
         private void headerGrid_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            //return;
+
             if (e.ChangedButton == MouseButton.Left)
             {
                 mClickedTask = null;
                 mClickedPile = this;
                 mClickedPosition = e.GetPosition(Parent as IInputElement);
+                mRequestDragging = true;
                 (sender as Grid).CaptureMouse();
+                
 
                 e.Handled = true;
             }
@@ -203,21 +211,23 @@ namespace Banananana
 
         private void headerGrid_MouseMove(object sender, MouseEventArgs e)
         {
+            //return;
+
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 Point mouse_pos = e.GetPosition(this.Parent as IInputElement);
                 Point delta = new Point(mouse_pos.X - mClickedPosition.X, mouse_pos.Y - mClickedPosition.Y);
                 double mouse_move_dist = Math.Sqrt(delta.X * delta.X + delta.Y * delta.Y);
 
-                if (!mDragging && mouse_move_dist >= 1.0)
+                if (mRequestDragging && !mIsDragging && mouse_move_dist >= 1.0)
                 {
                     OnDragPileStarted(mClickedPile);
 
-                    mDragging = true;
+                    mIsDragging = true;
+                    mRequestDragging = false;
                 }
 
-
-                if (mDragging)
+                if (mIsDragging)
                     OnDragPileMoved(this, mouse_pos);
 
                 e.Handled = true;
@@ -226,24 +236,60 @@ namespace Banananana
 
         private void headerGrid_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left && mDragging)
+            //return;
+
+            if (e.ChangedButton == MouseButton.Left)
             {
-                OnDragPileStopped(this);
+                if (mIsDragging)
+                    OnDragPileStopped(this);
+
                 (sender as Grid).ReleaseMouseCapture();
-                mDragging = false;
+                mIsDragging = false;
+                mRequestDragging = false;
 
                 e.Handled = true;
             }
         }
 
+
+        private void SetTitleEditEnabled(bool inEnabled)
+        {
+            if (inEnabled)
+            {
+                titleLabel.Visibility = Visibility.Hidden;
+                titleTextBox.Visibility = Visibility.Visible;
+                titleTextBox.Text = titleLabel.Content as string;
+                titleTextBox.Select(titleTextBox.Text.Length, 0);
+                titleTextBox.Focus();
+
+                // Cancel any dragging requests that we might have triggered by clicking
+                mRequestDragging = false;
+            }
+            else
+            {
+                titleLabel.Content = titleTextBox.Text;
+                titleLabel.Visibility = Visibility.Visible;
+                titleTextBox.Visibility = Visibility.Hidden;
+            }            
+        }
+
+
         private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            //titleLabel.Visibility = Visibility.Hidden;
-            //titleTextBox.Visibility = Visibility.Visible;
-            //titleTextBox.Text = titleLabel.Content as string;
-            //titleTextBox.SelectAll();
+            SetTitleEditEnabled(true);
+            e.Handled = true;
+        }
 
-            //e.Handled = true;
+        private void editTitleMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SetTitleEditEnabled(true);
+            e.Handled = true;
+        }
+
+        private void titleTextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            SetTitleEditEnabled(false);
+            e.Handled = true;
         }
     }
 }
