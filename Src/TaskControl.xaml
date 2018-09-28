@@ -8,15 +8,14 @@
              d:DesignHeight="450" d:DesignWidth="300" Width="300" MouseDoubleClick="UserControl_MouseDoubleClick">
     <Border x:Name="border" Height="Auto" Margin="4" Background="White" CornerRadius="8" BorderThickness="4" VerticalAlignment="Top" >
         <Border BorderThickness="8" Height="Auto">
-            <StackPanel Height="Auto" Orientation="Vertical">
-                <Grid Height="24">
-                    <StackPanel Orientation="Horizontal" Width="270" Margin="51,0"/>
-                    <Button x:Name="deleteButton" Content="❌" Margin="0" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="16" Padding="1,-5,1,1" Foreground="#FF919191" Click="deleteButton_Click"/>
-                </Grid>
-                <Rectangle Fill="#FFD4D4D4" Height="2" Margin="0,0,0,8"/>
-                <RichTextBox x:Name="richTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFFC500" FontSize="18" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" TextChanged="richTextBox_TextChanged" SelectionOpacity="0.7" MouseDoubleClick="richTextBox_MouseDoubleClick" LostKeyboardFocus="richTextBox_LostKeyboardFocus" IsEnabled="False">
+            <StackPanel Height="Auto" Orientation="Horizontal">
+                <RichTextBox x:Name="richTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFFC500" FontSize="18" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" TextChanged="richTextBox_TextChanged" SelectionOpacity="0.7" MouseDoubleClick="richTextBox_MouseDoubleClick" LostKeyboardFocus="richTextBox_LostKeyboardFocus" IsEnabled="False" Width="242">
                     <FlowDocument/>
                 </RichTextBox>
+                <Rectangle Fill="#FFD4D4D4" Margin="0" Width="2"/>
+                <Grid Height="24" HorizontalAlignment="Right" Margin="0">
+                    <Button x:Name="deleteButton" Content="❌" Margin="0" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="16" Padding="1,-5,1,1" Foreground="#FF919191" Click="deleteButton_Click"/>
+                </Grid>
 
             </StackPanel>
 

@@ -95,9 +95,21 @@ namespace Banananana
             ParentPile.DeleteTask(this);
         }
 
+        private void SetTextEditEnabled(bool inEnabled)
+        {
+            if (inEnabled)
+            {
+                richTextBox.IsEnabled = true;
+                richTextBox.Focus();
+            }
+            else
+            {
+            }
+        }
+
         private void richTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            
+            SetTextEditEnabled(true);
         }
 
         private void UserControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
