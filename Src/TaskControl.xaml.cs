@@ -79,49 +79,13 @@ namespace Banananana
             ParentPile = inPile;
             mOriginalBackground = border.Background;
 
-            //richTextBox.Focus();
-            //Keyboard.Focus(richTextBox);
             richTextBox.Document.Blocks.Clear();
             richTextBox.Document.Blocks.Add(new Paragraph(new Run(String.Format("Task {0}", mCounter++))));
-        }
-
-        private void richTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
             ParentPile.DeleteTask(this);
-        }
-
-        private void SetTextEditEnabled(bool inEnabled)
-        {
-            if (inEnabled)
-            {
-                richTextBox.IsEnabled = true;
-                richTextBox.Focus();
-            }
-            else
-            {
-            }
-        }
-
-        private void UserControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            //richTextBox.IsEnabled = true;
-            //Keyboard.Focus(richTextBox);
-            //richTextBox.SelectAll();
-        }
-
-        private void richTextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            //richTextBox.IsEnabled = false;
-        }
-
-        private void editTextMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            SetTextEditEnabled(true);
         }
     }
 }

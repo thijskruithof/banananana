@@ -123,10 +123,6 @@ namespace Banananana
             TaskControl task_control = new TaskControl(this);
             stackPanel.Children.Insert(1, task_control);
 
-            //Keyboard.Focus(tc.richTextBox);
-            task_control.richTextBox.Focus();
-            //Keyboard.Focus(tc.richTextBox);
-
             task_control.MouseDown += TaskControl_MouseDown;
             task_control.MouseUp += TaskControl_MouseUp;
             task_control.MouseMove += TaskControl_MouseMove;
@@ -193,8 +189,6 @@ namespace Banananana
 
         private void headerGrid_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //return;
-
             if (e.ChangedButton == MouseButton.Left)
             {
                 mClickedTask = null;
@@ -211,8 +205,6 @@ namespace Banananana
 
         private void headerGrid_MouseMove(object sender, MouseEventArgs e)
         {
-            //return;
-
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 Point mouse_pos = e.GetPosition(this.Parent as IInputElement);
@@ -236,8 +228,6 @@ namespace Banananana
 
         private void headerGrid_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            //return;
-
             if (e.ChangedButton == MouseButton.Left)
             {
                 if (mIsDragging)
@@ -249,47 +239,6 @@ namespace Banananana
 
                 e.Handled = true;
             }
-        }
-
-
-        //private void SetTitleEditEnabled(bool inEnabled)
-        //{
-        //    if (inEnabled)
-        //    {
-        //        titleLabel.Visibility = Visibility.Hidden;
-        //        titleTextBox.Visibility = Visibility.Visible;
-        //        titleTextBox.Text = titleLabel.Content as string;
-        //        titleTextBox.Select(titleTextBox.Text.Length, 0);
-        //        titleTextBox.Focus();
-
-        //        // Cancel any dragging requests that we might have triggered by clicking
-        //        mRequestDragging = false;
-        //    }
-        //    else
-        //    {
-        //        titleLabel.Content = titleTextBox.Text;
-        //        titleLabel.Visibility = Visibility.Visible;
-        //        titleTextBox.Visibility = Visibility.Hidden;
-        //    }            
-        //}
-
-
-        private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            //SetTitleEditEnabled(true);
-            e.Handled = true;
-        }
-
-        private void editTitleMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            //SetTitleEditEnabled(true);
-            e.Handled = true;
-        }
-
-        private void titleTextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            //SetTitleEditEnabled(false);
-            e.Handled = true;
         }
     }
 }
