@@ -5,11 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Banananana"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="300" Width="300" MouseDoubleClick="UserControl_MouseDoubleClick">
+             d:DesignHeight="450" d:DesignWidth="300" Width="300" MouseDoubleClick="UserControl_MouseDoubleClick" Focusable="True">
     <Border x:Name="border" Height="Auto" Margin="4" Background="White" CornerRadius="8" BorderThickness="4" VerticalAlignment="Top" >
         <Border BorderThickness="8" Height="Auto">
             <StackPanel Height="Auto" Orientation="Horizontal">
-                <RichTextBox x:Name="richTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFFC500" FontSize="18" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" TextChanged="richTextBox_TextChanged" SelectionOpacity="0.7" MouseDoubleClick="richTextBox_MouseDoubleClick" LostKeyboardFocus="richTextBox_LostKeyboardFocus" IsEnabled="False" Width="242">
+                <RichTextBox x:Name="richTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" FontSize="18" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" TextChanged="richTextBox_TextChanged" SelectionOpacity="0.7" LostKeyboardFocus="richTextBox_LostKeyboardFocus" Width="242">
+                    <RichTextBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem x:Name="editTitleMenuItem" Header="Edit..." Click="editTextMenuItem_Click"/>
+                        </ContextMenu>
+                    </RichTextBox.ContextMenu>
                     <FlowDocument/>
                 </RichTextBox>
                 <Rectangle Fill="#FFD4D4D4" Margin="0" Width="2"/>

@@ -15,8 +15,9 @@
                             <MenuItem x:Name="editTitleMenuItem" Header="Edit..." Click="editTitleMenuItem_Click"/>
                         </ContextMenu>
                     </Grid.ContextMenu>
-                    <Label x:Name="titleLabel" Content="Label" Margin="4" FontSize="16" Padding="0" MouseDoubleClick="Label_MouseDoubleClick" Height="Auto"/>
-                    <TextBox x:Name="titleTextBox" Margin="4" TextWrapping="Wrap" Text="TextBox" FontSize="16" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" Visibility="Hidden" LostKeyboardFocus="titleTextBox_LostKeyboardFocus" AcceptsReturn="True" Height="Auto"/>
+                    <RichTextBox x:Name="titleTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" FontSize="18" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" SelectionOpacity="0.7" Margin="4,4,58,4" VerticalAlignment="Bottom">
+                        <FlowDocument/>
+                    </RichTextBox>
                 </Grid>
                 <Border BorderThickness="0" Height="40">
                     <Button x:Name="addTaskButton" Content="+" Margin="4,0" VerticalAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" FontSize="24" VerticalContentAlignment="Top" RenderTransformOrigin="0.5,0.5" Padding="1,-4,1,1" Click="addTaskButton_Click" HorizontalContentAlignment="Center"/>

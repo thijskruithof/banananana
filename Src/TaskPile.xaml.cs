@@ -252,43 +252,43 @@ namespace Banananana
         }
 
 
-        private void SetTitleEditEnabled(bool inEnabled)
-        {
-            if (inEnabled)
-            {
-                titleLabel.Visibility = Visibility.Hidden;
-                titleTextBox.Visibility = Visibility.Visible;
-                titleTextBox.Text = titleLabel.Content as string;
-                titleTextBox.Select(titleTextBox.Text.Length, 0);
-                titleTextBox.Focus();
+        //private void SetTitleEditEnabled(bool inEnabled)
+        //{
+        //    if (inEnabled)
+        //    {
+        //        titleLabel.Visibility = Visibility.Hidden;
+        //        titleTextBox.Visibility = Visibility.Visible;
+        //        titleTextBox.Text = titleLabel.Content as string;
+        //        titleTextBox.Select(titleTextBox.Text.Length, 0);
+        //        titleTextBox.Focus();
 
-                // Cancel any dragging requests that we might have triggered by clicking
-                mRequestDragging = false;
-            }
-            else
-            {
-                titleLabel.Content = titleTextBox.Text;
-                titleLabel.Visibility = Visibility.Visible;
-                titleTextBox.Visibility = Visibility.Hidden;
-            }            
-        }
+        //        // Cancel any dragging requests that we might have triggered by clicking
+        //        mRequestDragging = false;
+        //    }
+        //    else
+        //    {
+        //        titleLabel.Content = titleTextBox.Text;
+        //        titleLabel.Visibility = Visibility.Visible;
+        //        titleTextBox.Visibility = Visibility.Hidden;
+        //    }            
+        //}
 
 
         private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            SetTitleEditEnabled(true);
+            //SetTitleEditEnabled(true);
             e.Handled = true;
         }
 
         private void editTitleMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            SetTitleEditEnabled(true);
+            //SetTitleEditEnabled(true);
             e.Handled = true;
         }
 
         private void titleTextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            SetTitleEditEnabled(false);
+            //SetTitleEditEnabled(false);
             e.Handled = true;
         }
     }

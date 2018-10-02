@@ -107,11 +107,6 @@ namespace Banananana
             }
         }
 
-        private void richTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            SetTextEditEnabled(true);
-        }
-
         private void UserControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             //richTextBox.IsEnabled = true;
@@ -122,6 +117,11 @@ namespace Banananana
         private void richTextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             //richTextBox.IsEnabled = false;
+        }
+
+        private void editTextMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SetTextEditEnabled(true);
         }
     }
 }
