@@ -195,7 +195,7 @@ namespace Banananana
                 mClickedPile = this;
                 mClickedPosition = e.GetPosition(Parent as IInputElement);
                 mRequestDragging = true;
-                (sender as Grid).CaptureMouse();
+                (sender as Border).CaptureMouse();
                 
 
                 e.Handled = true;
@@ -233,7 +233,7 @@ namespace Banananana
                 if (mIsDragging)
                     OnDragPileStopped(this);
 
-                (sender as Grid).ReleaseMouseCapture();
+                (sender as Border).ReleaseMouseCapture();
                 mIsDragging = false;
                 mRequestDragging = false;
 

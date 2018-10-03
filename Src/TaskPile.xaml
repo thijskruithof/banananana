@@ -7,9 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="416" Width="324" MinHeight="75" BorderThickness="0">
     <Grid Height="Auto">
-        <Border x:Name="border" Margin="8" Padding="0" Background="#D8ECECEC" Height="Auto" BorderThickness="4" CornerRadius="12">
+        <Border x:Name="border" Margin="8" Padding="0" Background="#D8ECECEC" Height="Auto" BorderThickness="4" CornerRadius="12" MouseDown="headerGrid_MouseDown" MouseUp="headerGrid_MouseUp" MouseMove="headerGrid_MouseMove">
             <StackPanel x:Name="stackPanel" Margin="0,8,0,0" Height="Auto" >
-                <Grid x:Name="headerGrid" Height="Auto" Background="#FFFFCB19" MouseDown="headerGrid_MouseDown" MouseUp="headerGrid_MouseUp" MouseMove="headerGrid_MouseMove" Margin="0,2,0,0">
+                <Grid x:Name="headerGrid" Height="Auto" Background="#FFFFCB19" Margin="0,2,0,0">
                     <RichTextBox x:Name="titleTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" FontSize="18" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" SelectionOpacity="0.7" Margin="4,4,58,4" VerticalAlignment="Bottom">
                         <FlowDocument/>
                     </RichTextBox>
