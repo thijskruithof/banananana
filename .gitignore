@@ -4,3 +4,4 @@ Src/\.vs/Banananana/v14/\.suo
 Src/bin/
 Src/obj/
 /Src/.vs/Banananana/v15
+/Src/packages/Newtonsoft.Json.11.0.2
