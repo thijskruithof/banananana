@@ -57,14 +57,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Data\Task.cs" />
-    <Compile Include="Data\TaskPile.cs" />
     <Compile Include="TaskControl.xaml.cs">
       <DependentUpon>TaskControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="TaskPile.xaml.cs">
       <DependentUpon>TaskPile.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WorkspaceData.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

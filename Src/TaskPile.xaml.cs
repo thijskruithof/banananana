@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -115,6 +116,17 @@ namespace Banananana
         public void DeleteTask(TaskControl inTask)
         {
             stackPanel.Children.Remove(inTask);
+        }
+
+        public WorkspaceData.Pile GetWorkspacePileData()
+        {
+            WorkspaceData.Pile data = new WorkspaceData.Pile();
+            data.Title = WorkspaceData.GetFlowDocumentContentsAsXML(titleTextBox.Document);
+
+            foreach (TaskControl task in Tasks)
+                data.Tasks.Add(task.GetWorkspaceTaskData());
+
+            return data;
         }
 
 

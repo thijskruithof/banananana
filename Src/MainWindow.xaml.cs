@@ -203,5 +203,42 @@ namespace Banananana
 
             mDragging = false;
         }
+
+
+        private String GetWorkspaceFilename()
+        {
+            return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Banananana\\workspace.json";
+        }
+
+
+        private WorkspaceData GetWorkspaceData()
+        {
+            WorkspaceData data = new WorkspaceData();
+
+            for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
+            {
+                TaskPile pile = stackPanel.Children[j] as TaskPile;
+
+                WorkspaceData.Pile pile_data = pile.GetWorkspacePileData();
+                data.Piles.Add(pile_data);
+            }
+
+            return data;
+        }
+
+
+        private void Save()
+        {
+            String filename = GetWorkspaceFilename();
+
+            WorkspaceData data = GetWorkspaceData();
+
+            data.SafeToFile(filename);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Save();
+        }
     }
 }

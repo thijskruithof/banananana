@@ -83,6 +83,14 @@ namespace Banananana
             richTextBox.Document.Blocks.Add(new Paragraph(new Run(String.Format("Task {0}", mCounter++))));
         }
 
+        public WorkspaceData.Task GetWorkspaceTaskData()
+        {
+            WorkspaceData.Task data = new WorkspaceData.Task();
+            data.Text = WorkspaceData.GetFlowDocumentContentsAsXML(richTextBox.Document);
+
+            return data;
+        }
+
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
             ParentPile.DeleteTask(this);
