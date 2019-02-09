@@ -31,7 +31,6 @@ namespace Banananana
             InitializeComponent();
 
             Load();
-            //AddPile();
         }
 
 
@@ -165,7 +164,7 @@ namespace Banananana
             // Determine task index we're trying to move our task to
             int preferred_task_index = preferred_pile.stackPanel.Children.Count - 2;
 
-            for (int i = 2; i < preferred_pile.stackPanel.Children.Count - 1; ++i)
+            for (int i = 3; i < preferred_pile.stackPanel.Children.Count; ++i)
             {
                 Point control_top_left = preferred_pile.stackPanel.Children[i].TransformToAncestor(stackPanel).Transform(new Point(0, 0));
 
@@ -176,6 +175,7 @@ namespace Banananana
                 }
             }
 
+            // Determine from which pile we're dragging
             int current_pile_index = -1;
             PileControl current_pile = null;
             for (int j = 0; j < stackPanel.Children.Count - 1; ++j)

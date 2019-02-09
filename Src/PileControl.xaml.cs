@@ -61,7 +61,8 @@ namespace Banananana
         {
             get
             {
-                for (int i=1; i<stackPanel.Children.Count-1; ++i)
+                // The first two children are fixed (header and add button)
+                for (int i=2; i<stackPanel.Children.Count; ++i)
                     yield return stackPanel.Children[i] as TaskControl;
             }
         }
@@ -148,7 +149,7 @@ namespace Banananana
         private TaskControl AddNewTask()
         {
             TaskControl task_control = new TaskControl(this);
-            stackPanel.Children.Insert(1, task_control);
+            stackPanel.Children.Insert(2, task_control);
 
             task_control.MouseDown += TaskControl_MouseDown;
             task_control.MouseUp += TaskControl_MouseUp;
@@ -282,6 +283,21 @@ namespace Banananana
                 return;
 
             ParentWindow.DeletePileControl(this);
+        }
+
+        private void AddTaskRect_MouseEnter(object sender, MouseEventArgs e)
+        {
+            addTaskRect.Opacity = 1.0;
+        }
+
+        private void AddTaskRect_MouseLeave(object sender, MouseEventArgs e)
+        {
+            addTaskRect.Opacity = 0.25;
+        }
+
+        private void AddTaskRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            AddNewTask();
         }
     }
 }
