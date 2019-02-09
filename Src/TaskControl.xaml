@@ -9,16 +9,21 @@
     <Border x:Name="border" Height="Auto" Margin="4,0" Background="White" CornerRadius="8" BorderThickness="4" VerticalAlignment="Top" >
         <Border BorderThickness="8" Height="Auto">
             <StackPanel Height="Auto" Orientation="Horizontal">
-                <RichTextBox x:Name="richTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" FontSize="18" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" SelectionOpacity="0.7" Width="278">
-                    <FlowDocument>
-                        <Paragraph/>
-                    </FlowDocument>
-                </RichTextBox>
+                <StackPanel Orientation="Vertical" Width="278">
+                    <RichTextBox x:Name="richTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" FontSize="18" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" SelectionOpacity="0.7">
+                        <FlowDocument>
+                            <Paragraph/>
+                        </FlowDocument>
+                    </RichTextBox>
+                    <StackPanel x:Name="linksStackPanel" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0"/>
+                </StackPanel>
                 <Rectangle Fill="#FFD4D4D4" Margin="0" Width="2"/>
                 <StackPanel Height="24" HorizontalAlignment="Right" Margin="0" Orientation="Horizontal">
                     <Label x:Name="optionsButton" Content="▼" Margin="5,0,5,3" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="14" Padding="1,-5,1,1" Foreground="#FF919191" RenderTransformOrigin="0.531,0.504" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="OptionsButton_MouseLeftButtonDown">
                         <Label.ContextMenu>
                             <ContextMenu>
+                                <MenuItem x:Name="addExternalLinkMenuItem" Header="Add external link..." Click="AddExternalLinkMenuItem_Click"/>
+                                <Separator/>
                                 <MenuItem x:Name="deleteTaskMenuItem" Header="Delete..." Click="DeleteTaskMenuItem_Click"/>
                             </ContextMenu>
                         </Label.ContextMenu>

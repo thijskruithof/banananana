@@ -72,6 +72,16 @@ namespace Banananana
             }
         }
 
+        public IEnumerable<ExternalLinkControl> ExternalLinkControls
+        {
+            get
+            {
+                // The first two children are fixed (header and add button)
+                for (int i = 0; i < linksStackPanel.Children.Count; ++i)
+                    yield return linksStackPanel.Children[i] as ExternalLinkControl;
+            }
+        }
+
         public TaskControl(PileControl inPile)
         {
             InitializeComponent();
@@ -88,12 +98,21 @@ namespace Banananana
             WorkspaceData.Task data = new WorkspaceData.Task();
             data.Text = WorkspaceData.GetFlowDocumentContentAsXML(richTextBox.Document);
 
+            foreach (ExternalLinkControl link in ExternalLinkControls)
+                data.ExternalLinks.Add(link.GetWorkspaceLinkData());
+
             return data;
         }
 
         public void SetWorkspaceTaskData(WorkspaceData.Task inData)
         {
             WorkspaceData.SetFlowDocumentContentFromXML(richTextBox.Document, inData.Text);
+
+            foreach (WorkspaceData.ExternalLink link_data in inData.ExternalLinks)
+            {
+                ExternalLinkControl link = AddNewExternalLinkControl();
+                link.SetWorkspaceLinkData(link_data);
+            }
         }
 
         private void OptionsButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -109,6 +128,21 @@ namespace Banananana
                 return;
 
             ParentPile.DeleteTaskControl(this);
+        }
+
+        private ExternalLinkControl AddNewExternalLinkControl()
+        {
+            ExternalLinkControl control = new ExternalLinkControl();
+            linksStackPanel.Children.Add(control);
+
+            control.Target = "http://www.google.com";
+
+            return control;
+        }
+
+        private void AddExternalLinkMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ExternalLinkControl new_link = AddNewExternalLinkControl();
         }
     }
 }

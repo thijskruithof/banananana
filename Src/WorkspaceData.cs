@@ -13,10 +13,24 @@ namespace Banananana
 {
     public class WorkspaceData
     {
+        public class ExternalLink
+        {
+            [JsonProperty]
+            public String Target { get; set; }
+        }
+
         public class Task
         {
             [JsonProperty]
             public String Text { get; set; }
+
+            [JsonProperty]
+            public List<ExternalLink> ExternalLinks { get; set; }
+
+            public Task()
+            {
+                ExternalLinks = new List<ExternalLink>();
+            }
         }
 
         public class Pile
