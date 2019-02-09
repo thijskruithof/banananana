@@ -52,7 +52,7 @@ namespace Banananana
 
         private PileControl AddNewPileControl()
         {
-            PileControl pile = new PileControl();
+            PileControl pile = new PileControl(this);
             pile.VerticalAlignment = VerticalAlignment.Top;
 
             pile.OnDragTaskStarted += Pile_OnDragTaskStarted;
@@ -68,6 +68,11 @@ namespace Banananana
             return pile;
         }
 
+
+        public void DeletePileControl(PileControl inPile)
+        {
+            stackPanel.Children.Remove(inPile);
+        }
 
 
 

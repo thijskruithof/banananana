@@ -52,6 +52,10 @@ namespace Banananana
         private PileControl mClickedPile;
         private Point mClickedPosition;
 
+        public MainWindow ParentWindow
+        {
+            get; set;
+        }
 
         public IEnumerable<TaskControl> TaskControls
         {
@@ -94,9 +98,10 @@ namespace Banananana
 
 
 
-        public PileControl()
+        public PileControl(MainWindow inParentWindow)
         {
             InitializeComponent();
+            ParentWindow = inParentWindow;
         }
 
 
@@ -113,7 +118,7 @@ namespace Banananana
             inTask.ParentPile = inDestinationPile;
         }
 
-        public void DeleteTask(TaskControl inTask)
+        public void DeleteTaskControl(TaskControl inTask)
         {
             stackPanel.Children.Remove(inTask);
         }
@@ -269,6 +274,14 @@ namespace Banananana
 
                 e.Handled = true;
             }
+        }
+
+        private void deleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want delete this pile with all the tasks in it?", "Delete pile?", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                return;
+
+            ParentWindow.DeletePileControl(this);
         }
     }
 }

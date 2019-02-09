@@ -98,7 +98,7 @@ namespace Banananana
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
-            ParentPile.DeleteTask(this);
+            ParentPile.DeleteTaskControl(this);
         }
     }
 }
