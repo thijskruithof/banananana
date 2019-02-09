@@ -60,8 +60,8 @@
     <Compile Include="TaskControl.xaml.cs">
       <DependentUpon>TaskControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TaskPile.xaml.cs">
-      <DependentUpon>TaskPile.xaml</DependentUpon>
+    <Compile Include="PileControl.xaml.cs">
+      <DependentUpon>PileControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="WorkspaceData.cs" />
     <Page Include="MainWindow.xaml">
@@ -80,7 +80,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TaskPile.xaml">
+    <Page Include="PileControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

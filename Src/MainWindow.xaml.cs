@@ -22,7 +22,7 @@ namespace Banananana
     {
         private bool mDragging;
         private TaskControl mDraggedTask;
-        private TaskPile mDraggedPile;
+        private PileControl mDraggedPile;
         private Cursor mDragPreviousCursor;        
 
 
@@ -30,17 +30,18 @@ namespace Banananana
         {
             InitializeComponent();
 
-            AddPile();
+            Load();
+            //AddPile();
         }
 
         private void addTaskButton_Click(object sender, RoutedEventArgs e)
         {
-            AddPile();
+            AddNewPileControl();
         }
 
-        private void AddPile()
+        private PileControl AddNewPileControl()
         {
-            TaskPile pile = new TaskPile();
+            PileControl pile = new PileControl();
             pile.VerticalAlignment = VerticalAlignment.Top;
 
             pile.OnDragTaskStarted += Pile_OnDragTaskStarted;
@@ -52,12 +53,14 @@ namespace Banananana
             pile.OnDragPileStopped += Pile_OnDragPileStopped;
 
             stackPanel.Children.Insert(stackPanel.Children.Count-1, pile);
+
+            return pile;
         }
 
 
 
 
-        private void Pile_OnDragPileStarted(TaskPile inPile)
+        private void Pile_OnDragPileStarted(PileControl inPile)
         {
             mDraggedPile = inPile;
 
@@ -67,14 +70,14 @@ namespace Banananana
             // Update dragging state of all piles
             for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
             {
-                TaskPile pile = stackPanel.Children[j] as TaskPile;
-                pile.DragState = (pile == mDraggedPile) ? TaskPile.EDragState.IsBeingDragged : TaskPile.EDragState.IsNotBeingDragged;
+                PileControl pile = stackPanel.Children[j] as PileControl;
+                pile.DragState = (pile == mDraggedPile) ? PileControl.EDragState.IsBeingDragged : PileControl.EDragState.IsNotBeingDragged;
             }
 
             mDragging = true;
         }
 
-        private void Pile_OnDragPileMoved(TaskPile inPile, Point inPosition)
+        private void Pile_OnDragPileMoved(PileControl inPile, Point inPosition)
         {
             if (!mDragging)
                 return;
@@ -83,7 +86,7 @@ namespace Banananana
             Point mouse_pos = inPosition;
 
             // Determine pile to place task in
-            double pile_width = (stackPanel.Children[0] as TaskPile).Width; // Child 0 is always the header of the pile
+            double pile_width = (stackPanel.Children[0] as PileControl).Width; // Child 0 is always the header of the pile
             int num_piles = stackPanel.Children.Count - 1;
 
             int preferred_pile_index = Math.Min((int)(mouse_pos.X / pile_width), num_piles - 1);
@@ -97,7 +100,7 @@ namespace Banananana
             }
         }
 
-        private void Pile_OnDragPileStopped(TaskPile inPile)
+        private void Pile_OnDragPileStopped(PileControl inPile)
         {
             if (!mDragging)
                 return;
@@ -106,7 +109,7 @@ namespace Banananana
 
             // Update dragging state of all piles
             for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
-                (stackPanel.Children[j] as TaskPile).DragState = TaskPile.EDragState.NoDraggingActive;
+                (stackPanel.Children[j] as PileControl).DragState = PileControl.EDragState.NoDraggingActive;
 
             mDragging = false;
         }
@@ -125,7 +128,7 @@ namespace Banananana
             // Update dragging state of all tasks
             for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
             {
-                TaskPile pile = stackPanel.Children[j] as TaskPile;
+                PileControl pile = stackPanel.Children[j] as PileControl;
 
                 foreach (TaskControl task in pile.Tasks)
                     task.DragState = (task == mDraggedTask) ? TaskControl.EDragState.IsBeingDragged : TaskControl.EDragState.IsNotBeingDragged;
@@ -143,11 +146,11 @@ namespace Banananana
             Point mouse_pos = inPosition;
 
             // Determine pile to place task in
-            double pile_width = (stackPanel.Children[0] as TaskPile).Width; // Child 0 is always the header of the pile
+            double pile_width = (stackPanel.Children[0] as PileControl).Width; // Child 0 is always the header of the pile
             int num_piles = stackPanel.Children.Count - 1;
 
             int preferred_pile_index = Math.Min((int)(mouse_pos.X / pile_width), num_piles-1);
-            TaskPile preferred_pile = stackPanel.Children[preferred_pile_index] as TaskPile;
+            PileControl preferred_pile = stackPanel.Children[preferred_pile_index] as PileControl;
 
             // Determine task index we're trying to move our task to
             int preferred_task_index = preferred_pile.stackPanel.Children.Count - 2;
@@ -164,10 +167,10 @@ namespace Banananana
             }
 
             int current_pile_index = -1;
-            TaskPile current_pile = null;
+            PileControl current_pile = null;
             for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
             {
-                TaskPile pile = stackPanel.Children[j] as TaskPile;
+                PileControl pile = stackPanel.Children[j] as PileControl;
                 if (pile.stackPanel.Children.Contains(mDraggedTask))
                 {
                     current_pile_index = j;
@@ -195,7 +198,7 @@ namespace Banananana
 
             for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
             {
-                TaskPile pile = stackPanel.Children[j] as TaskPile;
+                PileControl pile = stackPanel.Children[j] as PileControl;
 
                 foreach (TaskControl task in pile.Tasks)
                     task.DragState = TaskControl.EDragState.NoDraggingActive;
@@ -217,7 +220,7 @@ namespace Banananana
 
             for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
             {
-                TaskPile pile = stackPanel.Children[j] as TaskPile;
+                PileControl pile = stackPanel.Children[j] as PileControl;
 
                 WorkspaceData.Pile pile_data = pile.GetWorkspacePileData();
                 data.Piles.Add(pile_data);
@@ -227,13 +230,29 @@ namespace Banananana
         }
 
 
+        private void SetWorkspaceData(WorkspaceData inData)
+        {
+            foreach (WorkspaceData.Pile pile_data in inData.Piles)
+            {
+                PileControl pile = AddNewPileControl();
+                pile.SetWorkspacePileData(pile_data);
+            }
+        }
+
+
+        private void Load()
+        {
+            WorkspaceData data = WorkspaceData.LoadFromFile(GetWorkspaceFilename());
+
+            SetWorkspaceData(data);
+        }
+
+
         private void Save()
         {
-            String filename = GetWorkspaceFilename();
-
             WorkspaceData data = GetWorkspaceData();
 
-            data.SafeToFile(filename);
+            data.SafeToFile(GetWorkspaceFilename());
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

@@ -58,7 +58,28 @@ namespace Banananana
             }
         }
 
-        public static String GetFlowDocumentContentsAsXML(FlowDocument inDocument)
+        public static WorkspaceData LoadFromFile(String inFilename)
+        {
+            WorkspaceData data = new WorkspaceData();
+
+            if (!File.Exists(inFilename))
+                return data;
+
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.Converters.Add(new JavaScriptDateTimeConverter());
+            serializer.NullValueHandling = NullValueHandling.Ignore;
+            serializer.Formatting = Formatting.Indented;
+
+            using (StreamReader sr = new StreamReader(inFilename))
+            using (JsonReader reader = new JsonTextReader(sr))
+            {
+                data = serializer.Deserialize<WorkspaceData>(reader);
+            }
+
+            return data;
+        }
+
+        public static String GetFlowDocumentContentAsXML(FlowDocument inDocument)
         {
             using (var stream = new MemoryStream())
             {
@@ -67,6 +88,16 @@ namespace Banananana
 
                 return Encoding.UTF8.GetString(stream.ToArray());
             }
+        }
+
+        public static void SetFlowDocumentContentFromXML(FlowDocument inDocument, String inTextXML)
+        {            
+            byte[] data = Encoding.UTF8.GetBytes(inTextXML);
+            using (var stream = new MemoryStream(data))
+            {
+                TextRange range = new TextRange(inDocument.ContentStart, inDocument.ContentEnd);
+                range.Load(stream, DataFormats.Xaml);
+            }                       
         }
     }
 }

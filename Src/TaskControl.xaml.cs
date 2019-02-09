@@ -35,7 +35,7 @@ namespace Banananana
 
         private Brush mOriginalBackground;
 
-        public TaskPile ParentPile
+        public PileControl ParentPile
         {
             get; set;
         }
@@ -72,7 +72,7 @@ namespace Banananana
             }
         }
 
-        public TaskControl(TaskPile inPile)
+        public TaskControl(PileControl inPile)
         {
             InitializeComponent();
 
@@ -86,9 +86,14 @@ namespace Banananana
         public WorkspaceData.Task GetWorkspaceTaskData()
         {
             WorkspaceData.Task data = new WorkspaceData.Task();
-            data.Text = WorkspaceData.GetFlowDocumentContentsAsXML(richTextBox.Document);
+            data.Text = WorkspaceData.GetFlowDocumentContentAsXML(richTextBox.Document);
 
             return data;
+        }
+
+        public void SetWorkspaceTaskData(WorkspaceData.Task inData)
+        {
+            WorkspaceData.SetFlowDocumentContentFromXML(richTextBox.Document, inData.Text);
         }
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
