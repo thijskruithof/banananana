@@ -115,5 +115,8 @@
   <ItemGroup>
     <Resource Include="Resources\bananas-close-up.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\appicon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
