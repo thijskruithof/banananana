@@ -127,9 +127,10 @@ namespace Banananana
         {
             WorkspaceData.Pile data = new WorkspaceData.Pile();
             data.Title = WorkspaceData.GetFlowDocumentContentAsXML(titleTextBox.Document);
+            data.Color = (headerGrid.Background as SolidColorBrush).Color;
 
             foreach (TaskControl task in TaskControls)
-                data.Tasks.Add(task.GetWorkspaceTaskData());
+                data.Tasks.Add(task.GetWorkspaceTaskData());           
 
             return data;
         }
@@ -137,6 +138,7 @@ namespace Banananana
         public void SetWorkspacePileData(WorkspaceData.Pile inData)
         {
             WorkspaceData.SetFlowDocumentContentFromXML(titleTextBox.Document, inData.Title);
+            headerGrid.Background = new SolidColorBrush(inData.Color);
 
             foreach (WorkspaceData.Task task_data in inData.Tasks)
             {
@@ -242,14 +244,6 @@ namespace Banananana
             AddNewTaskControl();
         }
 
-        private void DeleteButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (MessageBox.Show("Are you sure you want delete this pile with all the tasks in it?", "Delete pile?", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
-                return;
-
-            ParentWindow.DeletePileControl(this);
-        }
-
         private void MoveButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
@@ -292,6 +286,29 @@ namespace Banananana
 
                 e.Handled = true;
             }
+        }
+
+        private void DeletePileMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want delete this pile with all the tasks in it?", "Delete pile?", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                return;
+
+            ParentWindow.DeletePileControl(this);
+        }
+
+        private void OptionsButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            optionsButton.ContextMenu.IsOpen = true;
+            e.Handled = true;
+        }
+
+        private void colorMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem item = sender as MenuItem;
+            string color_code = item.Header as String;
+
+            Color color = (Color)ColorConverter.ConvertFromString(color_code);
+            headerGrid.Background = new SolidColorBrush(color);
         }
     }
 }

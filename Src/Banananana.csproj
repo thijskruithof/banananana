@@ -149,5 +149,16 @@
   <ItemGroup>
     <Resource Include="Resources\externallinkicon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\color_a.png" />
+    <Resource Include="Resources\color_b.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\color_c.png" />
+    <Resource Include="Resources\color_d.png" />
+    <Resource Include="Resources\color_e.png" />
+    <Resource Include="Resources\color_f.png" />
+    <Resource Include="Resources\color_g.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

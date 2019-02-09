@@ -39,6 +39,9 @@ namespace Banananana
             public String Title { get; set; }
 
             [JsonProperty]
+            public System.Windows.Media.Color Color { get; set; }
+
+            [JsonProperty]
             public List<Task> Tasks { get; set; }
 
             public Pile()
