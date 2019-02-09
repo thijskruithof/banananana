@@ -162,7 +162,7 @@ namespace Banananana
             PileControl preferred_pile = stackPanel.Children[preferred_pile_index] as PileControl;
 
             // Determine task index we're trying to move our task to
-            int preferred_task_index = preferred_pile.stackPanel.Children.Count - 2;
+            int preferred_task_index = preferred_pile.stackPanel.Children.Count - 1;
 
             for (int i = 3; i < preferred_pile.stackPanel.Children.Count; ++i)
             {
@@ -263,6 +263,21 @@ namespace Banananana
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Save();
+        }
+
+        private void AddPileRect_MouseEnter(object sender, MouseEventArgs e)
+        {
+            addPileRect.Opacity = 1.0;
+        }
+
+        private void AddPileRect_MouseLeave(object sender, MouseEventArgs e)
+        {
+            addPileRect.Opacity = 0.25;
+        }
+
+        private void AddPileRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            AddNewPileControl();
         }
     }
 }
