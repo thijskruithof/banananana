@@ -1,0 +1,16 @@
+﻿<Window x:Class="Banananana.EditExternalLinkWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Banananana"
+        mc:Ignorable="d"
+        Title="Edit external link..." Width="268" Height="135" WindowStartupLocation="CenterOwner" SizeToContent="Height" WindowStyle="ToolWindow" MinHeight="143" MinWidth="268">
+    <StackPanel VerticalAlignment="Top" Margin="8">
+        <Label Content="Target:" Padding="0" Margin="0,0,0,4"/>
+        <TextBox x:Name="targetTextBox" Height="23" TextWrapping="Wrap" Text="TextBox" Margin="0,0,0,16" Background="#FFE2E2E2" BorderBrush="{x:Null}"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="okButton" Content="OK" Margin="0" Click="OKButton_Click" Padding="4" IsDefault="True"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

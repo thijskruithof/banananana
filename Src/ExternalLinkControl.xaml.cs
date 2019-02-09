@@ -67,7 +67,13 @@ namespace Banananana
 
         private void EditMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            EditExternalLinkWindow window = new EditExternalLinkWindow(Target);
+            window.Owner = this.ParentTask.ParentPile.ParentWindow;
 
+            if (window.ShowDialog() == true)
+            {
+                Target = window.Target;
+            }
         }
     }
 }

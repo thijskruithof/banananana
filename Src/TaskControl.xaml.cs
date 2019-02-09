@@ -140,14 +140,19 @@ namespace Banananana
             ExternalLinkControl control = new ExternalLinkControl(this);
             linksStackPanel.Children.Add(control);
 
-            control.Target = "http://www.google.com";
-
             return control;
         }
 
         private void AddExternalLinkMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            EditExternalLinkWindow window = new EditExternalLinkWindow(null);
+            window.Owner = this.ParentPile.ParentWindow;
+
+            if (window.ShowDialog() != true)
+                return;
+
             ExternalLinkControl new_link = AddNewExternalLinkControl();
+            new_link.Target = window.Target;
         }
     }
 }

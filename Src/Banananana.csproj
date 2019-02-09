@@ -57,6 +57,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="EditExternalLinkWindow.xaml.cs">
+      <DependentUpon>EditExternalLinkWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExternalLinkControl.xaml.cs">
       <DependentUpon>ExternalLinkControl.xaml</DependentUpon>
     </Compile>
@@ -67,6 +70,10 @@
       <DependentUpon>PileControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="WorkspaceData.cs" />
+    <Page Include="EditExternalLinkWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ExternalLinkControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
