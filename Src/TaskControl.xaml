@@ -10,7 +10,7 @@
         <Border BorderThickness="8" Height="Auto">
             <StackPanel Height="Auto" Orientation="Horizontal">
                 <StackPanel Orientation="Vertical" Width="278">
-                    <RichTextBox x:Name="richTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" FontSize="18" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" SelectionOpacity="0.7">
+                    <RichTextBox x:Name="richTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" SelectionOpacity="0.7" FontSize="14">
                         <FlowDocument>
                             <Paragraph/>
                         </FlowDocument>
@@ -18,7 +18,7 @@
                     <StackPanel x:Name="linksStackPanel" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0"/>
                 </StackPanel>
                 <Rectangle Fill="#FFD4D4D4" Margin="0" Width="2"/>
-                <StackPanel Height="24" HorizontalAlignment="Right" Margin="0" Orientation="Horizontal">
+                <StackPanel Height="19" HorizontalAlignment="Right" Margin="0" Orientation="Horizontal">
                     <Label x:Name="optionsButton" Content="▼" Margin="5,0,5,3" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="14" Padding="1,-5,1,1" Foreground="#FF919191" RenderTransformOrigin="0.531,0.504" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="OptionsButton_MouseLeftButtonDown">
                         <Label.ContextMenu>
                             <ContextMenu>
@@ -28,7 +28,7 @@
                             </ContextMenu>
                         </Label.ContextMenu>
                     </Label>
-                    <Label x:Name="moveButton" Content="☰" Margin="0" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="16" Padding="1,-5,1,1" Foreground="#FF919191" Cursor="Hand"/>
+                    <Label x:Name="moveButton" Content="☰" Margin="0,-2,0,2" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="16" Padding="1,-5,1,1" Foreground="#FF919191" Cursor="Hand"/>
                 </StackPanel>
 
             </StackPanel>

@@ -115,6 +115,11 @@ namespace Banananana
             }
         }
 
+        public void DeleteExternalLink(ExternalLinkControl inLinkControl)
+        {
+            linksStackPanel.Children.Remove(inLinkControl);
+        }
+
         private void OptionsButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             optionsButton.ContextMenu.IsOpen = true;
@@ -132,7 +137,7 @@ namespace Banananana
 
         private ExternalLinkControl AddNewExternalLinkControl()
         {
-            ExternalLinkControl control = new ExternalLinkControl();
+            ExternalLinkControl control = new ExternalLinkControl(this);
             linksStackPanel.Children.Add(control);
 
             control.Target = "http://www.google.com";

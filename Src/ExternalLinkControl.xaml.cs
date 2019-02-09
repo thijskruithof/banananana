@@ -21,10 +21,13 @@ namespace Banananana
     public partial class ExternalLinkControl : UserControl
     {
         public String Target { get; set; }
+        public TaskControl ParentTask { get; set; }
 
 
-        public ExternalLinkControl()
+        public ExternalLinkControl(TaskControl inParentTask)
         {
+            ParentTask = inParentTask;
+
             InitializeComponent();
         }
 
@@ -50,6 +53,21 @@ namespace Banananana
         private void LinkImage_MouseLeave(object sender, MouseEventArgs e)
         {
             linkImage.Opacity = 0.25;
+        }
+
+        private void DeleteMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ParentTask.DeleteExternalLink(this);
+        }
+
+        private void LinkImage_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            targetMenuItem.Header = Target;
+        }
+
+        private void EditMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

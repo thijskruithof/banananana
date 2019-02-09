@@ -4,8 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Banananana"
-             mc:Ignorable="d" Height="24" Width="24" Margin="0,0,8,0">
+             mc:Ignorable="d" Height="20" Width="20" Margin="0,0,8,0">
     <Grid Background="White">
-        <Image x:Name="linkImage" Source="Resources/externallinkicon.png" Cursor="Hand" Opacity="0.25" MouseEnter="LinkImage_MouseEnter" MouseLeave="LinkImage_MouseLeave"/>
+        <Image x:Name="linkImage" Source="Resources/externallinkicon.png" Cursor="Hand" Opacity="0.25" MouseEnter="LinkImage_MouseEnter" MouseLeave="LinkImage_MouseLeave" ContextMenuOpening="LinkImage_ContextMenuOpening">
+            <Image.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="targetMenuItem" IsEnabled="False"/>
+                    <MenuItem x:Name="editMenuItem" Header="Edit target..." Click="EditMenuItem_Click"/>
+                    <Separator/>
+                    <MenuItem x:Name="deleteMenuItem" Header="Delete" Click="DeleteMenuItem_Click"/>
+                </ContextMenu>
+            </Image.ContextMenu>
+        </Image>
     </Grid>
 </UserControl>
