@@ -34,6 +34,17 @@ namespace Banananana
             //AddPile();
         }
 
+
+        public IEnumerable<PileControl> PileControls
+        {
+            get
+            {
+                for (int i = 0; i < stackPanel.Children.Count - 1; ++i)
+                    yield return stackPanel.Children[i] as PileControl;
+            }
+        }
+
+
         private void addTaskButton_Click(object sender, RoutedEventArgs e)
         {
             AddNewPileControl();
@@ -68,11 +79,9 @@ namespace Banananana
             Cursor = Cursors.Hand;
 
             // Update dragging state of all piles
-            for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
-            {
-                PileControl pile = stackPanel.Children[j] as PileControl;
+            foreach (PileControl pile in PileControls)
                 pile.DragState = (pile == mDraggedPile) ? PileControl.EDragState.IsBeingDragged : PileControl.EDragState.IsNotBeingDragged;
-            }
+
 
             mDragging = true;
         }
@@ -108,8 +117,8 @@ namespace Banananana
             Cursor = mDragPreviousCursor;
 
             // Update dragging state of all piles
-            for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
-                (stackPanel.Children[j] as PileControl).DragState = PileControl.EDragState.NoDraggingActive;
+            foreach (PileControl pile in PileControls)
+                pile.DragState = PileControl.EDragState.NoDraggingActive;
 
             mDragging = false;
         }
@@ -126,13 +135,9 @@ namespace Banananana
             Cursor = Cursors.Hand;
 
             // Update dragging state of all tasks
-            for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
-            {
-                PileControl pile = stackPanel.Children[j] as PileControl;
-
-                foreach (TaskControl task in pile.Tasks)
+            foreach (PileControl pile in PileControls)
+                foreach (TaskControl task in pile.TaskControls)
                     task.DragState = (task == mDraggedTask) ? TaskControl.EDragState.IsBeingDragged : TaskControl.EDragState.IsNotBeingDragged;
-            }
 
             mDragging = true;
         }
@@ -196,13 +201,9 @@ namespace Banananana
 
             Cursor = mDragPreviousCursor;
 
-            for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
-            {
-                PileControl pile = stackPanel.Children[j] as PileControl;
-
-                foreach (TaskControl task in pile.Tasks)
+            foreach (PileControl pile in PileControls)
+                foreach (TaskControl task in pile.TaskControls)
                     task.DragState = TaskControl.EDragState.NoDraggingActive;
-            }
 
             mDragging = false;
         }
@@ -218,10 +219,9 @@ namespace Banananana
         {
             WorkspaceData data = new WorkspaceData();
 
-            for (int j = 0; j < stackPanel.Children.Count - 1; ++j)
-            {
-                PileControl pile = stackPanel.Children[j] as PileControl;
 
+            foreach (PileControl pile in PileControls)
+            { 
                 WorkspaceData.Pile pile_data = pile.GetWorkspacePileData();
                 data.Piles.Add(pile_data);
             }

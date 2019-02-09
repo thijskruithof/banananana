@@ -53,7 +53,7 @@ namespace Banananana
         private Point mClickedPosition;
 
 
-        public IEnumerable<TaskControl> Tasks
+        public IEnumerable<TaskControl> TaskControls
         {
             get
             {
@@ -123,7 +123,7 @@ namespace Banananana
             WorkspaceData.Pile data = new WorkspaceData.Pile();
             data.Title = WorkspaceData.GetFlowDocumentContentAsXML(titleTextBox.Document);
 
-            foreach (TaskControl task in Tasks)
+            foreach (TaskControl task in TaskControls)
                 data.Tasks.Add(task.GetWorkspaceTaskData());
 
             return data;
