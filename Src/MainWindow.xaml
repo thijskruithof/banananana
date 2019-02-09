@@ -12,7 +12,7 @@
     </Window.Background>
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <StackPanel x:Name="stackPanel" Orientation="Horizontal" Width="Auto" Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Border x:Name="addPileRect" HorizontalAlignment="Right" Margin="8,12" VerticalAlignment="Top" Width="36" Background="#FFE8E8E8" CornerRadius="8" Height="34" Opacity="0.25" MouseEnter="AddPileRect_MouseEnter" MouseLeave="AddPileRect_MouseLeave" Cursor="Hand" MouseLeftButtonDown="AddPileRect_MouseLeftButtonDown" >
+            <Border x:Name="addPileRect" HorizontalAlignment="Right" Margin="8,12" VerticalAlignment="Top" Width="36" Background="White" CornerRadius="8" Height="34" Opacity="0.25" MouseEnter="AddPileRect_MouseEnter" MouseLeave="AddPileRect_MouseLeave" Cursor="Hand" MouseLeftButtonDown="AddPileRect_MouseLeftButtonDown" >
                 <Label Content="+" FontSize="36" HorizontalContentAlignment="Center" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" Height="54" Margin="7,-9,7,-11"/>
             </Border>
         </StackPanel>

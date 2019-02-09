@@ -96,8 +96,11 @@ namespace Banananana
             WorkspaceData.SetFlowDocumentContentFromXML(richTextBox.Document, inData.Text);
         }
 
-        private void deleteButton_Click(object sender, RoutedEventArgs e)
+        private void DeleteButton_Copy_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (MessageBox.Show("Are you sure you want delete this task?", "Delete task?", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                return;
+
             ParentPile.DeleteTaskControl(this);
         }
     }

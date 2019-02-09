@@ -7,14 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="416" Width="324" MinHeight="75" BorderThickness="0">
     <Grid Height="Auto">
-        <Border x:Name="border" Margin="8" Padding="0" Background="#D8ECECEC" Height="Auto" BorderThickness="4" CornerRadius="12" MouseDown="headerGrid_MouseDown" MouseUp="headerGrid_MouseUp" MouseMove="headerGrid_MouseMove">
+        <Border x:Name="border" Margin="8" Padding="0" Background="#D8ECECEC" Height="Auto" BorderThickness="4" CornerRadius="12">
             <StackPanel x:Name="stackPanel" Margin="0,8,0,4" Height="Auto" >
                 <Grid x:Name="headerGrid" Height="Auto" Background="#FFFFCB19" Margin="0,2,0,4">
                     <RichTextBox x:Name="titleTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" FontSize="18" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" SelectionOpacity="0.7" Margin="4,4,58,4" VerticalAlignment="Bottom">
                         <FlowDocument/>
                     </RichTextBox>
-                    <Label x:Name="moveButton" Content="☰" Margin="0,4,10,4" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="16" Padding="1,-5,1,1" Foreground="#FF919191" RenderTransformOrigin="0.531,0.504" VerticalAlignment="Center"/>
-                    <Button x:Name="deleteButton" Content="🗑️" Margin="0,2,23,2" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="14" Padding="1,0,3,0" Foreground="#FF919191" Click="deleteButton_Click" VerticalAlignment="Center" Height="21"/>
+                    <Label x:Name="moveButton" Content="☰" Margin="0,4,10,4" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="16" Padding="1,-5,1,1" Foreground="#FF919191" RenderTransformOrigin="0.531,0.504" VerticalAlignment="Center" Cursor="Hand" MouseDown="MoveButton_MouseDown" MouseUp="MoveButton_MouseUp" MouseMove="MoveButton_MouseMove"/>
+                    <Label x:Name="deleteButton" Content="🗑️" Margin="0,7,26,7" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="14" Padding="1,-5,1,1" Foreground="#FF919191" RenderTransformOrigin="0.531,0.504" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="DeleteButton_MouseLeftButtonDown"/>
                 </Grid>
                 <Border x:Name="addTaskRect" BorderThickness="0" Height="32" Padding="0" Margin="7,4" CornerRadius="8" MouseEnter="AddTaskRect_MouseEnter" Opacity="0.25" MouseLeave="AddTaskRect_MouseLeave" MouseLeftButtonDown="AddTaskRect_MouseLeftButtonDown" Cursor="Hand">
                     <Border.Background>

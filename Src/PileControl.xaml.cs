@@ -46,7 +46,6 @@ namespace Banananana
 
         private EDragState mDragState = EDragState.NoDraggingActive;
 
-        private bool mRequestDragging = false;
         private bool mIsDragging = false;
         private TaskControl mClickedTask;
         private PileControl mClickedPile;
@@ -141,19 +140,19 @@ namespace Banananana
 
             foreach (WorkspaceData.Task task_data in inData.Tasks)
             {
-                TaskControl task = AddNewTask();
+                TaskControl task = AddNewTaskControl();
                 task.SetWorkspaceTaskData(task_data);
             }
         }
 
-        private TaskControl AddNewTask()
+        private TaskControl AddNewTaskControl()
         {
             TaskControl task_control = new TaskControl(this);
             stackPanel.Children.Insert(2, task_control);
 
-            task_control.MouseDown += TaskControl_MouseDown;
-            task_control.MouseUp += TaskControl_MouseUp;
-            task_control.MouseMove += TaskControl_MouseMove;
+            task_control.moveButton.MouseDown += TaskControl_MouseDown;
+            task_control.moveButton.MouseUp += TaskControl_MouseUp;
+            task_control.moveButton.MouseMove += TaskControl_MouseMove;
 
             return task_control;
         }
@@ -161,18 +160,34 @@ namespace Banananana
 
         private void addTaskButton_Click(object sender, RoutedEventArgs e)
         {
-            AddNewTask();
+            AddNewTaskControl();
         }
+
+
+        private TaskControl GetOwnerTaskControlFromControl(Control inSender)
+        {
+            DependencyObject parent = inSender.Parent;
+
+            while (!(parent is UserControl))
+            {
+                parent = LogicalTreeHelper.GetParent(parent);
+            }
+
+            return parent as TaskControl;
+        }
+
 
         private void TaskControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                mClickedTask = sender as TaskControl;
+                Control control = sender as Control;
+                mClickedTask = GetOwnerTaskControlFromControl(control);
                 mClickedPile = null;
                 mClickedPosition = e.GetPosition(Parent as IInputElement);
-                mRequestDragging = true;
-                mClickedTask.CaptureMouse();                
+                mIsDragging = true;
+                OnDragTaskStarted(mClickedTask);
+                control.CaptureMouse();
 
                 e.Handled = true;
             }
@@ -183,20 +198,9 @@ namespace Banananana
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 Point mouse_pos = e.GetPosition(this.Parent as IInputElement);
-                Point delta = new Point(mouse_pos.X - mClickedPosition.X, mouse_pos.Y - mClickedPosition.Y);
-                double mouse_move_dist = Math.Sqrt(delta.X * delta.X + delta.Y * delta.Y);
-
-                if (mRequestDragging && !mIsDragging && mouse_move_dist >= 1.0)
-                {
-                    OnDragTaskStarted(mClickedTask);
-
-                    mIsDragging = true;
-                    mRequestDragging = false;
-                }
-
 
                 if (mIsDragging)
-                    OnDragTaskMoved(sender as TaskControl, mouse_pos);
+                    OnDragTaskMoved(mClickedTask, mouse_pos);
 
                 e.Handled = true;
             }
@@ -206,10 +210,11 @@ namespace Banananana
         {
             if (e.ChangedButton == MouseButton.Left && mIsDragging)
             {
-                OnDragTaskStopped(sender as TaskControl);
-                mClickedTask.ReleaseMouseCapture();
+                Control control = sender as Control;
+                OnDragTaskStopped(mClickedTask);
+                control.ReleaseMouseCapture();
                 mIsDragging = false;
-                mRequestDragging = false;
+                mClickedTask = null;
 
                 e.Handled = true;
             }
@@ -221,69 +226,6 @@ namespace Banananana
             parent_pile.stackPanel.Children.Remove(inTask);
         }
 
-
-
-        private void headerGrid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                mClickedTask = null;
-                mClickedPile = this;
-                mClickedPosition = e.GetPosition(Parent as IInputElement);
-                mRequestDragging = true;
-                (sender as Border).CaptureMouse();
-                
-
-                e.Handled = true;
-            }
-        }
-
-
-        private void headerGrid_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                Point mouse_pos = e.GetPosition(this.Parent as IInputElement);
-                Point delta = new Point(mouse_pos.X - mClickedPosition.X, mouse_pos.Y - mClickedPosition.Y);
-                double mouse_move_dist = Math.Sqrt(delta.X * delta.X + delta.Y * delta.Y);
-
-                if (mRequestDragging && !mIsDragging && mouse_move_dist >= 1.0)
-                {
-                    OnDragPileStarted(mClickedPile);
-
-                    mIsDragging = true;
-                    mRequestDragging = false;
-                }
-
-                if (mIsDragging)
-                    OnDragPileMoved(this, mouse_pos);
-
-                e.Handled = true;
-            }
-        }
-
-        private void headerGrid_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                if (mIsDragging)
-                    OnDragPileStopped(this);
-
-                (sender as Border).ReleaseMouseCapture();
-                mIsDragging = false;
-                mRequestDragging = false;
-
-                e.Handled = true;
-            }
-        }
-
-        private void deleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show("Are you sure you want delete this pile with all the tasks in it?", "Delete pile?", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
-                return;
-
-            ParentWindow.DeletePileControl(this);
-        }
 
         private void AddTaskRect_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -297,7 +239,59 @@ namespace Banananana
 
         private void AddTaskRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            AddNewTask();
+            AddNewTaskControl();
+        }
+
+        private void DeleteButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want delete this pile with all the tasks in it?", "Delete pile?", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                return;
+
+            ParentWindow.DeletePileControl(this);
+        }
+
+        private void MoveButton_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                mClickedTask = null;
+                mClickedPile = this;
+                mClickedPosition = e.GetPosition(Parent as IInputElement);
+
+                mIsDragging = true;
+                (sender as Label).CaptureMouse();
+
+                OnDragPileStarted(mClickedPile);
+
+                e.Handled = true;
+            }
+        }
+
+        private void MoveButton_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                if (mIsDragging)
+                    OnDragPileStopped(this);
+
+                (sender as Label).ReleaseMouseCapture();
+                mIsDragging = false;
+
+                e.Handled = true;
+            }
+        }
+
+        private void MoveButton_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                Point mouse_pos = e.GetPosition(this.Parent as IInputElement);
+
+                if (mIsDragging)
+                    OnDragPileMoved(this, mouse_pos);
+
+                e.Handled = true;
+            }
         }
     }
 }
