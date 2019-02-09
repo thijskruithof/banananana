@@ -5,16 +5,24 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Banananana"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="300" Width="300" Focusable="True">
+             d:DesignHeight="450" d:DesignWidth="300" Width="350" Focusable="True">
     <Border x:Name="border" Height="Auto" Margin="4,0" Background="White" CornerRadius="8" BorderThickness="4" VerticalAlignment="Top" >
         <Border BorderThickness="8" Height="Auto">
             <StackPanel Height="Auto" Orientation="Horizontal">
-                <RichTextBox x:Name="richTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" FontSize="18" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" SelectionOpacity="0.7" Width="228">
-                    <FlowDocument/>
+                <RichTextBox x:Name="richTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" FontSize="18" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" SelectionOpacity="0.7" Width="278">
+                    <FlowDocument>
+                        <Paragraph/>
+                    </FlowDocument>
                 </RichTextBox>
                 <Rectangle Fill="#FFD4D4D4" Margin="0" Width="2"/>
                 <StackPanel Height="24" HorizontalAlignment="Right" Margin="0" Orientation="Horizontal">
-                    <Label x:Name="deleteButton_Copy" Content="🗑️" Margin="4,0,2,5" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="14" Padding="1,-5,1,1" Foreground="#FF919191" RenderTransformOrigin="0.531,0.504" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="DeleteButton_Copy_MouseLeftButtonDown"/>
+                    <Label x:Name="optionsButton" Content="▼" Margin="5,0,5,3" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="14" Padding="1,-5,1,1" Foreground="#FF919191" RenderTransformOrigin="0.531,0.504" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="OptionsButton_MouseLeftButtonDown">
+                        <Label.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem x:Name="deleteTaskMenuItem" Header="Delete..." Click="DeleteTaskMenuItem_Click"/>
+                            </ContextMenu>
+                        </Label.ContextMenu>
+                    </Label>
                     <Label x:Name="moveButton" Content="☰" Margin="0" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="16" Padding="1,-5,1,1" Foreground="#FF919191" Cursor="Hand"/>
                 </StackPanel>
 
