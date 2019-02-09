@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Banananana"
         mc:Ignorable="d"
-        Title="Banananana" Height="616.83" Width="843.696" Closing="Window_Closing" Icon="Resources/appicon.ico">
+        Title="Banananana" Height="616.83" Width="843.696" Closing="Window_Closing" Icon="Resources/appicon.ico"
+        Style="{StaticResource WinAll}">
     <Window.Background>
         <ImageBrush ImageSource="Resources/bananas-close-up.jpg" Stretch="UniformToFill"/>
     </Window.Background>

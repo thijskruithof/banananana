@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:Banananana"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="WinAll" TargetType="{x:Type Window}">
+            <Setter Property="FontFamily" Value="/Banananana;component/Resources/#Nunito" />
+        </Style>
     </Application.Resources>
 </Application>

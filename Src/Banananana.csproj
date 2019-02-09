@@ -108,6 +108,20 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Resources\Nunito-Black.ttf" />
+    <Resource Include="Resources\Nunito-BlackItalic.ttf" />
+    <Resource Include="Resources\Nunito-Bold.ttf" />
+    <Resource Include="Resources\Nunito-BoldItalic.ttf" />
+    <Resource Include="Resources\Nunito-ExtraBold.ttf" />
+    <Resource Include="Resources\Nunito-ExtraBoldItalic.ttf" />
+    <Resource Include="Resources\Nunito-ExtraLight.ttf" />
+    <Resource Include="Resources\Nunito-ExtraLightItalic.ttf" />
+    <Resource Include="Resources\Nunito-Italic.ttf" />
+    <Resource Include="Resources\Nunito-Light.ttf" />
+    <Resource Include="Resources\Nunito-LightItalic.ttf" />
+    <Resource Include="Resources\Nunito-Regular.ttf" />
+    <Resource Include="Resources\Nunito-SemiBold.ttf" />
+    <Resource Include="Resources\Nunito-SemiBoldItalic.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
