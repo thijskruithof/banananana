@@ -142,27 +142,31 @@ namespace Banananana
 
             foreach (WorkspaceData.Task task_data in inData.Tasks)
             {
-                TaskControl task = AddNewTaskControl();
+                TaskControl task = AddNewTaskControl(EAddNewTaskControlLocation.Back);
                 task.SetWorkspaceTaskData(task_data);
             }
         }
 
-        private TaskControl AddNewTaskControl()
+        private enum EAddNewTaskControlLocation
+        {
+            Front,
+            Back
+        }
+
+        private TaskControl AddNewTaskControl(EAddNewTaskControlLocation inLocation)
         {
             TaskControl task_control = new TaskControl(this);
-            stackPanel.Children.Insert(2, task_control);
+
+            if (inLocation == EAddNewTaskControlLocation.Front)
+                stackPanel.Children.Insert(2, task_control);
+            else
+                stackPanel.Children.Add(task_control);
 
             task_control.moveButton.MouseDown += TaskControl_MouseDown;
             task_control.moveButton.MouseUp += TaskControl_MouseUp;
             task_control.moveButton.MouseMove += TaskControl_MouseMove;
 
             return task_control;
-        }
-
-
-        private void addTaskButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddNewTaskControl();
         }
 
 
@@ -241,7 +245,7 @@ namespace Banananana
 
         private void AddTaskRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            AddNewTaskControl();
+            AddNewTaskControl(EAddNewTaskControlLocation.Front);
         }
 
         private void MoveButton_MouseDown(object sender, MouseButtonEventArgs e)
