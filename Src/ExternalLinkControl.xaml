@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Banananana"
              mc:Ignorable="d" Height="20" Width="20" Margin="0,0,8,0">
     <Grid Background="White">
-        <Image x:Name="linkImage" Source="Resources/externallinkicon.png" Cursor="Hand" Opacity="0.25" MouseEnter="LinkImage_MouseEnter" MouseLeave="LinkImage_MouseLeave" ContextMenuOpening="LinkImage_ContextMenuOpening">
+        <Image x:Name="linkImage" Source="Resources/externallinkicon.png" Cursor="Hand" Opacity="0.25" MouseEnter="LinkImage_MouseEnter" MouseLeave="LinkImage_MouseLeave" ContextMenuOpening="LinkImage_ContextMenuOpening" MouseLeftButtonDown="linkImage_MouseLeftButtonDown">
             <Image.ContextMenu>
                 <ContextMenu>
                     <MenuItem x:Name="targetMenuItem" IsEnabled="False"/>

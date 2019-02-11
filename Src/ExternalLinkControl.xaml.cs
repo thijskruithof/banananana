@@ -75,5 +75,10 @@ namespace Banananana
                 Target = window.Target;
             }
         }
+
+        private void linkImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            System.Diagnostics.Process.Start(Target);
+        }
     }
 }
