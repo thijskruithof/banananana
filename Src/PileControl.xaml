@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Banananana"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="416" Width="374" MinHeight="75" BorderThickness="0">
+             d:DesignHeight="200" d:DesignWidth="416" Width="324" MinHeight="75" BorderThickness="0">
     <Grid Height="Auto">
         <Border x:Name="border" Margin="8" Padding="0" Background="#D8ECECEC" Height="Auto" BorderThickness="4" CornerRadius="12">
             <StackPanel x:Name="stackPanel" Margin="0,8,0,4" Height="Auto" >

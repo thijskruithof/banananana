@@ -5,12 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Banananana"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="300" Width="350" Focusable="True">
+             d:DesignHeight="450" d:DesignWidth="300" Width="300" Focusable="True">
     <Border x:Name="border" Height="Auto" Margin="4,0" Background="White" CornerRadius="8" BorderThickness="4" VerticalAlignment="Top" >
         <Border BorderThickness="8" Height="Auto">
             <StackPanel Height="Auto" Orientation="Horizontal">
-                <StackPanel Orientation="Vertical" Width="280">
-                    <RichTextBox x:Name="richTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" SelectionOpacity="0.7" FontSize="14">
+                <StackPanel Orientation="Vertical" Width="230">
+                    <RichTextBox x:Name="richTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" SelectionOpacity="0.7" FontSize="12">
                         <FlowDocument>
                             <Paragraph/>
                         </FlowDocument>
