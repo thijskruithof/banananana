@@ -47,6 +47,7 @@ namespace Banananana
             public Pile()
             {
                 Tasks = new List<Task>();
+                Color = System.Windows.Media.Color.FromArgb(255,238,173,0);
             }
         }
         

@@ -6,9 +6,23 @@
              xmlns:local="clr-namespace:Banananana"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="300" Width="300" Focusable="True">
-    <Border x:Name="border" Height="Auto" Margin="4,0" Background="White" CornerRadius="8" BorderThickness="4" VerticalAlignment="Top" >
+    <Border x:Name="border" Height="Auto" Margin="4,0" CornerRadius="8" BorderThickness="4" VerticalAlignment="Top" >
+        <Border.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <LinearGradientBrush.RelativeTransform>
+                    <TransformGroup>
+                        <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                        <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                        <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </LinearGradientBrush.RelativeTransform>
+                <GradientStop Color="White" Offset="0.968"/>
+                <GradientStop Color="#FF00FB94" Offset="0.968"/>
+            </LinearGradientBrush>
+        </Border.Background>
         <Border BorderThickness="8" Height="Auto">
-            <StackPanel Height="Auto" Orientation="Horizontal">
+            <StackPanel Height="Auto" Orientation="Horizontal" Margin="4,0,0,0">
                 <StackPanel Orientation="Vertical" Width="230">
                     <RichTextBox x:Name="richTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" SelectionOpacity="0.7" FontSize="12">
                         <FlowDocument>

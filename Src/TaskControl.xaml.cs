@@ -22,7 +22,7 @@ namespace Banananana
     {
         public delegate void TaskControlHandler(TaskControl inTask);
 
-        static int mCounter = 0;
+        private static int mCounter = 0;
 
         public enum EDragState
         {
@@ -32,8 +32,6 @@ namespace Banananana
         }
 
         private EDragState mDragState = EDragState.NoDraggingActive;
-
-        private Brush mOriginalBackground;
 
         public PileControl ParentPile
         {
@@ -87,10 +85,14 @@ namespace Banananana
             InitializeComponent();
 
             ParentPile = inPile;
-            mOriginalBackground = border.Background;
 
+            // Default text
             richTextBox.Document.Blocks.Clear();
             richTextBox.Document.Blocks.Add(new Paragraph(new Run(String.Format("Task {0}", mCounter++))));
+
+            // Reset background linear
+            LinearGradientBrush border_background = border.Background as LinearGradientBrush;
+            border_background.GradientStops.Last().Color = Color.FromArgb(255, 160, 160, 160);
         }
 
         public WorkspaceData.Task GetWorkspaceTaskData()
