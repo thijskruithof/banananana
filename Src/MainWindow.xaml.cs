@@ -167,7 +167,7 @@ namespace Banananana
             PileControl preferred_pile = stackPanel.Children[preferred_pile_index] as PileControl;
 
             // Determine task index we're trying to move our task to
-            int preferred_task_ctrl_index = preferred_pile.stackPanel.Children.Count - 1;
+            int preferred_task_ctrl_index = preferred_pile.stackPanel.Children.Count;
 
             for (int i = 3; i < preferred_pile.stackPanel.Children.Count; ++i)
             {
@@ -199,6 +199,9 @@ namespace Banananana
             // Move dragged task to a different pile? Or move dragged task to different spot in same pile?
             if (current_pile_index != preferred_pile_index || current_task_ctrl_index != preferred_task_ctrl_index)
             {
+                if (current_pile_index == preferred_pile_index && preferred_task_ctrl_index > current_task_ctrl_index)
+                    preferred_task_ctrl_index--;
+
                 current_pile.MoveTaskControlToPileControl(mDraggedTask, preferred_pile, preferred_task_ctrl_index);
             }
         }
