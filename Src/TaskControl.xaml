@@ -24,7 +24,7 @@
         <Border BorderThickness="8" Height="Auto">
             <StackPanel Height="Auto" Orientation="Horizontal" Margin="4,0,0,0">
                 <StackPanel Orientation="Vertical" Width="230">
-                    <RichTextBox x:Name="richTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" SelectionOpacity="0.7" FontSize="12">
+                    <RichTextBox x:Name="richTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" SelectionOpacity="0.7" FontSize="12" TextChanged="richTextBox_TextChanged">
                         <FlowDocument>
                             <Paragraph/>
                         </FlowDocument>

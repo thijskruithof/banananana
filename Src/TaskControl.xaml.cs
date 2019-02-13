@@ -20,9 +20,7 @@ namespace Banananana
     /// </summary>
     public partial class TaskControl : UserControl
     {
-        public delegate void TaskControlHandler(TaskControl inTask);
-
-        private static int mCounter = 0;
+        public delegate void TaskControlHandler(TaskControl inTaskControl);
 
         public enum EDragState
         {
@@ -31,11 +29,29 @@ namespace Banananana
             IsNotBeingDragged
         }
 
+        private Workspace.Task mTask;
+        private PileControl mParentPileControl;
+
         private EDragState mDragState = EDragState.NoDraggingActive;
 
-        public PileControl ParentPile
+        public Workspace.Task Task
         {
-            get; set;
+            get
+            {
+                return mTask;
+            }
+        }
+
+        public PileControl ParentPileControl
+        {
+            get
+            {
+                return mParentPileControl;
+            }
+            set
+            {
+                mParentPileControl = value;
+            }
         }
 
         public EDragState DragState
@@ -80,45 +96,29 @@ namespace Banananana
             }
         }
 
-        public TaskControl(PileControl inPile)
+        public TaskControl(PileControl inPileControl, Workspace.Task inTask)
         {
             InitializeComponent();
 
-            ParentPile = inPile;
+            mTask = inTask;
+            mParentPileControl = inPileControl;
 
-            // Default text
-            richTextBox.Document.Blocks.Clear();
-            richTextBox.Document.Blocks.Add(new Paragraph(new Run(String.Format("Task {0}", mCounter++))));
+            // Set text
+            Workspace.SetFlowDocumentContentFromXML(richTextBox.Document, inTask.Text);
+
+            // Init external links
+            foreach (Workspace.ExternalLink link in inTask.ExternalLinks)
+                AddNewExternalLinkControl(link);
 
             // Reset background linear
             LinearGradientBrush border_background = border.Background as LinearGradientBrush;
             border_background.GradientStops.Last().Color = Color.FromArgb(255, 160, 160, 160);
         }
 
-        public WorkspaceData.Task GetWorkspaceTaskData()
+
+        public void DeleteExternalLinkAndControl(ExternalLinkControl inLinkControl)
         {
-            WorkspaceData.Task data = new WorkspaceData.Task();
-            data.Text = WorkspaceData.GetFlowDocumentContentAsXML(richTextBox.Document);
-
-            foreach (ExternalLinkControl link in ExternalLinkControls)
-                data.ExternalLinks.Add(link.GetWorkspaceLinkData());
-
-            return data;
-        }
-
-        public void SetWorkspaceTaskData(WorkspaceData.Task inData)
-        {
-            WorkspaceData.SetFlowDocumentContentFromXML(richTextBox.Document, inData.Text);
-
-            foreach (WorkspaceData.ExternalLink link_data in inData.ExternalLinks)
-            {
-                ExternalLinkControl link = AddNewExternalLinkControl();
-                link.SetWorkspaceLinkData(link_data);
-            }
-        }
-
-        public void DeleteExternalLink(ExternalLinkControl inLinkControl)
-        {
+            mTask.ExternalLinks.Remove(inLinkControl.ExternalLink);
             linksStackPanel.Children.Remove(inLinkControl);
         }
 
@@ -134,12 +134,12 @@ namespace Banananana
             if (MessageBox.Show("Are you sure you want delete this task?", "Delete task?", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
                 return;
 
-            ParentPile.DeleteTaskControl(this);
+            ParentPileControl.DeleteTaskAndControl(this);
         }
 
-        private ExternalLinkControl AddNewExternalLinkControl()
+        private ExternalLinkControl AddNewExternalLinkControl(Workspace.ExternalLink inExternalLink)
         {
-            ExternalLinkControl control = new ExternalLinkControl(this);
+            ExternalLinkControl control = new ExternalLinkControl(this, inExternalLink);
             linksStackPanel.Children.Add(control);
 
             return control;
@@ -148,13 +148,23 @@ namespace Banananana
         private void AddExternalLinkMenuItem_Click(object sender, RoutedEventArgs e)
         {
             EditExternalLinkWindow window = new EditExternalLinkWindow(null);
-            window.Owner = this.ParentPile.ParentWindow;
+            window.Owner = this.ParentPileControl.ParentWindow;
 
             if (window.ShowDialog() != true)
                 return;
 
-            ExternalLinkControl new_link = AddNewExternalLinkControl();
+            Workspace.ExternalLink new_link = new Workspace.ExternalLink();
             new_link.Target = window.Target;
+            mTask.ExternalLinks.Add(new_link);
+            AddNewExternalLinkControl(new_link);            
+        }
+
+        private void richTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Crappy, but works for now...
+
+            if (mTask != null)
+                mTask.Text = Workspace.GetFlowDocumentContentAsXML(richTextBox.Document);
         }
     }
 }

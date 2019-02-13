@@ -72,7 +72,7 @@
     <Compile Include="PileControl.xaml.cs">
       <DependentUpon>PileControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WorkspaceData.cs" />
+    <Compile Include="Workspace.cs" />
     <Page Include="EditExternalLinkWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

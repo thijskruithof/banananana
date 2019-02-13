@@ -21,20 +21,23 @@ namespace Banananana
     /// </summary>
     public partial class PileControl : UserControl
     {
-        public delegate void TaskDragHandler(TaskControl inTask);
-        public delegate void TaskDragMoveHandler(TaskControl inTask, Point inPosition);
+        public delegate void TaskDragHandler(TaskControl inTaskControl);
+        public delegate void TaskDragMoveHandler(TaskControl inTaskControl, Point inPosition);
 
-        public delegate void PileDragHandler(PileControl inPile);
-        public delegate void PileDragMoveHandler(PileControl inPile, Point inPosition);
+        public delegate void PileDragHandler(PileControl inPileControl);
+        public delegate void PileDragMoveHandler(PileControl inPileControl, Point inPosition);
 
 
-        public event TaskDragHandler OnDragTaskStarted;
-        public event TaskDragMoveHandler OnDragTaskMoved;
-        public event TaskDragHandler OnDragTaskStopped;
+        public event TaskDragHandler OnDragTaskControlStarted;
+        public event TaskDragMoveHandler OnDragTaskControlMoved;
+        public event TaskDragHandler OnDragTaskControlStopped;
 
-        public event PileDragHandler OnDragPileStarted;
-        public event PileDragMoveHandler OnDragPileMoved;
-        public event PileDragHandler OnDragPileStopped;
+        public event PileDragHandler OnDragPileControlStarted;
+        public event PileDragMoveHandler OnDragPileControlMoved;
+        public event PileDragHandler OnDragPileControlStopped;
+
+
+        private Workspace.Pile mPile;
 
 
         public enum EDragState
@@ -47,13 +50,21 @@ namespace Banananana
         private EDragState mDragState = EDragState.NoDraggingActive;
 
         private bool mIsDragging = false;
-        private TaskControl mClickedTask;
-        private PileControl mClickedPile;
+        private TaskControl mClickedTaskControl;
+        private PileControl mClickedPileControl;
         private Point mClickedPosition;
 
         public MainWindow ParentWindow
         {
             get; set;
+        }
+
+        public Workspace.Pile Pile
+        {
+            get
+            {
+                return mPile;
+            }
         }
 
         public IEnumerable<TaskControl> TaskControls
@@ -97,70 +108,52 @@ namespace Banananana
         }
 
 
-
-        public PileControl(MainWindow inParentWindow)
+        public PileControl(MainWindow inParentWindow, Workspace.Pile inPile)
         {
             InitializeComponent();
+
+            mPile = inPile;
             ParentWindow = inParentWindow;
+
+            Workspace.SetFlowDocumentContentFromXML(titleTextBox.Document, inPile.Title);
+            headerGrid.Background = new SolidColorBrush(inPile.Color);
+
+            foreach (Workspace.Task task in inPile.Tasks)
+                AddNewTaskControl(task);
         }
 
 
-        public void MoveTaskToPile(TaskControl inTask, PileControl inDestinationPile, int inDestinationTaskIndex)
+        public void MoveTaskControlToPileControl(TaskControl inTaskControl, PileControl inDestinationPileControl, int inDestinationTaskControlIndex)
         {
-            // Remove
-            int task_index = this.stackPanel.Children.IndexOf(inTask);
-            this.stackPanel.Children.RemoveAt(task_index);
+            // Remove from this pile
+            this.stackPanel.Children.Remove(inTaskControl);
+            this.mPile.Tasks.Remove(inTaskControl.Task);
 
-            // Add
-            inDestinationPile.stackPanel.Children.Insert(inDestinationTaskIndex, inTask);
+            // Add to destination pile (at the correct position)
+            inDestinationPileControl.stackPanel.Children.Insert(inDestinationTaskControlIndex, inTaskControl);
+            inDestinationPileControl.mPile.Tasks.Insert(inDestinationTaskControlIndex - 2, inTaskControl.Task);
 
             // Set new parent pile
-            inTask.ParentPile = inDestinationPile;
+            inTaskControl.ParentPileControl = inDestinationPileControl;
         }
 
-        public void DeleteTaskControl(TaskControl inTask)
+
+        public void DeleteTaskAndControl(TaskControl inTask)
         {
+            mPile.Tasks.Remove(inTask.Task);
             stackPanel.Children.Remove(inTask);
         }
 
-        public WorkspaceData.Pile GetWorkspacePileData()
+
+        private TaskControl AddNewTaskControl(Workspace.Task inTask)
         {
-            WorkspaceData.Pile data = new WorkspaceData.Pile();
-            data.Title = WorkspaceData.GetFlowDocumentContentAsXML(titleTextBox.Document);
-            data.Color = (headerGrid.Background as SolidColorBrush).Color;
+            int index = mPile.Tasks.IndexOf(inTask);
+            if (index < 0)
+                index = mPile.Tasks.Count;
 
-            foreach (TaskControl task in TaskControls)
-                data.Tasks.Add(task.GetWorkspaceTaskData());           
+            TaskControl task_control = new TaskControl(this, inTask);
 
-            return data;
-        }
-
-        public void SetWorkspacePileData(WorkspaceData.Pile inData)
-        {
-            WorkspaceData.SetFlowDocumentContentFromXML(titleTextBox.Document, inData.Title);
-            headerGrid.Background = new SolidColorBrush(inData.Color);
-
-            foreach (WorkspaceData.Task task_data in inData.Tasks)
-            {
-                TaskControl task = AddNewTaskControl(EAddNewTaskControlLocation.Back);
-                task.SetWorkspaceTaskData(task_data);
-            }
-        }
-
-        private enum EAddNewTaskControlLocation
-        {
-            Front,
-            Back
-        }
-
-        private TaskControl AddNewTaskControl(EAddNewTaskControlLocation inLocation)
-        {
-            TaskControl task_control = new TaskControl(this);
-
-            if (inLocation == EAddNewTaskControlLocation.Front)
-                stackPanel.Children.Insert(2, task_control);
-            else
-                stackPanel.Children.Add(task_control);
+            stackPanel.Children.Insert(2+index, task_control);
 
             task_control.moveButton.MouseDown += TaskControl_MouseDown;
             task_control.moveButton.MouseUp += TaskControl_MouseUp;
@@ -188,11 +181,11 @@ namespace Banananana
             if (e.ChangedButton == MouseButton.Left)
             {
                 Control control = sender as Control;
-                mClickedTask = GetOwnerTaskControlFromControl(control);
-                mClickedPile = null;
+                mClickedTaskControl = GetOwnerTaskControlFromControl(control);
+                mClickedPileControl = null;
                 mClickedPosition = e.GetPosition(Parent as IInputElement);
                 mIsDragging = true;
-                OnDragTaskStarted(mClickedTask);
+                OnDragTaskControlStarted(mClickedTaskControl);
                 control.CaptureMouse();
 
                 e.Handled = true;
@@ -206,7 +199,7 @@ namespace Banananana
                 Point mouse_pos = e.GetPosition(this.Parent as IInputElement);
 
                 if (mIsDragging)
-                    OnDragTaskMoved(mClickedTask, mouse_pos);
+                    OnDragTaskControlMoved(mClickedTaskControl, mouse_pos);
 
                 e.Handled = true;
             }
@@ -217,19 +210,13 @@ namespace Banananana
             if (e.ChangedButton == MouseButton.Left && mIsDragging)
             {
                 Control control = sender as Control;
-                OnDragTaskStopped(mClickedTask);
+                OnDragTaskControlStopped(mClickedTaskControl);
                 control.ReleaseMouseCapture();
                 mIsDragging = false;
-                mClickedTask = null;
+                mClickedTaskControl = null;
 
                 e.Handled = true;
             }
-        }
-
-        private void TaskControl_OnDelete(TaskControl inTask)
-        {
-            PileControl parent_pile = inTask.ParentPile;
-            parent_pile.stackPanel.Children.Remove(inTask);
         }
 
 
@@ -245,21 +232,23 @@ namespace Banananana
 
         private void AddTaskRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            AddNewTaskControl(EAddNewTaskControlLocation.Front);
+            Workspace.Task new_task = new Workspace.Task();
+            mPile.Tasks.Insert(0, new_task);
+            AddNewTaskControl(new_task);
         }
 
         private void MoveButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                mClickedTask = null;
-                mClickedPile = this;
+                mClickedTaskControl = null;
+                mClickedPileControl = this;
                 mClickedPosition = e.GetPosition(Parent as IInputElement);
 
                 mIsDragging = true;
                 (sender as Label).CaptureMouse();
 
-                OnDragPileStarted(mClickedPile);
+                OnDragPileControlStarted(mClickedPileControl);
 
                 e.Handled = true;
             }
@@ -270,7 +259,7 @@ namespace Banananana
             if (e.ChangedButton == MouseButton.Left)
             {
                 if (mIsDragging)
-                    OnDragPileStopped(this);
+                    OnDragPileControlStopped(this);
 
                 (sender as Label).ReleaseMouseCapture();
                 mIsDragging = false;
@@ -286,7 +275,7 @@ namespace Banananana
                 Point mouse_pos = e.GetPosition(this.Parent as IInputElement);
 
                 if (mIsDragging)
-                    OnDragPileMoved(this, mouse_pos);
+                    OnDragPileControlMoved(this, mouse_pos);
 
                 e.Handled = true;
             }
@@ -297,7 +286,7 @@ namespace Banananana
             if (MessageBox.Show("Are you sure you want delete this pile with all the tasks in it?", "Delete pile?", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
                 return;
 
-            ParentWindow.DeletePileControl(this);
+            ParentWindow.DeletePileAndControl(this);
         }
 
         private void OptionsButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -312,7 +301,17 @@ namespace Banananana
             string color_code = item.Header as String;
 
             Color color = (Color)ColorConverter.ConvertFromString(color_code);
+
+            mPile.Color = color;
             headerGrid.Background = new SolidColorBrush(color);
+        }
+
+        private void titleTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Crappy, but works for now...
+
+            if (mPile != null)
+                mPile.Title = Workspace.GetFlowDocumentContentAsXML(titleTextBox.Document);
         }
     }
 }

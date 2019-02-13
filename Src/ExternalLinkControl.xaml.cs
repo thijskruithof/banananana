@@ -20,29 +20,32 @@ namespace Banananana
     /// </summary>
     public partial class ExternalLinkControl : UserControl
     {
-        public String Target { get; set; }
-        public TaskControl ParentTask { get; set; }
-
-
-        public ExternalLinkControl(TaskControl inParentTask)
+        private Workspace.ExternalLink mExternalLink;
+        private TaskControl mParentTaskControl;
+        
+        public Workspace.ExternalLink ExternalLink
         {
-            ParentTask = inParentTask;
+            get
+            {
+                return mExternalLink;
+            }
+        }
+
+        public TaskControl ParentTaskControl
+        {
+            get
+            {
+                return mParentTaskControl;
+            }
+        }
+
+
+        public ExternalLinkControl(TaskControl inParentTask, Workspace.ExternalLink inExternalLink)
+        {
+            mExternalLink = inExternalLink;
+            mParentTaskControl = inParentTask;
 
             InitializeComponent();
-        }
-
-
-        public WorkspaceData.ExternalLink GetWorkspaceLinkData()
-        {
-            WorkspaceData.ExternalLink data = new WorkspaceData.ExternalLink();
-            data.Target = Target;
-
-            return data;
-        }
-
-        public void SetWorkspaceLinkData(WorkspaceData.ExternalLink inData)
-        {
-            Target = inData.Target;
         }
 
         private void LinkImage_MouseEnter(object sender, MouseEventArgs e)
@@ -57,28 +60,27 @@ namespace Banananana
 
         private void DeleteMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            ParentTask.DeleteExternalLink(this);
+            mParentTaskControl.DeleteExternalLinkAndControl(this);
         }
 
         private void LinkImage_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            targetMenuItem.Header = Target;
+            targetMenuItem.Header = mExternalLink.Target;
         }
 
         private void EditMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            EditExternalLinkWindow window = new EditExternalLinkWindow(Target);
-            window.Owner = this.ParentTask.ParentPile.ParentWindow;
+            EditExternalLinkWindow window = new EditExternalLinkWindow(mExternalLink.Target);
+            window.Owner = mParentTaskControl.ParentPileControl.ParentWindow;
 
             if (window.ShowDialog() == true)
-            {
-                Target = window.Target;
-            }
+                mExternalLink.Target = window.Target;
         }
 
         private void linkImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            System.Diagnostics.Process.Start(Target);
+            // Open the target URL directly in our browser
+            System.Diagnostics.Process.Start(mExternalLink.Target);
         }
     }
 }
