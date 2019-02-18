@@ -23,6 +23,11 @@ namespace Banananana
         {
             [JsonProperty]
             public String Target { get; set; }
+
+            public ExternalLink()
+            {
+                Target = "http://www.google.com";
+            }
         }
 
         /// <summary>

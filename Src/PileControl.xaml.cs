@@ -115,7 +115,9 @@ namespace Banananana
             mPile = inPile;
             ParentWindow = inParentWindow;
 
-            Workspace.SetFlowDocumentContentFromXML(titleTextBox.Document, inPile.Title);
+            if (inPile.Title != null)
+                Workspace.SetFlowDocumentContentFromXML(titleTextBox.Document, inPile.Title);
+
             headerGrid.Background = new SolidColorBrush(inPile.Color);
 
             foreach (Workspace.Task task in inPile.Tasks)

@@ -104,7 +104,8 @@ namespace Banananana
             mParentPileControl = inPileControl;
 
             // Set text
-            Workspace.SetFlowDocumentContentFromXML(richTextBox.Document, inTask.Text);
+            if (inTask.Text != null)
+                Workspace.SetFlowDocumentContentFromXML(richTextBox.Document, inTask.Text);
 
             // Init external links
             foreach (Workspace.ExternalLink link in inTask.ExternalLinks)
