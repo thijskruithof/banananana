@@ -156,30 +156,6 @@ namespace Banananana
             if (!mDragging)
                 return;
 
-            // Find out where to place our task
-            Point mouse_pos = inPosition;
-
-            // Determine pile to place task in
-            double pile_width = (stackPanel.Children[0] as PileControl).Width; // Child 0 is always the header of the pile
-            int num_piles = stackPanel.Children.Count - 1;
-
-            int preferred_pile_index = Math.Min((int)(mouse_pos.X / pile_width), num_piles-1);
-            PileControl preferred_pile = stackPanel.Children[preferred_pile_index] as PileControl;
-
-            // Determine task index we're trying to move our task to
-            int preferred_task_ctrl_index = preferred_pile.stackPanel.Children.Count;
-
-            for (int i = 3; i < preferred_pile.stackPanel.Children.Count; ++i)
-            {
-                Point control_top_left = preferred_pile.stackPanel.Children[i].TransformToAncestor(stackPanel).Transform(new Point(0, 0));
-
-                if (mouse_pos.Y < control_top_left.Y)
-                {
-                    preferred_task_ctrl_index = i - 1;
-                    break;
-                }
-            }
-
             // Determine from which pile we're dragging
             int current_pile_index = -1;
             PileControl current_pile = null;
@@ -194,14 +170,64 @@ namespace Banananana
                 }
             }
 
+            // Determine which task we're dragging
             int current_task_ctrl_index = current_pile.stackPanel.Children.IndexOf(mDraggedTask);
+
+            // Find out where to place our task
+            Point mouse_pos = inPosition;
+
+            // Determine pile to place task in
+            double pile_width = (stackPanel.Children[0] as PileControl).Width; // Child 0 is always the header of the pile
+            int num_piles = stackPanel.Children.Count - 1;
+
+            int preferred_pile_index = Math.Min((int)(mouse_pos.X / pile_width), num_piles-1);
+            PileControl preferred_pile = stackPanel.Children[preferred_pile_index] as PileControl;
+
+            // Determine task index we're trying to move our task to
+            int preferred_task_ctrl_index = -1;
+
+            if (preferred_pile.stackPanel.Children.Count >= 3)
+            {
+                if (preferred_pile_index == current_pile_index)
+                {
+                    double cur_top_y = mDraggedTask.TransformToAncestor(current_pile.stackPanel).Transform(new Point(0, 0)).Y;
+                    double cur_h = mDraggedTask.ActualHeight;
+
+                    // If our mouse is still within the task that we're dragging, no need to move it.
+                    if (mouse_pos.Y >= cur_top_y && mouse_pos.Y < cur_top_y + cur_h)
+                        preferred_task_ctrl_index = current_task_ctrl_index;
+                }
+                
+                if (preferred_task_ctrl_index < 0)
+                {
+                    double top_y = preferred_pile.stackPanel.Children[2].TransformToAncestor(stackPanel).Transform(new Point(0, 0)).Y;
+                    preferred_task_ctrl_index = 2;
+
+                    for (int i = 2; i < preferred_pile.stackPanel.Children.Count; ++i)
+                    {
+                        UIElement element = preferred_pile.stackPanel.Children[i];
+                        if (element == mDraggedTask)
+                            continue;
+
+                        double h = (preferred_pile.stackPanel.Children[i] as FrameworkElement).ActualHeight;
+
+                        if (mouse_pos.Y < top_y + h && mouse_pos.Y >= top_y)
+                            break;
+
+                        top_y += h;
+                        preferred_task_ctrl_index++;
+                    }
+                }
+            }
+            // Our destination pile is still empty, add task to bottom.
+            else
+            {
+                preferred_task_ctrl_index = preferred_pile.stackPanel.Children.Count;
+            }
 
             // Move dragged task to a different pile? Or move dragged task to different spot in same pile?
             if (current_pile_index != preferred_pile_index || current_task_ctrl_index != preferred_task_ctrl_index)
             {
-                if (current_pile_index == preferred_pile_index && preferred_task_ctrl_index > current_task_ctrl_index)
-                    preferred_task_ctrl_index--;
-
                 current_pile.MoveTaskControlToPileControl(mDraggedTask, preferred_pile, preferred_task_ctrl_index);
             }
         }
