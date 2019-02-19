@@ -63,6 +63,9 @@
     <Compile Include="EditExternalLinkWindow.xaml.cs">
       <DependentUpon>EditExternalLinkWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditNotesControl.xaml.cs">
+      <DependentUpon>EditNotesControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExternalLinkControl.xaml.cs">
       <DependentUpon>ExternalLinkControl.xaml</DependentUpon>
     </Compile>
@@ -74,6 +77,10 @@
     </Compile>
     <Compile Include="Workspace.cs" />
     <Page Include="EditExternalLinkWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditNotesControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
