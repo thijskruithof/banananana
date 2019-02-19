@@ -90,9 +90,9 @@ namespace Banananana
         {
             get
             {
-                // The first two children are fixed (header and add button)
-                for (int i = 0; i < linksStackPanel.Children.Count; ++i)
-                    yield return linksStackPanel.Children[i] as ExternalLinkControl;
+                for (int i = 1; i < linksAndNotesStackPanel.Children.Count; ++i)
+                    if (linksAndNotesStackPanel.Children[i] is ExternalLinkControl)
+                        yield return linksAndNotesStackPanel.Children[i] as ExternalLinkControl;
             }
         }
 
@@ -114,18 +114,30 @@ namespace Banananana
             // Reset background linear
             LinearGradientBrush border_background = border.Background as LinearGradientBrush;
             border_background.GradientStops.Last().Color = Color.FromArgb(255, 160, 160, 160);
+
+            // Init notes
+            if (inTask.Notes != null)
+                AddNewNotesControl();
         }
 
 
         public void DeleteExternalLinkAndControl(ExternalLinkControl inLinkControl)
         {
             mTask.ExternalLinks.Remove(inLinkControl.ExternalLink);
-            linksStackPanel.Children.Remove(inLinkControl);
+            linksAndNotesStackPanel.Children.Remove(inLinkControl);
         }
+
+        public void DeleteNotesAndControl(NotesControl inNotesControl)
+        {
+            mTask.Notes = null;
+            linksAndNotesStackPanel.Children.Remove(inNotesControl);
+        }
+
 
         private void OptionsButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             optionsButton.ContextMenu.IsOpen = true;
+            OptionsButton_ContextMenuOpening(sender, null);
 
             e.Handled = true;
         }
@@ -141,8 +153,15 @@ namespace Banananana
         private ExternalLinkControl AddNewExternalLinkControl(Workspace.ExternalLink inExternalLink)
         {
             ExternalLinkControl control = new ExternalLinkControl(this, inExternalLink);
-            linksStackPanel.Children.Add(control);
+            linksAndNotesStackPanel.Children.Insert(0, control);
 
+            return control;
+        }
+
+        private NotesControl AddNewNotesControl()
+        {
+            NotesControl control = new NotesControl(this, mTask);
+            linksAndNotesStackPanel.Children.Insert(linksAndNotesStackPanel.Children.Count, control);
             return control;
         }
 
@@ -166,6 +185,20 @@ namespace Banananana
 
             if (mTask != null)
                 mTask.Text = Workspace.GetFlowDocumentContentAsXML(richTextBox.Document);
+        }
+
+        private void AddNotesMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            // Init our notes
+            mTask.Notes = Workspace.Task.cNewNotesText;
+
+            // Add our control
+            AddNewNotesControl();
+        }
+
+        private void OptionsButton_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            addNotesMenuItem.IsEnabled = (mTask.Notes == null);
         }
     }
 }

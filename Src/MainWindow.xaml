@@ -10,11 +10,11 @@
     <Window.Background>
         <ImageBrush ImageSource="Resources/bananas-close-up.jpg" Stretch="UniformToFill"/>
     </Window.Background>
-    <Grid>
+    <Grid x:Name="mainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="0"/>
+            <ColumnDefinition Width="0"/>
         </Grid.ColumnDefinitions>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <StackPanel x:Name="stackPanel" Orientation="Horizontal" Width="Auto" Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -26,8 +26,6 @@
         <GridSplitter Background="DarkGray"  ResizeDirection="Columns" Grid.Column="1" 
                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                   ResizeBehavior="PreviousAndNext" />
-        <local:EditNotesControl Grid.Column="2">
-            
-        </local:EditNotesControl>
+
     </Grid>
 </Window>

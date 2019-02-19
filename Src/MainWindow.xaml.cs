@@ -285,6 +285,31 @@ namespace Banananana
             Workspace.Pile new_pile = new Workspace.Pile();
             mWorkspace.Piles.Add(new_pile);
             AddNewPileControl(new_pile);
+
+            ShowNotesEditPanel(null);
+        }
+
+        private void ShowNotesEditPanel(Workspace.Task inTask)
+        {
+            EditNotesControl control = new EditNotesControl();
+            control.OnClosed += EditNotesControl_OnClosed;
+
+            mainGrid.ColumnDefinitions[1].Width = new GridLength(5);
+            mainGrid.ColumnDefinitions[2].Width = new GridLength(500);
+            mainGrid.ColumnDefinitions[2].MinWidth = 300;
+
+            mainGrid.Children.Add(control);
+            Grid.SetColumn(control, 2);
+        }
+
+        private void EditNotesControl_OnClosed(EditNotesControl inControl)
+        {
+            mainGrid.Children.Remove(inControl);
+
+            mainGrid.ColumnDefinitions[2].MinWidth = 0;
+            mainGrid.ColumnDefinitions[2].Width = new GridLength(0);
+            mainGrid.ColumnDefinitions[1].Width = new GridLength(0);
+            
         }
     }
 }

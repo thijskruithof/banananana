@@ -29,13 +29,14 @@
                             <Paragraph/>
                         </FlowDocument>
                     </RichTextBox>
-                    <StackPanel x:Name="linksStackPanel" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0"/>
+                    <StackPanel x:Name="linksAndNotesStackPanel" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0"/>
                 </StackPanel>
                 <StackPanel Height="19" HorizontalAlignment="Right" Margin="0" Orientation="Horizontal">
-                    <Label x:Name="optionsButton" Content="⋮" Margin="5,-6,5,1" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="22" Padding="1,-5,1,4" Foreground="#FF919191" RenderTransformOrigin="0.531,0.504" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="OptionsButton_MouseLeftButtonDown" FontWeight="ExtraBold" Height="24">
+                    <Label x:Name="optionsButton" Content="⋮" Margin="5,-6,5,1" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="22" Padding="1,-5,1,4" Foreground="#FF919191" RenderTransformOrigin="0.531,0.504" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="OptionsButton_MouseLeftButtonDown" FontWeight="ExtraBold" Height="24" ContextMenuOpening="OptionsButton_ContextMenuOpening">
                         <Label.ContextMenu>
-                            <ContextMenu>
+                            <ContextMenu x:Name="optionsMenu">
                                 <MenuItem x:Name="addExternalLinkMenuItem" Header="Add external link..." Click="AddExternalLinkMenuItem_Click"/>
+                                <MenuItem x:Name="addNotesMenuItem" Header="Add notes..." Click="AddNotesMenuItem_Click"/>
                                 <Separator/>
                                 <MenuItem x:Name="deleteTaskMenuItem" Header="Delete..." Click="DeleteTaskMenuItem_Click"/>
                             </ContextMenu>

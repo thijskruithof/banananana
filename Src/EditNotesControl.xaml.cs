@@ -20,6 +20,10 @@ namespace Banananana
     /// </summary>
     public partial class EditNotesControl : UserControl
     {
+        public delegate void CloseHandler(EditNotesControl inControl);
+
+        public event CloseHandler OnClosed;
+
         public EditNotesControl()
         {
             InitializeComponent();
@@ -37,9 +41,7 @@ namespace Banananana
 
         private void closeButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.Visibility = Visibility.Collapsed;
-            (Parent as Grid).ColumnDefinitions[2].Width = new GridLength(0);
-            (Parent as Grid).ColumnDefinitions[1].Width = new GridLength(0);
+            OnClosed(this);
         }
     }
 }
