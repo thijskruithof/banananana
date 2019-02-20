@@ -131,6 +131,7 @@ namespace Banananana
         {
             mTask.Notes = null;
             linksAndNotesStackPanel.Children.Remove(inNotesControl);
+            mParentPileControl.ParentWindow.CloseEditNodesControlForTask(mTask);
         }
 
 
@@ -181,7 +182,7 @@ namespace Banananana
 
         private void richTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Crappy, but works for now...
+            // Crappy/inefficient, but works for now...
 
             if (mTask != null)
                 mTask.Text = Workspace.GetFlowDocumentContentAsXML(richTextBox.Document);
@@ -189,10 +190,7 @@ namespace Banananana
 
         private void AddNotesMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            // Init our notes
             mTask.Notes = Workspace.Task.cNewNotesText;
-
-            // Add our control
             AddNewNotesControl();
         }
 

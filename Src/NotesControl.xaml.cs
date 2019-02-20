@@ -43,12 +43,22 @@ namespace Banananana
 
         private void NotesImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
+            OpenEditNotesControl();
         }
 
         private void DeleteMenuItem_Click(object sender, RoutedEventArgs e)
         {
             mParentTaskControl.DeleteNotesAndControl(this);
+        }
+
+        private void editMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            OpenEditNotesControl();
+        }
+
+        private void OpenEditNotesControl()
+        {
+            mParentTaskControl.ParentPileControl.ParentWindow.OpenEditNotesControl(mTask);
         }
     }
 }

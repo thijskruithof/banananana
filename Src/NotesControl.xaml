@@ -5,12 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Banananana"
              mc:Ignorable="d" 
-             d:DesignHeight="20" d:DesignWidth="20" Height="20" Width="20" Margin="0,0,8,0">
+             d:DesignHeight="20" d:DesignWidth="20" Height="20" Width="20" Margin="0,2,8,0">
     <Grid Background="White">
         <Image x:Name="notesImage" Source="Resources/notesicon.png" Cursor="Hand" Opacity="0.25" MouseEnter="NotesImage_MouseEnter" MouseLeave="NotesImage_MouseLeave" MouseLeftButtonDown="NotesImage_MouseLeftButtonDown">
             <Image.ContextMenu>
                 <ContextMenu>
-                    <MenuItem x:Name="editMenuItem" Header="Edit notes..."/>
+                    <MenuItem x:Name="editMenuItem" Header="Edit notes..." Click="editMenuItem_Click"/>
                     <Separator/>
                     <MenuItem x:Name="deleteMenuItem" Header="Delete" Click="DeleteMenuItem_Click"/>
                 </ContextMenu>

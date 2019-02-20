@@ -286,12 +286,27 @@ namespace Banananana
             mWorkspace.Piles.Add(new_pile);
             AddNewPileControl(new_pile);
 
-            ShowNotesEditPanel(null);
+            OpenEditNotesControl(null);
         }
 
-        private void ShowNotesEditPanel(Workspace.Task inTask)
+        private EditNotesControl GetActiveEditNotesControl()
         {
-            EditNotesControl control = new EditNotesControl();
+            if (mainGrid.Children.Count >= 3)
+                return mainGrid.Children[2] as EditNotesControl;
+            else
+                return null;                           
+        }
+
+
+        public void OpenEditNotesControl(Workspace.Task inTask)
+        {
+            // First: check if any edit panel is currently open. If so, close it first...
+            EditNotesControl active_control = GetActiveEditNotesControl();
+            if (active_control != null)
+                mainGrid.Children.Remove(active_control);
+
+            // Open new edit panel
+            EditNotesControl control = new EditNotesControl(inTask);
             control.OnClosed += EditNotesControl_OnClosed;
 
             mainGrid.ColumnDefinitions[1].Width = new GridLength(5);
@@ -302,14 +317,26 @@ namespace Banananana
             Grid.SetColumn(control, 2);
         }
 
-        private void EditNotesControl_OnClosed(EditNotesControl inControl)
+        public void CloseEditNodesControlForTask(Workspace.Task inTask)
         {
-            mainGrid.Children.Remove(inControl);
+            EditNotesControl active_control = GetActiveEditNotesControl();
+            if (active_control != null && active_control.Task == inTask)
+                CloseEditNotesControl();
+        }
+
+        private void CloseEditNotesControl()
+        {
+            if (mainGrid.Children.Count >= 3)
+                mainGrid.Children.RemoveAt(2);
 
             mainGrid.ColumnDefinitions[2].MinWidth = 0;
             mainGrid.ColumnDefinitions[2].Width = new GridLength(0);
             mainGrid.ColumnDefinitions[1].Width = new GridLength(0);
-            
+        }
+
+        private void EditNotesControl_OnClosed(EditNotesControl inControl)
+        {
+            CloseEditNotesControl();
         }
     }
 }

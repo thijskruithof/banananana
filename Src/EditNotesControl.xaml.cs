@@ -24,10 +24,25 @@ namespace Banananana
 
         public event CloseHandler OnClosed;
 
-        public EditNotesControl()
+        private Workspace.Task mTask;
+
+        public Workspace.Task Task
         {
-            InitializeComponent();
+            get
+            {
+                return mTask;
+            }
         }
+
+        public EditNotesControl(Workspace.Task inTask)
+        {
+            mTask = inTask;
+
+            InitializeComponent();
+
+            Workspace.SetFlowDocumentContentFromXML(titleTextBox.Document, inTask.Text);
+        }
+               
 
         private void closeButton_MouseEnter(object sender, MouseEventArgs e)
         {

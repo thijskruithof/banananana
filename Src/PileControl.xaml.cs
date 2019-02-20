@@ -140,10 +140,11 @@ namespace Banananana
         }
 
 
-        public void DeleteTaskAndControl(TaskControl inTask)
+        public void DeleteTaskAndControl(TaskControl inTaskControl)
         {
-            mPile.Tasks.Remove(inTask.Task);
-            stackPanel.Children.Remove(inTask);
+            mPile.Tasks.Remove(inTaskControl.Task);
+            stackPanel.Children.Remove(inTaskControl);
+            ParentWindow.CloseEditNodesControlForTask(inTaskControl.Task);
         }
 
 
