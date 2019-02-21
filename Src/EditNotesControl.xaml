@@ -12,16 +12,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid VerticalAlignment="Top">
-            <Border Height="Auto" VerticalAlignment="Top" Margin="0,3,27,3" Padding="6" Background="#BFFFFFFF" CornerRadius="8" >
-                <RichTextBox x:Name="titleTextBox" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" SelectionOpacity="0.7" FontSize="12" IsReadOnly="True">
-                    <FlowDocument>
-                        <Paragraph/>
-                    </FlowDocument>
-                </RichTextBox>
-
+            <Border x:Name="taskBorder" Height="Auto" VerticalAlignment="Top" Margin="0,3,27,3" Padding="0" Background="#BFFFFFFF" CornerRadius="0" >
             </Border>
             <Label x:Name="closeButton" Content="❌" HorizontalAlignment="Right" BorderBrush="{x:Null}" BorderThickness="0" FontSize="16" Padding="1,-2,1,0" Foreground="Black" RenderTransformOrigin="0.531,0.504" VerticalAlignment="Top" Cursor="Hand" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" Opacity="0.25" MouseEnter="closeButton_MouseEnter" MouseLeave="closeButton_MouseLeave" MouseLeftButtonDown="closeButton_MouseLeftButtonDown" Margin="0,3"/>
-
         </Grid>
         <Border Margin="0,6,0,0" Padding="6" Background="#BFFFFFFF" CornerRadius="8" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="1" >
             <RichTextBox x:Name="notesTextBox" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" AcceptsTab="True" VerticalScrollBarVisibility="Auto" BorderThickness="0" SelectionOpacity="0.7" FontSize="12" Padding="0" Margin="0" HorizontalScrollBarVisibility="Auto" TextChanged="notesTextBox_TextChanged">

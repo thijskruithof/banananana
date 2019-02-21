@@ -26,6 +26,5 @@
         <GridSplitter Background="White"  ResizeDirection="Columns" Grid.Column="1" 
                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                   ResizeBehavior="PreviousAndNext" />
-
     </Grid>
 </Window>

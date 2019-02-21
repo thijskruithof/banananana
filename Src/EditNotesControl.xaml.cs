@@ -38,10 +38,14 @@ namespace Banananana
         {
             InitializeComponent();
 
+            TaskControl new_task_control = new TaskControl(null, inTask);
+            taskBorder.Child = new_task_control;
+            new_task_control.HorizontalAlignment = HorizontalAlignment.Stretch;
+
             // Init task after UI has been initialized, as the init of the UI will trigger a notesTextBox_TextChanged
             mTask = inTask;
 
-            Workspace.SetFlowDocumentContentFromXML(titleTextBox.Document, inTask.Text);
+//            Workspace.SetFlowDocumentContentFromXML(titleTextBox.Document, inTask.Text);
             Workspace.SetFlowDocumentContentFromXML(notesTextBox.Document, inTask.Notes);
         }
                
