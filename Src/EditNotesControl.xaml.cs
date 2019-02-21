@@ -36,11 +36,13 @@ namespace Banananana
 
         public EditNotesControl(Workspace.Task inTask)
         {
-            mTask = inTask;
-
             InitializeComponent();
 
+            // Init task after UI has been initialized, as the init of the UI will trigger a notesTextBox_TextChanged
+            mTask = inTask;
+
             Workspace.SetFlowDocumentContentFromXML(titleTextBox.Document, inTask.Text);
+            Workspace.SetFlowDocumentContentFromXML(notesTextBox.Document, inTask.Notes);
         }
                
 
@@ -57,6 +59,14 @@ namespace Banananana
         private void closeButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             OnClosed(this);
+        }
+
+        private void notesTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Crappy/inefficient, but works for now...
+
+            if (mTask != null)
+                mTask.Notes = Workspace.GetFlowDocumentContentAsXML(notesTextBox.Document);
         }
     }
 }

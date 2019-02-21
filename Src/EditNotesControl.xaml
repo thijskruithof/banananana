@@ -5,11 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Banananana"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="400" Background="#FFFDE288">
-    <StackPanel Margin="8" Orientation="Vertical">
-        <StackPanel Orientation="Horizontal">
-            <Image x:Name="notesImage" Source="Resources/notesicon.png" Margin="0,3,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="20" Height="20"/>
-            <Border Height="Auto" VerticalAlignment="Top" Margin="0,3,0,0" Padding="4" Background="#7FFFFFFF" CornerRadius="8" Width="300" >
+             d:DesignHeight="421.333" d:DesignWidth="319.333" Background="#FFFDE288">
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid VerticalAlignment="Top">
+            <Border Height="Auto" VerticalAlignment="Top" Margin="0,3,27,3" Padding="6" Background="#7FFFFFFF" CornerRadius="8" >
                 <RichTextBox x:Name="titleTextBox" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" SelectionOpacity="0.7" FontSize="12" IsReadOnly="True">
                     <FlowDocument>
                         <Paragraph/>
@@ -17,17 +20,16 @@
                 </RichTextBox>
 
             </Border>
-            <Label x:Name="closeButton" Content="❌" HorizontalAlignment="Left" BorderBrush="{x:Null}" BorderThickness="0" FontSize="16" Padding="1,-2,1,0" Foreground="Black" RenderTransformOrigin="0.531,0.504" VerticalAlignment="Center" Cursor="Hand" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" Opacity="0.25" MouseEnter="closeButton_MouseEnter" MouseLeave="closeButton_MouseLeave" MouseLeftButtonDown="closeButton_MouseLeftButtonDown"/>
-        </StackPanel>
+            <Label x:Name="closeButton" Content="❌" HorizontalAlignment="Right" BorderBrush="{x:Null}" BorderThickness="0" FontSize="16" Padding="1,-2,1,0" Foreground="Black" RenderTransformOrigin="0.531,0.504" VerticalAlignment="Top" Cursor="Hand" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" Opacity="0.25" MouseEnter="closeButton_MouseEnter" MouseLeave="closeButton_MouseLeave" MouseLeftButtonDown="closeButton_MouseLeftButtonDown" Margin="0,3"/>
 
-        <Border Margin="0,8,0,0" Padding="0" Background="#7FFFFFFF" CornerRadius="8" Height="397" >
-            <RichTextBox x:Name="notesTextBox" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" SelectionOpacity="0.7" FontSize="12" Padding="0" Margin="0">
-                <FlowDocument>
+        </Grid>
+        <Border Margin="0,6,0,0" Padding="6" Background="#7FFFFFFF" CornerRadius="8" ScrollViewer.VerticalScrollBarVisibility="Disabled" Grid.Row="1" >
+            <RichTextBox x:Name="notesTextBox" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" AcceptsTab="True" VerticalScrollBarVisibility="Auto" BorderThickness="0" SelectionOpacity="0.7" FontSize="12" Padding="0" Margin="0" HorizontalScrollBarVisibility="Auto" TextChanged="notesTextBox_TextChanged">
+                <FlowDocument FontSize="14">
                     <Paragraph/>
                 </FlowDocument>
             </RichTextBox>
 
         </Border>
-
-    </StackPanel>
+    </Grid>
 </UserControl>

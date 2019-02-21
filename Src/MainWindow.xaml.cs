@@ -71,6 +71,7 @@ namespace Banananana
         {
             mWorkspace.Piles.Remove(inPileControl.Pile);
             stackPanel.Children.Remove(inPileControl);
+            CloseEditNodesControlForPile(inPileControl.Pile);
         }
 
 
@@ -315,6 +316,13 @@ namespace Banananana
 
             mainGrid.Children.Add(control);
             Grid.SetColumn(control, 2);
+        }
+
+        public void CloseEditNodesControlForPile(Workspace.Pile inPile)
+        {
+            EditNotesControl active_control = GetActiveEditNotesControl();
+            if (active_control != null && inPile.Tasks.Contains(active_control.Task))
+                CloseEditNotesControl();
         }
 
         public void CloseEditNodesControlForTask(Workspace.Task inTask)
