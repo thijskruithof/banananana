@@ -23,7 +23,7 @@
                 </Border>
             </StackPanel>
         </ScrollViewer>
-        <GridSplitter Background="#FFFFEECC"  ResizeDirection="Columns" Grid.Column="1" 
+        <GridSplitter Background="White"  ResizeDirection="Columns" Grid.Column="1" 
                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                   ResizeBehavior="PreviousAndNext" />
 

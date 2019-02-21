@@ -310,7 +310,7 @@ namespace Banananana
             EditNotesControl control = new EditNotesControl(inTask);
             control.OnClosed += EditNotesControl_OnClosed;
 
-            mainGrid.ColumnDefinitions[1].Width = new GridLength(5);
+            mainGrid.ColumnDefinitions[1].Width = new GridLength(8);
             mainGrid.ColumnDefinitions[2].Width = new GridLength(500);
             mainGrid.ColumnDefinitions[2].MinWidth = 300;
 
