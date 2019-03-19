@@ -286,8 +286,6 @@ namespace Banananana
             Workspace.Pile new_pile = new Workspace.Pile();
             mWorkspace.Piles.Add(new_pile);
             AddNewPileControl(new_pile);
-
-            OpenEditNotesControl(null);
         }
 
         private EditNotesControl GetActiveEditNotesControl()
