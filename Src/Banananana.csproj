@@ -69,6 +69,9 @@
     <Compile Include="ExternalLinkControl.xaml.cs">
       <DependentUpon>ExternalLinkControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ManageCategoriesWindow.xaml.cs">
+      <DependentUpon>ManageCategoriesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NotesControl.xaml.cs">
       <DependentUpon>NotesControl.xaml</DependentUpon>
     </Compile>
@@ -103,6 +106,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ManageCategoriesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NotesControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

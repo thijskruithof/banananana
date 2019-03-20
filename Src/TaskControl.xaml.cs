@@ -29,6 +29,7 @@ namespace Banananana
             IsNotBeingDragged
         }
 
+        private Workspace mWorkspace;
         private Workspace.Task mTask;
         private PileControl mParentPileControl;
 
@@ -96,10 +97,11 @@ namespace Banananana
             }
         }
 
-        public TaskControl(PileControl inPileControl, Workspace.Task inTask)
+        public TaskControl(PileControl inPileControl, Workspace inWorkspace, Workspace.Task inTask)
         {
             InitializeComponent();
 
+            mWorkspace = inWorkspace;
             mTask = inTask;
             mParentPileControl = inPileControl;
 
@@ -197,6 +199,28 @@ namespace Banananana
         private void OptionsButton_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             addNotesMenuItem.IsEnabled = (mTask.Notes == null);
+
+            // Rebuild our context menu
+            while (categoryMenuItem.Items.Count > 2)
+                categoryMenuItem.Items.RemoveAt(0);
+
+            for (int i = -1; i < mWorkspace.Categories.Count; ++i)
+            {
+                Workspace.Category cat = (i >= 0) ? mWorkspace.Categories[i] : null;
+
+                MenuItem item = new MenuItem();
+                item.Header = (i < 0) ? "None" : cat.Title;
+                item.Tag = (Object)i;
+                categoryMenuItem.Items.Insert(i + 1, item);
+            }
+        }
+
+        private void manageCategoriesMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ManageCategoriesWindow window = new ManageCategoriesWindow(mWorkspace);
+            window.Owner = mParentPileControl.ParentWindow;
+
+            window.ShowDialog();
         }
     }
 }

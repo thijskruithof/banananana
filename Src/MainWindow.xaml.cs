@@ -50,7 +50,7 @@ namespace Banananana
 
         private PileControl AddNewPileControl(Workspace.Pile inPile)
         {
-            PileControl pile_control = new PileControl(this, inPile);
+            PileControl pile_control = new PileControl(this, mWorkspace, inPile);
             pile_control.VerticalAlignment = VerticalAlignment.Top;
 
             pile_control.OnDragTaskControlStarted += Pile_OnDragTaskStarted;
@@ -305,7 +305,7 @@ namespace Banananana
                 mainGrid.Children.Remove(active_control);
 
             // Open new edit panel
-            EditNotesControl control = new EditNotesControl(inTask);
+            EditNotesControl control = new EditNotesControl(mWorkspace, inTask);
             control.OnClosed += EditNotesControl_OnClosed;
 
             mainGrid.ColumnDefinitions[1].Width = new GridLength(8);

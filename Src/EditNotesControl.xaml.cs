@@ -34,11 +34,11 @@ namespace Banananana
             }
         }
 
-        public EditNotesControl(Workspace.Task inTask)
+        public EditNotesControl(Workspace inWorkspace, Workspace.Task inTask)
         {
             InitializeComponent();
 
-            TaskControl new_task_control = new TaskControl(null, inTask);
+            TaskControl new_task_control = new TaskControl(null, inWorkspace, inTask);
             taskBorder.Child = new_task_control;
             new_task_control.HorizontalAlignment = HorizontalAlignment.Stretch;
 

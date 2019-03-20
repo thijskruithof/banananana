@@ -38,6 +38,11 @@
                                 <MenuItem x:Name="addExternalLinkMenuItem" Header="Add external link..." Click="AddExternalLinkMenuItem_Click"/>
                                 <MenuItem x:Name="addNotesMenuItem" Header="Add notes..." Click="AddNotesMenuItem_Click"/>
                                 <Separator/>
+                                <MenuItem x:Name="categoryMenuItem" Header="Category">
+                                    <Separator/>
+                                    <MenuItem x:Name="manageCategoriesMenuItem" Header="Manage..." Click="manageCategoriesMenuItem_Click"/>
+                                </MenuItem>
+                                <Separator/>
                                 <MenuItem x:Name="deleteTaskMenuItem" Header="Delete..." Click="DeleteTaskMenuItem_Click"/>
                             </ContextMenu>
                         </Label.ContextMenu>

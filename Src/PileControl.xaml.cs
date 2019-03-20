@@ -36,7 +36,7 @@ namespace Banananana
         public event PileDragMoveHandler OnDragPileControlMoved;
         public event PileDragHandler OnDragPileControlStopped;
 
-
+        private Workspace mWorkspace;
         private Workspace.Pile mPile;
 
 
@@ -108,10 +108,11 @@ namespace Banananana
         }
 
 
-        public PileControl(MainWindow inParentWindow, Workspace.Pile inPile)
+        public PileControl(MainWindow inParentWindow, Workspace inWorkspace, Workspace.Pile inPile)
         {
             InitializeComponent();
 
+            mWorkspace = inWorkspace;
             mPile = inPile;
             ParentWindow = inParentWindow;
 
@@ -154,7 +155,7 @@ namespace Banananana
             if (index < 0)
                 index = mPile.Tasks.Count;
 
-            TaskControl task_control = new TaskControl(this, inTask);
+            TaskControl task_control = new TaskControl(this, mWorkspace, inTask);
 
             stackPanel.Children.Insert(2+index, task_control);
 
