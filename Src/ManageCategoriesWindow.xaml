@@ -5,19 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Banananana"
         mc:Ignorable="d"
-        Title="Manage categories..." Height="394.952" Width="462.614" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner">
+        Title="Manage categories..." Height="385.952" Width="461.614" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner">
     <Grid>
         <Label Content="Categories:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Padding="0"/>
-        <ListView x:Name="categoriesListView" Margin="10,31,10,144">
+        <ListView x:Name="categoriesListView" Margin="10,31,10,145" SelectionChanged="categoriesListView_SelectionChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Color" Width="100"/>
-                    <GridViewColumn Header="Title" Width="300"/>
+                    <GridViewColumn Header="Color" DisplayMemberBinding="{Binding Color}" Width="100"/>
+                    <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Title}" Width="300"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="deleteButton" Content="Delete" HorizontalAlignment="Left" Margin="90,0,0,117" VerticalAlignment="Bottom" Width="75"/>
-        <Button x:Name="addButton" Content="Add" HorizontalAlignment="Left" Margin="10,0,0,117" VerticalAlignment="Bottom" Width="75" Click="addButton_Click"/>
+        <Button x:Name="deleteButton" Content="Delete" HorizontalAlignment="Right" Margin="0,0,10,120" VerticalAlignment="Bottom" Width="75" Click="deleteButton_Click"/>
+        <Button x:Name="addButton" Content="Add" HorizontalAlignment="Right" Margin="0,0,90,120" VerticalAlignment="Bottom" Width="75" Click="addButton_Click"/>
+        <Button x:Name="modifyButton" Content="Modify" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" Click="modifyButton_Click"/>
+        <TextBox x:Name="titleTextBox" Height="23" Margin="62,0,10,40" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Bottom"/>
+        <Label Content="Color:" HorizontalAlignment="Left" Margin="10,0,0,77" VerticalAlignment="Bottom" Padding="0"/>
+        <Label Content="Title:" HorizontalAlignment="Left" Margin="10,0,0,46" VerticalAlignment="Bottom" Padding="0"/>
+        <Rectangle x:Name="colorRect" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="23" Margin="62,0,0,73" VerticalAlignment="Bottom" Width="23" Stroke="Black"/>
+        <Rectangle x:Name="pickColorRect" Fill="#FFECC1A9" HorizontalAlignment="Left" Height="23" Margin="108,0,0,73" VerticalAlignment="Bottom" Width="23" Stroke="Black" MouseLeftButtonDown="pickColorRect_MouseLeftButtonDown"/>
+        <Rectangle x:Name="pickColorRect1" Fill="#FFBF1CBF" HorizontalAlignment="Left" Height="23" Margin="136,0,0,73" VerticalAlignment="Bottom" Width="23" Stroke="Black" MouseLeftButtonDown="pickColorRect_MouseLeftButtonDown"/>
+        <Rectangle x:Name="pickColorRect2" Fill="#FFCBBB18" HorizontalAlignment="Left" Height="23" Margin="164,0,0,73" VerticalAlignment="Bottom" Width="23" Stroke="Black" MouseLeftButtonDown="pickColorRect_MouseLeftButtonDown" RenderTransformOrigin="-1.087,0.609"/>
 
     </Grid>
 </Window>
