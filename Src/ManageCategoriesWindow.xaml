@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Banananana"
         mc:Ignorable="d"
-        Title="Manage categories..." Height="385.952" Width="461.614" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner">
+        Title="Manage categories..." Height="396.952" Width="461.614" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner">
     <Grid>
         <Label Content="Categories:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Padding="0"/>
         <ListView x:Name="categoriesListView" Margin="10,31,10,145" SelectionChanged="categoriesListView_SelectionChanged">
@@ -23,9 +23,16 @@
         <Label Content="Color:" HorizontalAlignment="Left" Margin="10,0,0,77" VerticalAlignment="Bottom" Padding="0"/>
         <Label Content="Title:" HorizontalAlignment="Left" Margin="10,0,0,46" VerticalAlignment="Bottom" Padding="0"/>
         <Rectangle x:Name="colorRect" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="23" Margin="62,0,0,73" VerticalAlignment="Bottom" Width="23" Stroke="Black"/>
-        <Rectangle x:Name="pickColorRect" Fill="#FFECC1A9" HorizontalAlignment="Left" Height="23" Margin="108,0,0,73" VerticalAlignment="Bottom" Width="23" Stroke="Black" MouseLeftButtonDown="pickColorRect_MouseLeftButtonDown"/>
-        <Rectangle x:Name="pickColorRect1" Fill="#FFBF1CBF" HorizontalAlignment="Left" Height="23" Margin="136,0,0,73" VerticalAlignment="Bottom" Width="23" Stroke="Black" MouseLeftButtonDown="pickColorRect_MouseLeftButtonDown"/>
-        <Rectangle x:Name="pickColorRect2" Fill="#FFCBBB18" HorizontalAlignment="Left" Height="23" Margin="164,0,0,73" VerticalAlignment="Bottom" Width="23" Stroke="Black" MouseLeftButtonDown="pickColorRect_MouseLeftButtonDown" RenderTransformOrigin="-1.087,0.609"/>
+        <StackPanel x:Name="colorPickersPanel" Margin="110,0,10,73" Orientation="Horizontal" VerticalAlignment="Bottom">
+            <Rectangle x:Name="pickColorRect0" Fill="#FFFF5B00" HorizontalAlignment="Left" Height="23" Width="23" Stroke="Black" MouseLeftButtonDown="pickColorRect_MouseLeftButtonDown" Margin="8,0,0,0"/>
+            <Rectangle x:Name="pickColorRect1" Fill="Magenta" HorizontalAlignment="Left" Height="23" Width="23" Stroke="Black" MouseLeftButtonDown="pickColorRect_MouseLeftButtonDown" Margin="8,0,0,0"/>
+            <Rectangle x:Name="pickColorRect2" Fill="#FF00FF74" HorizontalAlignment="Left" Height="23" Width="23" Stroke="Black" MouseLeftButtonDown="pickColorRect_MouseLeftButtonDown" Margin="8,0,0,0"/>
+            <Rectangle x:Name="pickColorRect3" Fill="#FF8621FF" HorizontalAlignment="Left" Height="23" Width="23" Stroke="Black" MouseLeftButtonDown="pickColorRect_MouseLeftButtonDown" Margin="8,0,0,0"/>
+            <Rectangle x:Name="pickColorRect4" Fill="#FFFF239B" HorizontalAlignment="Left" Height="23" Width="23" Stroke="Black" MouseLeftButtonDown="pickColorRect_MouseLeftButtonDown" Margin="8,0,0,0"/>
+            <Rectangle x:Name="pickColorRect5" Fill="#FF9B9B9B" HorizontalAlignment="Left" Height="23" Width="23" Stroke="Black" MouseLeftButtonDown="pickColorRect_MouseLeftButtonDown" Margin="8,0,0,0"/>
+            <Rectangle x:Name="pickColorRect6" Fill="#FFFFC603" HorizontalAlignment="Left" Height="23" Width="23" Stroke="Black" MouseLeftButtonDown="pickColorRect_MouseLeftButtonDown" Margin="8,0,0,0"/>
+            <Rectangle x:Name="pickColorRect7" Fill="#FF08D2FF" HorizontalAlignment="Left" Height="23" Width="23" Stroke="Black" MouseLeftButtonDown="pickColorRect_MouseLeftButtonDown" Margin="8,0,0,0"/>
+        </StackPanel>
 
     </Grid>
 </Window>

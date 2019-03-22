@@ -112,15 +112,20 @@ namespace Banananana
             if (item != null)
             {
                 titleTextBox.IsEnabled = true;
+                modifyButton.IsEnabled = true;
+                colorPickersPanel.Visibility = Visibility.Visible;
+
                 colorRect.Fill = new SolidColorBrush(item.Category.Color);
                 titleTextBox.Text = item.Title;
-                modifyButton.IsEnabled = true;
+                
             }
             else
             {
                 titleTextBox.IsEnabled = false;
-                titleTextBox.Text = "";
                 modifyButton.IsEnabled = false;
+                colorPickersPanel.Visibility = Visibility.Hidden;
+
+                titleTextBox.Text = "";              
             }
         }
 
@@ -141,10 +146,7 @@ namespace Banananana
             CategoriesListItem item = categoriesListView.SelectedItem as CategoriesListItem;
 
             if (item != null)
-            {
-                item.Category.Color = ((sender as Rectangle).Fill as SolidColorBrush).Color;
-                colorRect.Fill = new SolidColorBrush(item.Category.Color);
-            }
+                colorRect.Fill = (sender as Rectangle).Fill;
         }
     }
 }

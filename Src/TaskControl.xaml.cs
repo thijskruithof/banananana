@@ -113,13 +113,26 @@ namespace Banananana
             foreach (Workspace.ExternalLink link in inTask.ExternalLinks)
                 AddNewExternalLinkControl(link);
 
-            // Reset background linear
-            LinearGradientBrush border_background = border.Background as LinearGradientBrush;
-            border_background.GradientStops.Last().Color = Color.FromArgb(255, 160, 160, 160);
+            // Set the task's header color
+            UpdateTaskHeaderColor();
 
             // Init notes
             if (inTask.Notes != null)
                 AddNewNotesControl();
+        }
+
+        public void UpdateTaskHeaderColor()
+        {
+            Color color;
+
+            if (mTask.CategoryIndex >= 0)
+                color = mWorkspace.Categories[mTask.CategoryIndex].Color;
+            else
+                color = Color.FromArgb(255, 160, 160, 160);
+
+            // Set background linear
+            LinearGradientBrush border_background = border.Background as LinearGradientBrush;
+            border_background.GradientStops.Last().Color = color;
         }
 
 
@@ -211,8 +224,20 @@ namespace Banananana
                 MenuItem item = new MenuItem();
                 item.Header = (i < 0) ? "None" : cat.Title;
                 item.Tag = (Object)i;
+                item.IsCheckable = true;
+                item.IsChecked = mTask.CategoryIndex == i;
+                item.Click += CategoryMenuItem_Click;
                 categoryMenuItem.Items.Insert(i + 1, item);
             }
+        }
+
+        private void CategoryMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem item = sender as MenuItem;
+            item.IsChecked = true;
+            mTask.CategoryIndex = (int)item.Tag;
+
+            UpdateTaskHeaderColor();
         }
 
         private void manageCategoriesMenuItem_Click(object sender, RoutedEventArgs e)
