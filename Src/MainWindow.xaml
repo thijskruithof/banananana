@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Banananana"
         mc:Ignorable="d"
         Title="Banananana" Height="616.83" Width="843.696" Closing="Window_Closing" Icon="Resources/appicon.ico"
-        Style="{StaticResource WinAll}">
+        Style="{StaticResource WinAll}" Loaded="Window_Loaded">
     <Window.Background>
         <ImageBrush ImageSource="Resources/bananas-close-up.jpg" Stretch="UniformToFill"/>
     </Window.Background>

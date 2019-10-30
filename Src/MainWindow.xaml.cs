@@ -266,9 +266,37 @@ namespace Banananana
             mWorkspace.SaveToFile(GetWorkspaceFilename());
         }
 
+        private void SaveWindowSizeAndPosition()
+        {
+            // https://stackoverflow.com/questions/847752/net-wpf-remember-window-size-between-sessions
+
+            if (WindowState == WindowState.Maximized)
+            {
+                // Use the RestoreBounds as the current values will be 0, 0 and the size of the screen
+                Properties.Settings.Default.WindowTop = RestoreBounds.Top;
+                Properties.Settings.Default.WindowLeft = RestoreBounds.Left;
+                Properties.Settings.Default.WindowHeight = RestoreBounds.Height;
+                Properties.Settings.Default.WindowWidth = RestoreBounds.Width;
+                Properties.Settings.Default.WindowMaximized = true;
+            }
+            else
+            {
+                Properties.Settings.Default.WindowTop = this.Top;
+                Properties.Settings.Default.WindowLeft = this.Left;
+                Properties.Settings.Default.WindowHeight = this.Height;
+                Properties.Settings.Default.WindowWidth = this.Width;
+                Properties.Settings.Default.WindowMaximized = false;
+            }
+
+            Properties.Settings.Default.HasWindowSizeAndPosition = true;
+
+            Properties.Settings.Default.Save();
+        }
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             SaveWorkspace();
+            SaveWindowSizeAndPosition();
         }
 
         private void AddPileRect_MouseEnter(object sender, MouseEventArgs e)
@@ -343,6 +371,26 @@ namespace Banananana
         private void EditNotesControl_OnClosed(EditNotesControl inControl)
         {
             CloseEditNotesControl();
+        }
+
+        private void SetInitialWindowSizeAndPosition()
+        {
+            // Set initial window size and position
+            if (Properties.Settings.Default.HasWindowSizeAndPosition)
+            {
+                this.Top = Properties.Settings.Default.WindowTop;
+                this.Left = Properties.Settings.Default.WindowLeft;
+                this.Width = Properties.Settings.Default.WindowWidth;
+                this.Height = Properties.Settings.Default.WindowHeight;
+
+                if (Properties.Settings.Default.WindowMaximized)
+                    this.WindowState = WindowState.Maximized;
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            SetInitialWindowSizeAndPosition();
         }
     }
 }
