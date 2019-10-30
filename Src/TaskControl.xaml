@@ -21,36 +21,39 @@
                 <GradientStop x:Name="colorGradientStop" Color="#FF00FB94" Offset="0.968"/>
             </LinearGradientBrush>
         </Border.Background>
-        <Border BorderThickness="8" Height="Auto">
-            <StackPanel Height="Auto" Orientation="Horizontal" Margin="4,0,0,0">
-                <StackPanel Orientation="Vertical" Width="230">
-                    <RichTextBox x:Name="richTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" SelectionOpacity="0.7" FontSize="12" TextChanged="richTextBox_TextChanged">
-                        <FlowDocument>
-                            <Paragraph/>
-                        </FlowDocument>
-                    </RichTextBox>
-                    <StackPanel x:Name="linksAndNotesStackPanel" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0"/>
-                </StackPanel>
-                <StackPanel Height="19" HorizontalAlignment="Right" Margin="0" Orientation="Horizontal">
-                    <Label x:Name="optionsButton" Content="⋮" Margin="5,-6,5,1" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="22" Padding="1,-5,1,4" Foreground="#FF919191" RenderTransformOrigin="0.531,0.504" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="OptionsButton_MouseLeftButtonDown" FontWeight="ExtraBold" Height="24" ContextMenuOpening="OptionsButton_ContextMenuOpening">
-                        <Label.ContextMenu>
-                            <ContextMenu x:Name="optionsMenu">
-                                <MenuItem x:Name="addExternalLinkMenuItem" Header="Add external link..." Click="AddExternalLinkMenuItem_Click"/>
-                                <MenuItem x:Name="addNotesMenuItem" Header="Add notes..." Click="AddNotesMenuItem_Click"/>
-                                <Separator/>
-                                <MenuItem x:Name="categoryMenuItem" Header="Category">
+        <Border Height="Auto" BorderBrush="#3F000000" BorderThickness="0,0,0,3" CornerRadius="5">
+            <Border BorderThickness="8" Height="Auto">
+                <StackPanel Height="Auto" Orientation="Horizontal" Margin="4,0,0,0">
+                    <StackPanel Orientation="Vertical" Width="230">
+                        <RichTextBox x:Name="richTextBox" Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" SelectionOpacity="0.7" FontSize="12" TextChanged="richTextBox_TextChanged" FontFamily="/Banananana;component/Resources/#Nunito">
+                            <FlowDocument>
+                                <Paragraph/>
+                            </FlowDocument>
+                        </RichTextBox>
+                        <StackPanel x:Name="linksAndNotesStackPanel" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0"/>
+                    </StackPanel>
+                    <StackPanel Height="19" HorizontalAlignment="Right" Margin="0" Orientation="Horizontal">
+                        <Label x:Name="optionsButton" Content="⋮" Margin="5,-6,5,1" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="22" Padding="1,-5,1,4" Foreground="#FF919191" RenderTransformOrigin="0.531,0.504" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="OptionsButton_MouseLeftButtonDown" FontWeight="ExtraBold" Height="24" ContextMenuOpening="OptionsButton_ContextMenuOpening">
+                            <Label.ContextMenu>
+                                <ContextMenu x:Name="optionsMenu">
+                                    <MenuItem x:Name="addExternalLinkMenuItem" Header="Add external link..." Click="AddExternalLinkMenuItem_Click"/>
+                                    <MenuItem x:Name="addNotesMenuItem" Header="Add notes..." Click="AddNotesMenuItem_Click"/>
                                     <Separator/>
-                                    <MenuItem x:Name="manageCategoriesMenuItem" Header="Manage..." Click="manageCategoriesMenuItem_Click"/>
-                                </MenuItem>
-                                <Separator/>
-                                <MenuItem x:Name="deleteTaskMenuItem" Header="Delete..." Click="DeleteTaskMenuItem_Click"/>
-                            </ContextMenu>
-                        </Label.ContextMenu>
-                    </Label>
-                    <Label x:Name="moveButton" Content="☰" Margin="0,-4" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0,0,0,0" FontSize="18" Padding="1,-5,1,5" Foreground="#FF919191" Cursor="Hand"/>
+                                    <MenuItem x:Name="categoryMenuItem" Header="Category">
+                                        <Separator/>
+                                        <MenuItem x:Name="manageCategoriesMenuItem" Header="Manage..." Click="manageCategoriesMenuItem_Click"/>
+                                    </MenuItem>
+                                    <Separator/>
+                                    <MenuItem x:Name="deleteTaskMenuItem" Header="Delete..." Click="DeleteTaskMenuItem_Click"/>
+                                </ContextMenu>
+                            </Label.ContextMenu>
+                        </Label>
+                        <Label x:Name="moveButton" Content="☰" Margin="0,-4" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0,0,0,0" FontSize="18" Padding="1,-5,1,5" Foreground="#FF919191" Cursor="Hand"/>
+                    </StackPanel>
+
                 </StackPanel>
 
-            </StackPanel>
+            </Border>
 
         </Border>
 
