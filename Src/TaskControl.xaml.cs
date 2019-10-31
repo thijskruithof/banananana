@@ -146,7 +146,6 @@ namespace Banananana
         {
             mTask.Notes = null;
             linksAndNotesStackPanel.Children.Remove(inNotesControl);
-            mParentPileControl.ParentWindow.CloseEditNodesControlForTask(mTask);
         }
 
 

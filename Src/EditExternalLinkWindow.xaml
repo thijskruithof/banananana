@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Banananana"
         mc:Ignorable="d"
-        Title="Edit external link..." Width="268" Height="135" WindowStartupLocation="CenterOwner" SizeToContent="Height" WindowStyle="ToolWindow" MinHeight="143" MinWidth="268">
+        Title="Edit external link..." Width="380.5" Height="135" WindowStartupLocation="CenterOwner" SizeToContent="Height" WindowStyle="ToolWindow" MinHeight="143" MinWidth="268">
     <StackPanel VerticalAlignment="Top" Margin="8">
         <Label Content="Target:" Padding="0" Margin="0,0,0,4"/>
         <TextBox x:Name="targetTextBox" Height="23" TextWrapping="Wrap" Text="TextBox" Margin="0,0,0,16" Background="#FFE2E2E2" BorderBrush="{x:Null}"/>

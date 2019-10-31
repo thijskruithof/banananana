@@ -71,7 +71,6 @@ namespace Banananana
         {
             mWorkspace.Piles.Remove(inPileControl.Pile);
             stackPanel.Children.Remove(inPileControl);
-            CloseEditNodesControlForPile(inPileControl.Pile);
         }
 
 
@@ -316,61 +315,11 @@ namespace Banananana
             AddNewPileControl(new_pile);
         }
 
-        private EditNotesControl GetActiveEditNotesControl()
+
+        public void ShowEditNotesWindow(Workspace.Task inTask)
         {
-            if (mainGrid.Children.Count >= 3)
-                return mainGrid.Children[2] as EditNotesControl;
-            else
-                return null;                           
-        }
-
-
-        public void OpenEditNotesControl(Workspace.Task inTask)
-        {
-            // First: check if any edit panel is currently open. If so, close it first...
-            EditNotesControl active_control = GetActiveEditNotesControl();
-            if (active_control != null)
-                mainGrid.Children.Remove(active_control);
-
-            // Open new edit panel
-            EditNotesControl control = new EditNotesControl(mWorkspace, inTask);
-            control.OnClosed += EditNotesControl_OnClosed;
-
-            mainGrid.ColumnDefinitions[1].Width = new GridLength(8);
-            mainGrid.ColumnDefinitions[2].Width = new GridLength(500);
-            mainGrid.ColumnDefinitions[2].MinWidth = 300;
-
-            mainGrid.Children.Add(control);
-            Grid.SetColumn(control, 2);
-        }
-
-        public void CloseEditNodesControlForPile(Workspace.Pile inPile)
-        {
-            EditNotesControl active_control = GetActiveEditNotesControl();
-            if (active_control != null && inPile.Tasks.Contains(active_control.Task))
-                CloseEditNotesControl();
-        }
-
-        public void CloseEditNodesControlForTask(Workspace.Task inTask)
-        {
-            EditNotesControl active_control = GetActiveEditNotesControl();
-            if (active_control != null && active_control.Task == inTask)
-                CloseEditNotesControl();
-        }
-
-        private void CloseEditNotesControl()
-        {
-            if (mainGrid.Children.Count >= 3)
-                mainGrid.Children.RemoveAt(2);
-
-            mainGrid.ColumnDefinitions[2].MinWidth = 0;
-            mainGrid.ColumnDefinitions[2].Width = new GridLength(0);
-            mainGrid.ColumnDefinitions[1].Width = new GridLength(0);
-        }
-
-        private void EditNotesControl_OnClosed(EditNotesControl inControl)
-        {
-            CloseEditNotesControl();
+            EditNotesWindow window = new EditNotesWindow(mWorkspace, inTask);
+            window.ShowDialog();
         }
 
         private void SetInitialWindowSizeAndPosition()

@@ -145,7 +145,6 @@ namespace Banananana
         {
             mPile.Tasks.Remove(inTaskControl.Task);
             stackPanel.Children.Remove(inTaskControl);
-            ParentWindow.CloseEditNodesControlForTask(inTaskControl.Task);
         }
 
 

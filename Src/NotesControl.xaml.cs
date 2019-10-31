@@ -43,7 +43,7 @@ namespace Banananana
 
         private void NotesImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            OpenEditNotesControl();
+            ShowEditNotesWindow();
         }
 
         private void DeleteMenuItem_Click(object sender, RoutedEventArgs e)
@@ -53,12 +53,12 @@ namespace Banananana
 
         private void editMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            OpenEditNotesControl();
+            ShowEditNotesWindow();
         }
 
-        private void OpenEditNotesControl()
+        private void ShowEditNotesWindow()
         {
-            mParentTaskControl.ParentPileControl.ParentWindow.OpenEditNotesControl(mTask);
+            mParentTaskControl.ParentPileControl.ParentWindow.ShowEditNotesWindow(mTask);
         }
     }
 }
