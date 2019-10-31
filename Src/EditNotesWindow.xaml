@@ -12,16 +12,20 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <RichTextBox x:Name="richTextBox" Height="Auto" Background="#FFE8E8E8" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" VerticalAlignment="Bottom" SelectionOpacity="0.7" FontSize="12" FontFamily="/Banananana;component/Resources/#Nunito" Margin="0,0,0,8">
-            <FlowDocument>
-                <Paragraph/>
-            </FlowDocument>
-        </RichTextBox>
-        <RichTextBox x:Name="notesTextBox" Background="#FFE8E8E8" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" AcceptsTab="True" VerticalScrollBarVisibility="Auto" BorderThickness="0" SelectionOpacity="0.7" FontSize="12" Padding="0" Margin="0,0,0,8" HorizontalScrollBarVisibility="Auto" Grid.Row="1">
-            <FlowDocument FontSize="14">
-                <Paragraph/>
-            </FlowDocument>
-        </RichTextBox>
+        <Border Height="Auto" VerticalAlignment="Bottom" Margin="0,0,0,8" Background="#FFE8E8E8" Padding="4" CornerRadius="4">
+            <RichTextBox x:Name="richTextBox" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" AcceptsTab="True" VerticalScrollBarVisibility="Disabled" BorderThickness="0" SelectionOpacity="0.7" FontSize="12" FontFamily="/Banananana;component/Resources/#Nunito" IsReadOnly="True">
+                <FlowDocument>
+                    <Paragraph/>
+                </FlowDocument>
+            </RichTextBox>
+        </Border>
+        <Border Margin="0,0,0,8" Grid.Row="1" Padding="4" CornerRadius="4" Background="#FFE8E8E8">
+            <RichTextBox x:Name="notesTextBox" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FFFF7400" AcceptsTab="True" VerticalScrollBarVisibility="Auto" BorderThickness="0" SelectionOpacity="0.7" FontSize="12" Padding="0" HorizontalScrollBarVisibility="Auto">
+                <FlowDocument FontSize="14">
+                    <Paragraph/>
+                </FlowDocument>
+            </RichTextBox>
+        </Border>
         <Button x:Name="okButton" Content="OK" Margin="0" Padding="4" IsDefault="True" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="okButton_Click" Grid.Row="2"/>
     </Grid>
 </Window>
