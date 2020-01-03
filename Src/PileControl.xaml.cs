@@ -36,7 +36,6 @@ namespace Banananana
         public event PileDragMoveHandler OnDragPileControlMoved;
         public event PileDragHandler OnDragPileControlStopped;
 
-        private Workspace mWorkspace;
         private Workspace.Pile mPile;
 
 
@@ -108,11 +107,10 @@ namespace Banananana
         }
 
 
-        public PileControl(MainWindow inParentWindow, Workspace inWorkspace, Workspace.Pile inPile)
+        public PileControl(MainWindow inParentWindow, Workspace.Pile inPile)
         {
             InitializeComponent();
 
-            mWorkspace = inWorkspace;
             mPile = inPile;
             ParentWindow = inParentWindow;
 
@@ -130,11 +128,11 @@ namespace Banananana
         {
             // Remove from this pile
             this.stackPanel.Children.Remove(inTaskControl);
-            this.mPile.Tasks.Remove(inTaskControl.Task);
+            this.mPile.RemoveTask(inTaskControl.Task);
 
             // Add to destination pile (at the correct position)
             inDestinationPileControl.stackPanel.Children.Insert(inDestinationTaskControlIndex, inTaskControl);
-            inDestinationPileControl.mPile.Tasks.Insert(inDestinationTaskControlIndex - 2, inTaskControl.Task);
+            inDestinationPileControl.mPile.InsertTask(inDestinationTaskControlIndex - 2, inTaskControl.Task);
 
             // Set new parent pile
             inTaskControl.ParentPileControl = inDestinationPileControl;
@@ -143,7 +141,7 @@ namespace Banananana
 
         public void DeleteTaskAndControl(TaskControl inTaskControl)
         {
-            mPile.Tasks.Remove(inTaskControl.Task);
+            mPile.RemoveTask(inTaskControl.Task);
             stackPanel.Children.Remove(inTaskControl);
         }
 
@@ -154,7 +152,7 @@ namespace Banananana
             if (index < 0)
                 index = mPile.Tasks.Count;
 
-            TaskControl task_control = new TaskControl(this, mWorkspace, inTask);
+            TaskControl task_control = new TaskControl(this, inTask);
 
             stackPanel.Children.Insert(2+index, task_control);
 
@@ -236,7 +234,7 @@ namespace Banananana
         private void AddTaskRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Workspace.Task new_task = new Workspace.Task();
-            mPile.Tasks.Insert(0, new_task);
+            mPile.InsertTask(0, new_task);
             AddNewTaskControl(new_task);
         }
 

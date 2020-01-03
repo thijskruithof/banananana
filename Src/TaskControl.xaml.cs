@@ -29,7 +29,6 @@ namespace Banananana
             IsNotBeingDragged
         }
 
-        private Workspace mWorkspace;
         private Workspace.Task mTask;
         private PileControl mParentPileControl;
 
@@ -97,11 +96,10 @@ namespace Banananana
             }
         }
 
-        public TaskControl(PileControl inPileControl, Workspace inWorkspace, Workspace.Task inTask)
+        public TaskControl(PileControl inPileControl, Workspace.Task inTask)
         {
             InitializeComponent();
 
-            mWorkspace = inWorkspace;
             mTask = inTask;
             mParentPileControl = inPileControl;
 
@@ -126,7 +124,7 @@ namespace Banananana
             Color color;
 
             if (mTask.CategoryIndex >= 0)
-                color = mWorkspace.Categories[mTask.CategoryIndex].Color;
+                color = Workspace.Instance.Categories[mTask.CategoryIndex].Color;
             else
                 color = Color.FromArgb(255, 160, 160, 160);
 
@@ -138,7 +136,7 @@ namespace Banananana
 
         public void DeleteExternalLinkAndControl(ExternalLinkControl inLinkControl)
         {
-            mTask.ExternalLinks.Remove(inLinkControl.ExternalLink);
+            mTask.RemoveExternalLink(inLinkControl.ExternalLink);
             linksAndNotesStackPanel.Children.Remove(inLinkControl);
         }
 
@@ -190,7 +188,7 @@ namespace Banananana
 
             Workspace.ExternalLink new_link = new Workspace.ExternalLink();
             new_link.Target = window.Target;
-            mTask.ExternalLinks.Add(new_link);
+            mTask.AddExternalLink(new_link);
             AddNewExternalLinkControl(new_link);            
         }
 
@@ -216,9 +214,9 @@ namespace Banananana
             while (categoryMenuItem.Items.Count > 2)
                 categoryMenuItem.Items.RemoveAt(0);
 
-            for (int i = -1; i < mWorkspace.Categories.Count; ++i)
+            for (int i = -1; i < Workspace.Instance.Categories.Count; ++i)
             {
-                Workspace.Category cat = (i >= 0) ? mWorkspace.Categories[i] : null;
+                Workspace.Category cat = (i >= 0) ? Workspace.Instance.Categories[i] : null;
 
                 MenuItem item = new MenuItem();
                 item.Header = (i < 0) ? "None" : cat.Title;
@@ -241,7 +239,7 @@ namespace Banananana
 
         private void manageCategoriesMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            ManageCategoriesWindow window = new ManageCategoriesWindow(mWorkspace);
+            ManageCategoriesWindow window = new ManageCategoriesWindow();
             window.Owner = mParentPileControl.ParentWindow;
 
             window.ShowDialog();

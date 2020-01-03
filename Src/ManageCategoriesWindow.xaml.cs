@@ -27,12 +27,8 @@ namespace Banananana
             public Workspace.Category Category { get; set; }
         }
 
-        private Workspace mWorkspace;
-
-        public ManageCategoriesWindow(Workspace inWorkspace)
+        public ManageCategoriesWindow()
         {
-            mWorkspace = inWorkspace;
-
             InitializeComponent();
             RebuildListView();
             UpdateSelectedItemFields();
@@ -44,7 +40,7 @@ namespace Banananana
             cat.Color = Color.FromArgb(255, 255, 0, 0);
             cat.Title = "New category";
 
-            mWorkspace.Categories.Add(cat);
+            Workspace.Instance.AddCategory(cat);
 
             RebuildListView();
         }
@@ -58,7 +54,7 @@ namespace Banananana
 
             categoriesListView.Items.Clear();
 
-            foreach (Workspace.Category category in mWorkspace.Categories)
+            foreach (Workspace.Category category in Workspace.Instance.Categories)
             {
                 CategoriesListItem item = new CategoriesListItem();
                 item.Color = category.Color.ToString();
@@ -70,7 +66,7 @@ namespace Banananana
 
             if (selected_item != null)
             {
-                int idx = mWorkspace.Categories.IndexOf(selected_item);
+                int idx = Workspace.Instance.Categories.IndexOf(selected_item);
                 if (idx >= 0)
                     categoriesListView.SelectedIndex = idx;
             }
@@ -85,16 +81,16 @@ namespace Banananana
 
             if (item != null)
             {
-                int category_index = mWorkspace.Categories.IndexOf(item.Category);
+                int category_index = Workspace.Instance.Categories.IndexOf(item.Category);
                 if (category_index >= 0)
                 {
                     // Reset all tasks that are assigned to this category
-                    foreach (Workspace.Pile pile in mWorkspace.Piles)
+                    foreach (Workspace.Pile pile in Workspace.Instance.Piles)
                         foreach (Workspace.Task task in pile.Tasks)
                             if (task.CategoryIndex == category_index)
                                 task.CategoryIndex = -1;
 
-                    mWorkspace.Categories.RemoveAt(category_index);
+                    Workspace.Instance.RemoveCategoryAt(category_index);
                     RebuildListView();
                 }
             }            
