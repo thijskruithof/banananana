@@ -58,7 +58,7 @@ namespace Banananana
         private void UpdateTitle(object sender, EventArgs e)
         {
             string suffix = "";
-            if (Workspace.Instance.mIsDirty)
+            if (Workspace.Instance.IsDirty)
             {
                 if (!mAutoSaveTimer.IsEnabled)
                     mAutoSaveTimer.Start();
@@ -69,7 +69,7 @@ namespace Banananana
 
         private void AutoSave(object sender, EventArgs e)
         {
-            if (!Workspace.Instance.mIsDirty)
+            if (!Workspace.Instance.IsDirty)
                 return;
 
             SaveWorkspace();

@@ -178,21 +178,21 @@ namespace Banananana
             }
         }
 
-        private static Mutex mutex = new Mutex();
-        private static Workspace instance = null;
+        private static Mutex sSaveMutex = new Mutex();
+        private static Workspace sInstance = null;
 
         public static Workspace Instance
         {
             get
             {
-                if (instance == null)
-                    instance = new Workspace();
-                return instance;
+                if (sInstance == null)
+                    sInstance = new Workspace();
+                return sInstance;
             }
-            set { instance = value; }
+            set { sInstance = value; }
         }
  
-        public bool mIsDirty { get; private set; }
+        public bool IsDirty { get; private set; }
 
         /// <summary>
         /// All the task piles that the user has defined
@@ -244,14 +244,14 @@ namespace Banananana
 
         private Workspace()
         {
-            mIsDirty = false;
+            IsDirty = false;
             Piles = new List<Pile>();
             Categories = new List<Category>();
         }
 
         public void MarkAsDirty()
         {
-            mIsDirty = true;
+            IsDirty = true;
         }
 
         /// <summary>
@@ -260,7 +260,7 @@ namespace Banananana
         /// <param name="inFilename"></param>
         public void SaveToFile(String inFilename)
         {
-            mutex.WaitOne();
+            sSaveMutex.WaitOne();
             // Ensure path exists
             Directory.CreateDirectory(Path.GetDirectoryName(inFilename));
 
@@ -274,8 +274,8 @@ namespace Banananana
             {
                 serializer.Serialize(writer, this);
             }
-            Instance.mIsDirty = false;
-            mutex.ReleaseMutex();
+            Instance.IsDirty = false;
+            sSaveMutex.ReleaseMutex();
         }
 
         /// <summary>
@@ -285,7 +285,7 @@ namespace Banananana
         /// <returns></returns>
         public static void LoadFromFile(String inFilename)
         {
-            mutex.WaitOne();
+            sSaveMutex.WaitOne();
             Workspace data = Instance;
 
             if (!File.Exists(inFilename))
@@ -303,8 +303,8 @@ namespace Banananana
             }
 
             Instance = data;
-            Instance.mIsDirty = false;
-            mutex.ReleaseMutex();
+            Instance.IsDirty = false;
+            sSaveMutex.ReleaseMutex();
         }
 
         /// <summary>
