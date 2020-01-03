@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Banananana
 {
@@ -20,11 +21,17 @@ namespace Banananana
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const double cAutoSaveTime = 2.0;
+        private const double cTitleUpdateTime = 1 / 30;
+
         private bool mDragging;
         private TaskControl mDraggedTask;
         private PileControl mDraggedPile;
         private Cursor mDragPreviousCursor;
-        private Workspace mWorkspace;
+
+        private string mInitialTitle;
+
+        private DispatcherTimer mAutoSaveTimer;
 
         public MainWindow()
         {
@@ -33,10 +40,37 @@ namespace Banananana
             InitializeComponent();
 
             // Init our UI
-            foreach (Workspace.Pile pile in mWorkspace.Piles)
+            foreach (Workspace.Pile pile in Workspace.Instance.Piles)
                 AddNewPileControl(pile);
+
+            mInitialTitle = Title;
+
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(cTitleUpdateTime);
+            timer.Tick += UpdateTitle;
+            timer.Start();
+
+            mAutoSaveTimer = new DispatcherTimer();
+            mAutoSaveTimer.Interval = TimeSpan.FromSeconds(cAutoSaveTime);
+            mAutoSaveTimer.Tick += AutoSave;
+            mAutoSaveTimer.Start();
         }
 
+        private void UpdateTitle(object sender, EventArgs e)
+        {
+            string suffix = "";
+            if (Workspace.Instance.mIsDirty)
+            {
+                suffix = " (modified)";
+            }
+            Title = mInitialTitle + suffix;
+        }
+
+        private void AutoSave(object sender, EventArgs e)
+        {
+            SaveWorkspace();
+            SaveWindowSizeAndPosition();
+        }
 
         public IEnumerable<PileControl> PileControls
         {
@@ -50,7 +84,7 @@ namespace Banananana
 
         private PileControl AddNewPileControl(Workspace.Pile inPile)
         {
-            PileControl pile_control = new PileControl(this, mWorkspace, inPile);
+            PileControl pile_control = new PileControl(this, inPile);
             pile_control.VerticalAlignment = VerticalAlignment.Top;
 
             pile_control.OnDragTaskControlStarted += Pile_OnDragTaskStarted;
@@ -69,7 +103,7 @@ namespace Banananana
 
         public void DeletePileAndControl(PileControl inPileControl)
         {
-            mWorkspace.Piles.Remove(inPileControl.Pile);
+            Workspace.Instance.RemovePile(inPileControl.Pile);
             stackPanel.Children.Remove(inPileControl);
         }
 
@@ -109,11 +143,11 @@ namespace Banananana
             if (current_pile_ctrl_index != preferred_pile_ctrl_index)
             {
                 // Remove pile and control
-                mWorkspace.Piles.RemoveAt(current_pile_ctrl_index);
+                Workspace.Instance.RemovePileAt(current_pile_ctrl_index);
                 stackPanel.Children.RemoveAt(current_pile_ctrl_index);
 
                 // Insert pile and control at correct spot
-                mWorkspace.Piles.Insert(preferred_pile_ctrl_index, inPileControl.Pile);
+                Workspace.Instance.InsertPile(preferred_pile_ctrl_index, inPileControl.Pile);
                 stackPanel.Children.Insert(preferred_pile_ctrl_index, inPileControl);
             }
         }
@@ -256,13 +290,13 @@ namespace Banananana
 
         private void LoadWorkspace()
         {
-            mWorkspace = Workspace.LoadFromFile(GetWorkspaceFilename());
+            Workspace.LoadFromFile(GetWorkspaceFilename());
         }
 
 
         private void SaveWorkspace()
         {
-            mWorkspace.SaveToFile(GetWorkspaceFilename());
+            Workspace.Instance.SaveToFile(GetWorkspaceFilename());
         }
 
         private void SaveWindowSizeAndPosition()
@@ -311,14 +345,13 @@ namespace Banananana
         private void AddPileRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Workspace.Pile new_pile = new Workspace.Pile();
-            mWorkspace.Piles.Add(new_pile);
+            Workspace.Instance.AddPile(new_pile);
             AddNewPileControl(new_pile);
         }
 
-
         public void ShowEditNotesWindow(Workspace.Task inTask)
         {
-            EditNotesWindow window = new EditNotesWindow(mWorkspace, inTask);
+            EditNotesWindow window = new EditNotesWindow(Workspace.Instance, inTask);
             window.ShowDialog();
         }
 
