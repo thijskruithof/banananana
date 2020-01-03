@@ -53,7 +53,6 @@ namespace Banananana
             mAutoSaveTimer = new DispatcherTimer();
             mAutoSaveTimer.Interval = TimeSpan.FromSeconds(cAutoSaveTime);
             mAutoSaveTimer.Tick += AutoSave;
-            mAutoSaveTimer.Start();
         }
 
         private void UpdateTitle(object sender, EventArgs e)
@@ -61,6 +60,8 @@ namespace Banananana
             string suffix = "";
             if (Workspace.Instance.mIsDirty)
             {
+                if (!mAutoSaveTimer.IsEnabled)
+                    mAutoSaveTimer.Start();
                 suffix = " (modified)";
             }
             Title = mInitialTitle + suffix;
@@ -68,8 +69,12 @@ namespace Banananana
 
         private void AutoSave(object sender, EventArgs e)
         {
+            if (!Workspace.Instance.mIsDirty)
+                return;
+
             SaveWorkspace();
             SaveWindowSizeAndPosition();
+            mAutoSaveTimer.Stop();
         }
 
         public IEnumerable<PileControl> PileControls
