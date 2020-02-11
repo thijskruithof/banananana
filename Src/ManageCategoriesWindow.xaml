@@ -32,6 +32,8 @@
             <Rectangle x:Name="pickColorRect5" Fill="#FF9B9B9B" HorizontalAlignment="Left" Height="23" Width="23" Stroke="Black" MouseLeftButtonDown="pickColorRect_MouseLeftButtonDown" Margin="8,0,0,0"/>
             <Rectangle x:Name="pickColorRect6" Fill="#FFFFC603" HorizontalAlignment="Left" Height="23" Width="23" Stroke="Black" MouseLeftButtonDown="pickColorRect_MouseLeftButtonDown" Margin="8,0,0,0"/>
             <Rectangle x:Name="pickColorRect7" Fill="#FF08D2FF" HorizontalAlignment="Left" Height="23" Width="23" Stroke="Black" MouseLeftButtonDown="pickColorRect_MouseLeftButtonDown" Margin="8,0,0,0"/>
+            <Rectangle x:Name="pickColorRect7_Copy" Fill="#FFD1FF00" HorizontalAlignment="Left" Height="23" Width="23" Stroke="Black" MouseLeftButtonDown="pickColorRect_MouseLeftButtonDown" Margin="8,0,0,0"/>
+            <Rectangle x:Name="pickColorRect7_Copy1" Fill="#FFB7FFFF" HorizontalAlignment="Left" Height="23" Width="23" Stroke="Black" MouseLeftButtonDown="pickColorRect_MouseLeftButtonDown" Margin="8,0,0,0"/>
         </StackPanel>
 
     </Grid>
